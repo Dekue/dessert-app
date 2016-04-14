@@ -1,0 +1,9 @@
+- Download of libdessert from repository
+- Download of tun/tap module
+- Automatic activation of transceiver, disabling of energy-save mode
+- Automatic switching to ad-hoc mode
+- Automatic setting of default route
+- Notification when daemon is (dis-) connected to/from mesh network
+- Move configuration of always available parameters, e.g., from daemon to app configuration
+- Better representation of CLI return values
+- Custom activities for daemons, e.g., show topology

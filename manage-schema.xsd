@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema id="ManagerOptions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- ROOT -->
+	<xs:element name="ManagerOptions">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="Spacer" type="SpacerType" />
+				<xs:element name="Command" type="CommandType" />
+				<xs:element name="Property" type="PropertyType" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- MANAGE ELEMENTS -->
+	<xs:complexType name="SpacerType">
+		<xs:attribute name="description" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="PropertyType">
+		<xs:sequence maxOccurs="1" minOccurs="1">
+			<xs:element name="GetterCommand" type="GetterCommandType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="SetterCommand" type="SetterCommandType" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="description" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="CommandType">
+		<xs:sequence maxOccurs="1" minOccurs="1">
+			<xs:element name="CommandLine" type="CommandLineType" minOccurs="1" maxOccurs="unbounded" />
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="StringOption" type="StringOptionType" />
+				<xs:element name="BooleanOption" type="BooleanOptionType" />
+				<xs:element name="IntegerOption" type="IntegerOptionType" />
+				<xs:element name="DecimalOption" type="DecimalOptionType" />
+				<xs:element name="ListOption" type="ListOptionType" />
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="description" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<!-- PROPERTY COMMAND TYPES -->
+	<xs:complexType name="GetterCommandType">
+		<xs:sequence maxOccurs="1" minOccurs="1">
+			<xs:element name="CommandLine" type="CommandLineType" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SetterCommandType">
+		<xs:sequence maxOccurs="1" minOccurs="1">
+			<xs:element name="CommandLine" type="CommandLineType" minOccurs="1" maxOccurs="unbounded" />
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="StringOption" type="StringOptionType" />
+				<xs:element name="BooleanOption" type="BooleanOptionType" />
+				<xs:element name="IntegerOption" type="IntegerOptionType" />
+				<xs:element name="DecimalOption" type="DecimalOptionType" />
+				<xs:element name="ListOption" type="ListOptionType" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- COMMANDLINE TYPES -->
+	<xs:complexType name="CommandLineType">
+		<xs:attribute name="value" type="xs:string" use="required" />
+		<xs:attribute name="mode" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<!-- OPTION TYPES -->
+	<xs:complexType name="StringOptionType">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="description" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="BooleanOptionType">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="description" type="xs:string" use="required" />
+		<xs:attribute name="falseValue" type="xs:string" use="optional" />
+		<xs:attribute name="trueValue" type="xs:string" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="IntegerOptionType">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="description" type="xs:string" use="required" />
+		<xs:attribute name="minValue" type="xs:integer" use="optional" />
+		<xs:attribute name="maxValue" type="xs:integer" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="DecimalOptionType">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="description" type="xs:string" use="required" />
+		<xs:attribute name="minValue" type="xs:double" use="optional" />
+		<xs:attribute name="maxValue" type="xs:double" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="ListOptionType">
+		<xs:sequence maxOccurs="1" minOccurs="1">
+			<xs:element name="Item" type="ListItemType" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="description" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="ListItemType">
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<ScrollView 
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<LinearLayout 
+			android:orientation="vertical"
+			android:layout_width="fill_parent" 
+			android:layout_height="fill_parent">
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingTop="15px" android:paddingLeft="15px" android:paddingRight="15px"
+				android:textStyle="bold" android:textColor="#ffffff" android:text="@string/app_version" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="15px" android:paddingRight="15px"
+				android:layout_gravity="center_vertical" android:textColor="#ffffff"
+				android:text="&lt;unknown&gt;" android:id="@+id/AppVersionText"/>
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingTop="15px" android:paddingLeft="15px" android:paddingRight="15px"
+				android:textStyle="bold" android:textColor="#ffffff" android:text="@string/lib_versions" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="15px" android:paddingRight="15px"
+				android:layout_gravity="center_vertical" android:textColor="#ffffff"
+				android:text="&lt;unknown&gt;" android:id="@+id/LibVersionText"/>
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingTop="15px" android:paddingLeft="15px" android:paddingRight="15px"
+				android:textStyle="bold" android:textColor="#ffffff" android:text="@string/project_page" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:autoLink="web" android:textColorLink="#ffffff" android:paddingLeft="15px"
+				android:paddingRight="15px" android:textSize="12sp" android:textColor="#ffffff"
+				android:text="http://www.des-testbed.net" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingTop="15px" android:paddingLeft="15px" android:paddingRight="15px"
+				android:textStyle="bold" android:textColor="#ffffff" android:text="@string/license" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="15px" android:paddingRight="15px" android:textColor="#ffffff" android:text="GNU General Public License v3"/>
+			<TextView android:text="http://www.gnu.org/licenses/gpl.html"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:autoLink="web" android:textColorLink="#ffffff" android:paddingLeft="15px"
+				android:paddingRight="15px" android:textSize="12sp" android:textColor="#ffffff" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingTop="15px" android:paddingLeft="15px" android:paddingRight="15px"
+				android:textStyle="bold" android:textColor="#ffffff" android:text="@string/authors" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="15px" android:paddingRight="15px" android:textColor="#ffffff"
+				android:text="Ramin Baradari (Original Development)" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="15px" android:paddingRight="15px" android:textColor="#ffffff"
+				android:text="Bastian Blywis (DES-SERT Project and Further Development)" />				
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingTop="15px" android:paddingLeft="15px" android:paddingRight="15px"
+				android:textStyle="bold" android:textColor="#ffffff" android:text="@string/third_party_software" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:autoLink="web" android:textColorLink="#ffffff" android:paddingLeft="15px"
+				android:paddingRight="15px" android:textSize="12sp" android:textColor="#ffffff"
+				android:text="http://www.des-testbed.net/DES-SERT" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:autoLink="web" android:textColorLink="#ffffff" android:paddingLeft="15px"
+				android:paddingRight="15px" android:textSize="12sp" android:textColor="#ffffff"
+				android:text="http://sites.dparrish.com/libcli" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:autoLink="web" android:textColorLink="#ffffff" android:paddingLeft="15px"
+				android:paddingRight="15px" android:textSize="12sp" android:textColor="#ffffff"
+				android:text="http://www.tcpdump.org" />
+			<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:autoLink="web" android:textColorLink="#ffffff" android:paddingLeft="15px"
+				android:paddingRight="15px" android:textSize="12sp" android:textColor="#ffffff"
+				android:text="http://uthash.sourceforge.net" />
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

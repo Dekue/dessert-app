@@ -1,0 +1,263 @@
+This document contains a step by step description to compile the dessert libraries and the
+necessary dependencies. Furthermore it tries to describe the used arguments and tools.
+
+Supported systems are: Linux, Mac OS X and Cygwin
+[Only Cygwin and Linux are tested while Cygwin had most mileage]
+
+----------------------------------------------------------------------------------------------------
+Prerequisites:
+
+	- Android NDK Revision 4b or newer (http://developer.android.com/sdk/ndk/index.html)
+	  [while newer revisions SHOULD work only revision 4b has been tested]
+	  
+	- android-gcc wrapper perl script (part of the thesis; check <thesis-root>/Src/tools)
+	
+	- android-strip wrapper perl script (part of the thesis; check <thesis-root>/Src/tools)
+	  [actually this is optional]
+	
+	- DES-SERT dependencies:
+		* libpcap 1.1.1 (http://www.tcpdump.org/)
+		* libcli 1.9.5 (https://github.com/dparrish/libcli)
+		* uthash 1.9.1 (uthash.sourceforge.net)
+		[newer versions should should work too but have not been tested]
+		
+	- Android specific build dependencies (part of the thesis; check <thesis-root>/Src/ for each)
+		* libregex (Src/libregex)
+		  [necessary to fullfill missing functions of GNU libc used in libcli]
+		* libpthreadex (Src/libpthreadex)
+		  [necessary to fullfill missing pthread read/write lock functions of GNU libc used in 
+		  libdessert]
+		* netinet/ip6.h (Src/include/netinet/ip6.h)
+		  [missing header with ipv6 definitions]
+		* libcli.patch (Src/libcli-patch/libcli.patch)
+		  [patch file to uncomment the use of crypt(3) in libcli which is not used at all]
+	
+	- (optional) Cygwin latest version; only needed if you want to compile on windows systems
+	
+
+All references to directories in this document are relative to a common build directory.
+
+The directory of each dependency is assumed to be in a subdirectory of the common build directory 
+unless otherwise noted in the preparations section.
+
+The target directory for all projects and the common include directory is assumed to be "tmp" and 
+"tmp/include" (keep in mind this is relative to the common build directory). Feel free to change any
+occurrence of "tmp" to your own liking.
+
+
+
+----------------------------------------------------------------------------------------------------
+Preparations:
+
+---
+Place the path of the android-gcc and android-strip wrapper scripts on the "PATH".
+
+
+---
+For the android-gcc and android-strip wrapper to function they must know the path of the NDK 
+installation. This is achieved by configuring the environment variable "ANDROID_NDK_HOME". The 
+wrappers are trying to guess the host system but in case of invalid identification please set 
+"ANDROID_NDK_PLATFORM" to either "linux-x86", "darwin-x86" or "windows". Furthermore the wrapper
+assume a GCC 4.4.0 exists. This should be the case for NDK Revision 4b and NDK Revision 5 but in
+case this is not true you can set "ANDROID_NDK_GCC_VERSION" to any version that exists in the 
+installed Android NDK.
+
+To check if all is configured properly just run "android-gcc --version" and 
+"android-strip --version". The output should be
+
+$ android-gcc --version
+arm-eabi-gcc (GCC) 4.4.0
+[...]
+
+$ android-strip --version
+GNU strip (GNU Binutils) 2.19
+[...]
+
+In case it doesn not work the paths that are checked for existance are: (in perl)
+my $host_dir = "${ndk_home}/build/prebuilt/${ndk_host}";
+my $toolchain_dir = "${host_dir}/arm-eabi-${ndk_gcc_version}";
+my $gcc_exec = "${toolchain_dir}/bin/arm-eabi-gcc";
+my $strip_exec = "${toolchain_dir}/bin/arm-eabi-strip";
+my $platform_dir = "${ndk_home}/build/platforms/${ndk_platform}";
+
+
+---
+Place header files of uthash into "tmp/include".
+
+
+---
+Place the "netinet/ip6.h" file into "tmp/include/netinet/ip6.h".
+
+
+---
+Apply the "libcli.patch" to the source of libcli
+
+
+	
+----------------------------------------------------------------------------------------------------
+Common build arguments:	
+
+There are a few recurring arguments to the build calls:
+
+	- CC="android-gcc"
+      Sets the compiler to use. In this case we want to use the android wrapper script.
+	  
+	- --host=arm-none-linux
+	  Sets the compile target of the cross compilation when running a configure script.
+	
+	- DESTDIR=".." and PREFIX="/tmp"
+	- DESTDIR="`pwd`/.." and PREFIX="/tmp"
+	- --prefix=`pwd`/../tmp/
+	  Or with any similiar values is used to force the build output to the "tmp" folder.
+	  
+	- CFLAGS="[...] -I`pwd`/../tmp/include [...]"
+	  Must be set to find the additional includes (e.g. netinet/ipv6.h and uthash)
+	  	
+	  
+----------------------------------------------------------------------------------------------------
+0. Optional build step:
+
+You can call "android-strip <binaryfile>" for each binary artifact of the build process to strip it
+off any debug symbols. This safes about 10 to 20 percent of the file size. Should not matter if it 
+is done after each step or once all is compiled.
+
+
+
+----------------------------------------------------------------------------------------------------
+1. Building libregex:
+
+make CC="android-gcc" DESTDIR=".." PREFIX="/tmp" clean all install
+
+
+
+----------------------------------------------------------------------------------------------------
+2. Building libpthreadex:
+
+make CC="android-gcc" DESTDIR=".." PREFIX="/tmp" clean all install
+
+
+
+----------------------------------------------------------------------------------------------------
+3. Building libcli:
+
+make CC="android-gcc" CFLAGS="-I`pwd`/../tmp/include -I. -DSTDC_HEADERS" \
+LDFLAGS="-shared `pwd`/../tmp/lib/libregex.a -Wl,-soname,libcli.so" \
+LIBS="" DESTDIR="`pwd`/.." PREFIX="/tmp" clean libcli.so install
+
+
+Desciption:
+	- CFLAGS="[...] -I. [...]"
+	  For some reason I couldn't figure out the Makefile has some problem to find the projects 
+	  own header files. Adds the project directory to the include path.
+	  
+	- CFLAGS="[...] -DSTDC_HEADERS [...]"
+	  Some #define 's in the kernel header that ship with the NDK are not compatible without this
+	  #define.
+	
+	- LDFLAGS="[...] -shared [...]"
+	  Force building shared libraries. Might be redundant actually because of late changes in
+	  the wrapper scripts but should not cause any harm.
+	 
+	- LDFLAGS="[...] `pwd`/../tmp/lib/libregex.a [...]"
+	  To link with the additional static libregex library.
+	 
+	- LDFLAGS="[...] -Wl,-soname,libcli.so [...]"
+	  Forces the output file of the shared library to be libcli.so
+
+	- LIBS=""
+	  Do not use the default libs as defined in the Makefile.
+	 
+
+	 
+----------------------------------------------------------------------------------------------------
+4. Building libpcap:
+
+./configure CC="android-gcc" CFLAGS="-Dlinux" --prefix=`pwd`/../tmp/ \
+--host=arm-none-linux --with-pcap=linux \
+ac_cv_linux_vers=2 ac_cv_func_malloc_0_nonnull=yes ac_cv_func_realloc_0_nonnull=yes
+
+make
+
+make install
+
+
+Desciption:
+	- CFLAGS="-Dlinux"
+	- --with-pcap=linux
+	- ac_cv_linux_vers=2
+	  Configure has a problem with figuring out the target system of the cross compilation.
+	  Might actually be related to the naming scheme of the gcc executable that is called.
+	  "arm-eabi-gcc" should probably be named "arm-android-linux-gcc" for a proper host triplet
+	  detection. But this does not explain why the "--host" argument is not used instead.
+	  The "ac_cv_linux_vers" is a configure cache variable. A bit dirty that trick but can be used
+	  to override part of the detection.
+
+	- ac_cv_func_malloc_0_nonnull=yes
+	- ac_cv_func_realloc_0_nonnull=yes
+	  Configure has a problem with detecting the proper malloc and realloc implementation/behaviour.
+	  Might be related to the host triplet problem.
+
+
+----------------------------------------------------------------------------------------------------
+5. Building libdessert
+
+!!! On some systems the configure script had a problem detecting the zlib library of Android.
+!!! If you run into problems do the following:
+!!!   Comment out the "CHECK_ZLIB" line in the configure.ac script and then call "sh autogen.sh"
+!!!   to generate a fresh configure script
+!!! A better detection macro would be a way better fix but I could not find any. Another idea is
+!!! to only call "CHECK_ZLIB" if "--enable-android-build" is not used. But I find this a bit dirty.
+
+./configure CC="android-gcc" CFLAGS="-I`pwd`/../tmp/include -D__linux__" \
+LDFLAGS="-L`pwd`/../tmp/lib" --prefix=`pwd`/../tmp/ --host=arm-none-linux  \
+--without-net-snmp --enable-android-build \
+ac_cv_func_malloc_0_nonnull=yes ac_cv_func_realloc_0_nonnull=yes
+
+make
+
+make install
+
+
+Desciption:
+	- CFLAGS="[...] -D__linux__ [...]"
+	- ac_cv_func_malloc_0_nonnull=yes 
+	- ac_cv_func_realloc_0_nonnull=yes
+	  Same host triplet detection problem as in step 4.
+	  
+	- --enable-android-build
+      Does what is says.
+
+	- --without-net-snmp
+	  Net-SNMP is not supported on Android.
+	  
+	  
+
+----------------------------------------------------------------------------------------------------
+6. Building libdessert-extra
+
+libdessert-extra was merged into libdessert in July 2011.
+
+----------------------------------------------------------------------------------------------------
+7. Archive the result
+
+You are done with compiling and you should archive the artifacts now. 
+
+Files you want to include in the tarball:
+	
+	- directory "tmp/include"
+	
+	- directory "tmp/lib"
+	  [You do not actually need all files in this directory. The libdessert, libdessert-extra,
+	   libcli and libpcap library files suffice. Include their <libname>.so.<libversion> files
+	   and any symbolic links that point to them]
+
+This tarball serves as you base for a new version of the dessert manager application with updated
+dessert libraries and as the dependency package (libraries and the needed headers) to build
+daemon executables.
+
+[See build-daemons-HOWTO.txt and build-application-HOWTO.txt]
+
+
+
+
+

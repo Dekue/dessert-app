@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<group android:checkable="false" android:visible="true" android:enabled="true"
+		android:id="@+id/DaemonGroup">
+
+		<item android:checkable="false" android:visible="true" android:enabled="true"
+			android:id="@+id/Refresh" android:title="@string/refresh_all" android:icon="@android:drawable/ic_menu_rotate" />
+
+		<item android:checkable="false" android:visible="true" android:enabled="true"
+			android:id="@+id/CustomCommand" android:title="@string/custom_command"
+			android:icon="@android:drawable/ic_menu_edit" />
+
+		<item android:checkable="false" android:visible="true" android:enabled="true"
+			android:id="@+id/Telnet" android:title="@string/telnet" android:icon="@android:drawable/ic_menu_manage" />
+
+		<item android:checkable="false" android:visible="true" android:enabled="true"
+			android:id="@+id/Shutdown" android:title="@string/shutdown"
+			android:icon="@android:drawable/ic_menu_close_clear_cancel" />
+
+		<item android:checkable="false" android:visible="true" android:enabled="true"
+			android:id="@+id/Kill" android:title="@string/kill" android:icon="@android:drawable/ic_menu_delete" />
+
+	</group>
+
+	<item android:checkable="false" android:visible="true" android:enabled="true"
+		android:id="@+id/Preferences" android:title="@string/preferences"
+		android:icon="@android:drawable/ic_menu_preferences" />
+
+	<item android:checkable="false" android:visible="true" android:enabled="true"
+		android:id="@+id/About" android:title="@string/about" android:icon="@android:drawable/ic_menu_info_details" />
+
+</menu>

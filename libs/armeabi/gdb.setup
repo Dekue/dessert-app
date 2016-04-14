@@ -1,0 +1,3 @@
+set solib-search-path /cygdrive/c/Projects/workspace/dessert-manager/obj/local/armeabi
+directory /cygdrive/c/Language/android-ndk-r4/build/platforms/android-4/arch-arm/usr/include
+directory /cygdrive/c/Projects/workspace/dessert-manager/jni
