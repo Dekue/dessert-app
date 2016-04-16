@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="about">About</string>
+	<string name="app_version">Application Version:</string>
+	<string name="lib_versions">Library Versions:</string>
+	<string name="project_page">Project Page:</string>
+	<string name="license">License:</string>
+	<string name="authors">Authors:</string>
+	<string name="third_party_software">3rd-Party-Software</string>
+	<string name="install_file">Install File</string>
+	<string name="launch_daemon">Launch daemon</string>
+	<string name="install_daemons">Install Daemons</string>
+	<string name="start_daemon">Start Daemon</string>
+	<string name="start_daemon_error">An error occurred while starting the daemon. The daemon
+		package might be faulty or the installation is broken.\n\nDetails:\t%s
+	</string>
+	<string name="start_daemon_script_error">The daemon startup script failed to run</string>
+	<string name="manage_running_daemons">Manage Running Daemons</string>
+	<string name="app_name">DES-SERT</string>
+	<string name="refresh_list">Refresh List</string>
+	<string name="refresh_all">Refresh All</string>
+	<string name="custom_command">Custom Command</string>
+	<string name="run_custom_command">Run Custom Command</string>
+	<string name="telnet">Telnet</string>
+	<string name="shutdown">Shutdown</string>
+	<string name="kill">Kill</string>
+	<string name="preferences">Preferences</string>
+	<string name="shutdown_daemon">Shutdown Daemon</string>
+	<string name="kill_daemon">Kill Daemon</string>
+	<string name="connect_telnet">Connect via Telnet</string>
+	<string name="select_daemon_zip_title">Select Daemon ZIP-File</string>
+	<string name="select_daemon_options_title">Select Daemon Options File</string>
+	<string name="open">Open</string>
+	<string name="load">Load</string>
+	<string name="save">Save</string>
+	<string name="install">Install</string>
+	<string name="defaults">Defaults</string>
+	<string name="no_filemanager_installed">No file manager installed</string>
+	<string name="no_sdcard_installed">No SD card mounted</string>
+	<string name="install_progress_title">Installing daemon</string>
+	<string name="install_progress_msg_prepare">Preparing daemon installation...</string>
+	<string name="install_progress_msg_download">Downloading daemon package...</string>
+	<string name="install_progress_msg_unpack">Unpacking daemon pack...</string>
+	<string name="install_daemon_success">Daemon installed successfully.</string>
+	<string name="install_daemon_failure">Failure while installing daemon.</string>
+	<string name="install_daemon_error">An error occurred while installing the daemon:\n%s</string>
+	<string name="issued_shutdown_command">Issued shutdown command</string>
+	<string name="issued_kill_command">Issued kill command</string>
+	<string name="error_kill_command">An error occurred while issuing the kill command. Is the \&quot;kill\&quot; command properly configured?</string>
+	<string name="uninstall_daemon">Uninstall Daemon</string>
+	<string name="uninstalled_daemon">Daemon successfully uninstalled</string>
+	<string name="getting_repo_index">Retrieving repository index</string>
+	<string name="getting_repo_error">An error occurred while retrieving the repository:\n%s</string>
+	<string name="ask_install_daemon">Do you want to install the daemon %1$s %2$s from %3$s?</string>
+	<string name="ask_restore_defaults">Do you want to the default options for this daemon?</string>
+	<string name="ask_overwrite_file">The file already exists.\nDo you want to overwrite it?</string>
+	<string name="target_directory">Target Directory:</string>
+	<string name="target_file">Target File:</string>
+	<string name="target_name">Target Name:</string>
+	<string name="prepend_timestamp">Prepend Timestamp</string>
+	<string name="choose_value">Choose Value</string>
+	<string name="daemon_not_running">No daemon running.</string>
+	<string name="daemon_running">Daemon running:</string>
+	<string name="daemon_started">Daemon started</string>
+	<string name="daemon">Daemon</string>
+	<string name="name">Name</string>
+	<string name="version">Version</string>
+	<string name="pid">PID</string>
+	<string name="cliport">CLI Port</string>
+	<string name="command_title">Command:</string>
+	<string name="property_title">Property:</string>
+	<string name="value_unknown">&lt;unknown&gt;</string>
+	<string name="value_querying">&lt;querying&gt;</string>
+	<string name="set_property">Set Property: %s</string>
+	<string name="run_command">Run Command: %s</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="cancel">Cancel</string>
+	<string name="close">Close</string>
+	<string name="ok">OK</string>
+	<string name="start">Start</string>
+	<string name="execute">Execute</string>
+	<string name="run">Run</string>
+	<string name="save_options_title">Save Options File</string>
+	<string name="command_progress_title">Running Command</string>
+	<string name="command_progress_message">Command: %s</string>
+	<string name="command_results_title">Command Results</string>
+	<string name="command_results_done">DONE</string>
+	<string name="command_aborted">A failure occurred while running the command</string>
+	<string name="command_error">An error occurred while running the command</string>
+	<string name="native_commands_not_found_title">Bad Configuration</string>
+	<string name="native_commands_not_found_msg">The following native commands could not be found. You
+		should check your configuration:\n%s</string>
+	<string name="native_command_not_found_title">Binary Not Found</string>
+	<string name="native_command_not_found_msg">The native binary could not be found. You should check the
+		value: %s</string>
+	<string name="ignore">Ignore</string>
+	<string name="install_start_script_error">An error occurred while installing the daemon helper
+		script:\n</string>
+	<string name="install_libraries_success">Successfully installed the DES-SERT shared library files
+	</string>
+	<string name="install_libraries_failure">Installing the DES-SERT shared library files failed
+	</string>
+	<string name="install_libraries_error">An error occurred while installing the DES-SERT shared
+		library files:\n</string>
+
+	<!-- setup strings -->
+	<string name="setup_category_cli_title">CLI Settings</string>
+	<string name="setup_category_sysif_title">System Interface Settings</string>
+	<string name="setup_category_meshif_title">Mesh Interface Settings</string>
+	<string name="setup_category_repository_title">Repository Settings</string>
+	<string name="setup_category_path_title">System Executable Settings</string>
+
+	<string name="setup_cliport_title">Change Default CLI Port</string>
+	<string name="setup_cliport_summary">Port number to use for the CLI telnet interfaces (e.g.
+		4519)</string>
+
+	<string name="setup_sysif_title">Change System Interface</string>
+	<string name="setup_sysif_summary">System interface name to use (e.g. tap0)</string>
+
+	<string name="setup_sysip_title">Change System IP Number</string>
+	<string name="setup_sysip_summary">IP number to use for the system interface (e.g.
+		10.0.17.254)</string>
+
+	<string name="setup_sysmask_title">Change System Subnet Mask</string>
+	<string name="setup_sysmask_summary">Subnet mask number to use for the system interface (e.g.
+		255.255.0.0)</string>
+
+	<string name="setup_mtu_title">Change System MTU Size</string>
+	<string name="setup_mtu_summary">MTU Size to use for the system interface (e.g. 1300)
+	</string>
+
+	<string name="setup_meshif_title">Change Mesh Interface</string>
+	<string name="setup_meshif_summary">Mesh interface name to use (e.g. wlan0)</string>
+
+	<string name="setup_repourl_title">Change Repository URL</string>
+	<string name="setup_repourl_summary">Daemon repository URL (e.g.
+		http://www.example.net/repo/folder)</string>
+
+	<string name="setup_pathsu_title">Change \&quot;su\&quot; Command</string>
+	<string name="setup_pathsu_summary">Path to \&quot;su\&quot; command (e.g. /system/bin/su)
+	</string>
+
+	<string name="setup_pathsh_title">Change \&quot;sh\&quot; Command</string>
+	<string name="setup_pathsh_summary">Path to \&quot;sh\&quot; command (e.g. /system/bin/sh)
+	</string>
+
+	<string name="setup_pathln_title">Change \&quot;ln\&quot; Command</string>
+	<string name="setup_pathln_summary">Path to \&quot;ln\&quot; command (e.g. /system/bin/ln)
+	</string>
+
+	<string name="setup_pathchmod_title">Change \&quot;chmod\&quot; Command</string>
+	<string name="setup_pathchmod_summary">Path to \&quot;chmod\&quot; command (e.g.
+		/system/bin/chmod)</string>
+
+	<string name="setup_pathkill_title">Change \&quot;kill\&quot; Command</string>
+	<string name="setup_pathkill_summary">Path to \&quot;kill\&quot; command (e.g. /system/bin/kill)
+	</string>
+
+<string name="local_service_started">Notification Service</string>
+<string name="exit">Exit</string>
+</resources>

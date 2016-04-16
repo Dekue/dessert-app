@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:key="global_preferences">
+	<PreferenceCategory android:title="@string/setup_category_cli_title">
+		<EditTextPreference android:key="cliport"
+			android:title="@string/setup_cliport_title" android:summary="@string/setup_cliport_summary"
+			android:defaultValue="4519" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/setup_category_sysif_title">
+		<EditTextPreference android:key="sysif" android:title="@string/setup_sysif_title"
+			android:summary="@string/setup_sysif_summary" android:defaultValue="tap0" />
+		<EditTextPreference android:key="sysip" android:title="@string/setup_sysip_title"
+			android:summary="@string/setup_sysip_summary" android:defaultValue="10.0.17.254" />
+		<EditTextPreference android:key="sysmask"
+			android:title="@string/setup_sysmask_title" android:summary="@string/setup_sysmask_summary"
+			android:defaultValue="255.255.0.0" />
+		<EditTextPreference android:key="mtu" android:title="@string/setup_mtu_title"
+			android:summary="@string/setup_mtu_summary" android:defaultValue="1300" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/setup_category_meshif_title">
+		<EditTextPreference android:key="meshif"
+			android:title="@string/setup_meshif_title" android:summary="@string/setup_meshif_summary"
+			android:defaultValue="wlan0" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/setup_category_repository_title">
+		<EditTextPreference android:key="repourl"
+			android:title="@string/setup_repourl_title" android:summary="@string/setup_repourl_summary"
+			android:defaultValue="http://www.des-testbed.net/libdessert/downloads/android/" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/setup_category_path_title">
+		<EditTextPreference android:key="pathsu"
+			android:title="@string/setup_pathsu_title" android:summary="@string/setup_pathsu_summary"
+			android:defaultValue="/system/bin/su" />
+		<EditTextPreference android:key="pathsh"
+			android:title="@string/setup_pathsh_title" android:summary="@string/setup_pathsh_summary"
+			android:defaultValue="/system/bin/sh" />
+		<EditTextPreference android:key="pathln"
+			android:title="@string/setup_pathln_title" android:summary="@string/setup_pathln_summary"
+			android:defaultValue="/system/bin/ln" />
+		<EditTextPreference android:key="pathchmod"
+			android:title="@string/setup_pathchmod_title" android:summary="@string/setup_pathchmod_summary"
+			android:defaultValue="/system/bin/chmod" />
+		<EditTextPreference android:key="pathkill"
+			android:title="@string/setup_pathkill_title" android:summary="@string/setup_pathkill_summary"
+			android:defaultValue="/system/bin/kill" />
+	</PreferenceCategory>
+</PreferenceScreen>
