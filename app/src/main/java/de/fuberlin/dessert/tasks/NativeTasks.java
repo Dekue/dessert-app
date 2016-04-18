@@ -79,7 +79,7 @@ public class NativeTasks {
      * @return array of command paths that are not found
      */
     public static String[] checkCommandPaths() {
-        ArrayList<String> paths = new ArrayList<String>();
+        ArrayList<String> paths = new ArrayList<>();
         paths.add(getPathToCHMOD());
         paths.add(getPathToKILL());
         paths.add(getPathToLN());
@@ -107,11 +107,10 @@ public class NativeTasks {
      * @return the return code of the chmod process
      */
     public static int chmod(File file, String mode, boolean runAsSU) {
-        StringBuilder sb = new StringBuilder(getPathToCHMOD());
-        sb.append(" ").append(mode);
-        sb.append(" ").append(file.getAbsolutePath());
+        String sb = getPathToCHMOD() + " " + mode +
+                " " + file.getAbsolutePath();
 
-        return NativeTasks.runCommand(sb.toString(), runAsSU);
+        return NativeTasks.runCommand(sb, runAsSU);
     }
 
     /**
@@ -283,11 +282,10 @@ public class NativeTasks {
      * @return the return code of the called command
      */
     public static int ln(File targetFile, File linkFile, boolean runAsSU) {
-        StringBuilder sb = new StringBuilder(getPathToLN());
-        sb.append(" ").append(targetFile.getAbsolutePath());
-        sb.append(" ").append(linkFile.getAbsolutePath());
+        String sb = getPathToLN() + " " + targetFile.getAbsolutePath() +
+                " " + linkFile.getAbsolutePath();
 
-        return NativeTasks.runCommand(sb.toString(), runAsSU);
+        return NativeTasks.runCommand(sb, runAsSU);
     }
 
     /**

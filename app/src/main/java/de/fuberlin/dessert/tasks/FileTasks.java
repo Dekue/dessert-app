@@ -193,7 +193,7 @@ public class FileTasks {
      * @return list of daemon directories
      */
     public static List<File> getDirectoriesForInstalledDaemons() {
-        List<File> result = new ArrayList<File>();
+        List<File> result = new ArrayList<>();
         Collections.addAll(result, getDaemonsDir().listFiles(new DaemonDirectoryFilter()));
         return result;
     }
@@ -212,7 +212,7 @@ public class FileTasks {
      * @return versions of the currently installed libraries
      */
     public static Map<String, LibraryVersion> getInstalledLibrariesVersions() {
-        Map<String, LibraryVersion> result = new HashMap<String, LibraryVersion>();
+        Map<String, LibraryVersion> result = new HashMap<>();
 
         // group 1 is the library name
         // group 2 is the library version

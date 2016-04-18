@@ -16,38 +16,26 @@ model {
             minifyEnabled = false
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             proguardFiles.add(file('proguard-rules.txt'))
-            ndk {
-                debuggable true
-            }
         }
-        /*debug {
-            debuggable = true
-            ndk.Debuggable = true
-        }*/
     }
-
 
     android.ndk {
         moduleName = "native_task"
-
         stl = "stlport_static"
-
         //cppFlags += "-Isrc/main/jni".toString()
-
         ldLibs.addAll(['log'])
         //ldLibs += ["android"]
     }
+
     /*
-    android.productFlavors {
+    productFlavors {
         create("arm") {
             ndk.abiFilters += "armeabi"
         }
         create("arm7") {
             ndk.abiFilters += "armeabi-v7a"
         }
-        create("fat")
-    }
-    */
+    }*/
 }
 
 dependencies {

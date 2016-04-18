@@ -48,7 +48,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import de.fuberlin.dessert.DessertApplication;
@@ -364,7 +363,7 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
         }
 
         // build list of all files in sdcard root
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
         File[] files = Environment.getExternalStorageDirectory().listFiles();
         if (files != null) {
             for (File file : files) {

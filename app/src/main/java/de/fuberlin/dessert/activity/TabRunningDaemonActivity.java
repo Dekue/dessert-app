@@ -404,9 +404,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
 
             // call telnet activity
             RunningDaemonInfo daemonInfo = DessertApplication.instance.getRunningDaemon();
-            StringBuilder sb = new StringBuilder();
-            sb.append("telnet://localhost:").append(daemonInfo.getCLIPort()).append("/#").append(daemonInfo.getName());
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(sb.toString())));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("telnet://localhost:" + daemonInfo.getCLIPort() + "/#" + daemonInfo.getName())));
 
             supRetVal = true;
             break;
@@ -486,7 +484,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
             @Override
             public void onClick(View view) {
                 // build options map
-                Map<String, String> optionsMap = new HashMap<String, String>();
+                Map<String, String> optionsMap = new HashMap<>();
                 for (CommandOption option : commandEntry.getCommandOptions()) {
                     optionsMap.put(option.getName().toUpperCase(), option.getValue());
                 }
@@ -657,7 +655,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
             @Override
             public void onClick(View view) {
                 // build options map
-                Map<String, String> optionsMap = new HashMap<String, String>();
+                Map<String, String> optionsMap = new HashMap<>();
                 for (CommandOption option : propertyEntry.getSetterCommandOptions()) {
                     optionsMap.put(option.getName().toUpperCase(), option.getValue());
                 }

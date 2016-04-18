@@ -141,33 +141,17 @@ public class ApplicationVersion implements Comparable<ApplicationVersion> {
                 return false;
             }
 
-            boolean rollover = false;
+            boolean rollover;
             // lower bound            
-            if (compareVersionWithMaskPart(revision, parts[2]) < 0) {
-                rollover = true;
-            } else {
-                rollover = false;
-            }
-            if (compareVersionWithMaskPart((rollover ? minor - 1 : minor), parts[1]) < 0) {
-                rollover = true;
-            } else {
-                rollover = false;
-            }
+            rollover = compareVersionWithMaskPart(revision, parts[2]) < 0;
+            rollover = compareVersionWithMaskPart((rollover ? minor - 1 : minor), parts[1]) < 0;
             if (compareVersionWithMaskPart((rollover ? major - 1 : major), parts[0]) < 0) {
                 return false;
             }
 
             // upper bound
-            if (compareVersionWithMaskPart(revision, parts[5]) > 0) {
-                rollover = true;
-            } else {
-                rollover = false;
-            }
-            if (compareVersionWithMaskPart((rollover ? minor + 1 : minor), parts[4]) > 0) {
-                rollover = true;
-            } else {
-                rollover = false;
-            }
+            rollover = compareVersionWithMaskPart(revision, parts[5]) > 0;
+            rollover = compareVersionWithMaskPart((rollover ? minor + 1 : minor), parts[4]) > 0;
             if (compareVersionWithMaskPart((rollover ? major + 1 : major), parts[3]) > 0) {
                 return false;
             }

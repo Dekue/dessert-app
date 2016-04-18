@@ -190,8 +190,8 @@ public class TabDaemonRepositoryActivity extends ListActivity {
 
         setContentView(R.layout.daemon_list);
 
-        List<RepositoryDaemonInfo> listContent = new ArrayList<RepositoryDaemonInfo>();
-        DaemonListAdapter<RepositoryDaemonInfo> adapter = new DaemonListAdapter<RepositoryDaemonInfo>(this, listContent, true, false);
+        List<RepositoryDaemonInfo> listContent = new ArrayList<>();
+        DaemonListAdapter<RepositoryDaemonInfo> adapter = new DaemonListAdapter<>(this, listContent, true, false);
         setListAdapter(adapter);
 
         ListView listView = getListView();
@@ -343,7 +343,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
         }
 
         // build list of all files in sdcard root
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
         File[] files = Environment.getExternalStorageDirectory().listFiles();
         if (files != null) {
             for (File file : files) {

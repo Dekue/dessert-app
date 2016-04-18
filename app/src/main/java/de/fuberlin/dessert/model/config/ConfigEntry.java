@@ -76,7 +76,7 @@ public abstract class ConfigEntry {
         return preferences.getString(getKey(), null);
     }
 
-    abstract public View getView(LayoutInflater layouInflater, SharedPreferences preferences);
+    abstract public View getView(LayoutInflater layoutInflater, SharedPreferences preferences);
 
     abstract public void readValueFromProperties(SharedPreferences preferences, Properties properties);
 

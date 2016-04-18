@@ -26,6 +26,6 @@ import java.util.EventListener;
 
 public interface DataChangedEventListener extends EventListener {
 
-    public void onDataChanged();
+    void onDataChanged();
 
 }

@@ -176,7 +176,7 @@ public class XMLTasks {
             }
         });
 
-        final List<String> listItems = new ArrayList<String>();
+        final List<String> listItems = new ArrayList<>();
         Element listElement = root.getChild(LIST_ELEMENT);
         listElement.setElementListener(new ElementListener() {
             private String name;
@@ -207,9 +207,7 @@ public class XMLTasks {
         try {
             reader = new FileReader(configFile);
             Xml.parse(reader, root.getContentHandler());
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Could not read configuration file: " + configFile.getAbsolutePath(), e);
-        } catch (SAXException e) {
+        } catch (IOException | SAXException e) {
             Log.e(LOG_TAG, "Could not read configuration file: " + configFile.getAbsolutePath(), e);
         } finally {
             Utils.safelyClose(reader);
@@ -229,8 +227,8 @@ public class XMLTasks {
         final ManageConfiguration result = new ManageConfiguration();
 
         // to hold the common inner items
-        final List<CommandLine> commandLines = new ArrayList<CommandLine>();
-        final List<CommandOption> commandOptions = new ArrayList<CommandOption>();
+        final List<CommandLine> commandLines = new ArrayList<>();
+        final List<CommandOption> commandOptions = new ArrayList<>();
 
         // ROOT !!!!!!!!!!!!!
         final RootElement root = new RootElement(MANAGER_ROOT_ELEMENT);
@@ -342,7 +340,7 @@ public class XMLTasks {
                         }
                     });
 
-                    final List<String> listItems = new ArrayList<String>();
+                    final List<String> listItems = new ArrayList<>();
                     Element listElement = setterCommandElement.getChild(LIST_OPTION_ELEMENT);
                     listElement.setElementListener(new ElementListener() {
                         private String name;
@@ -445,7 +443,7 @@ public class XMLTasks {
                     }
                 });
 
-                final List<String> listItems = new ArrayList<String>();
+                final List<String> listItems = new ArrayList<>();
                 Element listElement = commandElement.getChild(LIST_OPTION_ELEMENT);
                 listElement.setElementListener(new ElementListener() {
                     private String name;
@@ -476,9 +474,7 @@ public class XMLTasks {
         try {
             reader = new FileReader(manageFile);
             Xml.parse(reader, root.getContentHandler());
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Could not read configuration file: " + manageFile.getAbsolutePath(), e);
-        } catch (SAXException e) {
+        } catch (IOException | SAXException e) {
             Log.e(LOG_TAG, "Could not read configuration file: " + manageFile.getAbsolutePath(), e);
         } finally {
             Utils.safelyClose(reader);
@@ -492,7 +488,7 @@ public class XMLTasks {
      * 
      * @param inputStream stream to read from
      * @param baseURL base URL to use for the repository file location in the
-     *            daemon informations
+     *            daemon information
      * @return list of repository daemon information as read from the source and
      *         build using the given <code>baseURL</code>
      * @throws IOException thrown when the source stream could not be read
@@ -501,7 +497,7 @@ public class XMLTasks {
      */
     public static List<RepositoryDaemonInfo> readRepositoryIndex(final InputStream inputStream, final URL baseURL) throws IOException,
             SAXException {
-        final List<RepositoryDaemonInfo> result = new ArrayList<RepositoryDaemonInfo>();
+        final List<RepositoryDaemonInfo> result = new ArrayList<>();
 
         RootElement root = new RootElement(REPOSITORY_ROOT_ELEMENT);
 

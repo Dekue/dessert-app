@@ -30,7 +30,7 @@ public class ManageConfiguration {
     private final List<ManageEntry> manageEntries;
 
     public ManageConfiguration() {
-        this.manageEntries = new ArrayList<ManageEntry>();
+        this.manageEntries = new ArrayList<>();
     }
 
     public void addEntry(ManageEntry entry) {

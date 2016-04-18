@@ -62,7 +62,7 @@ public class TelnetScheduler {
      * Priorities of a scheduled job. Higher prioritized jobs are executed
      * earlier.
      */
-    public static enum Priority {
+    public enum Priority {
         /** Highest priority */
         HIGHEST,
         /** High priority */
@@ -116,9 +116,7 @@ public class TelnetScheduler {
                     return false;
             } else if (!job.equals(other.job))
                 return false;
-            if (priority != other.priority)
-                return false;
-            return true;
+            return priority == other.priority;
         }
 
         @Override
@@ -144,7 +142,7 @@ public class TelnetScheduler {
 
         @Override
         public void run() {
-            isRunning = true;
+            boolean isRunning = true;
             while (isRunning) {
                 Thread.interrupted();
 
@@ -198,11 +196,10 @@ public class TelnetScheduler {
     /**
      * Internal queue and lock object for the scheduler
      */
-    private final PriorityQueue<JobWrapper> queue = new PriorityQueue<JobWrapper>();
+    private final PriorityQueue<JobWrapper> queue = new PriorityQueue<>();
     private int lastJobID = 0;
 
     private final WorkerThread workerThread;
-    private boolean isRunning = false;
 
     private Socket socket = null;
     private InputStream incomingData;
@@ -276,7 +273,7 @@ public class TelnetScheduler {
         }
 
         // we need at most two command switches
-        String firstCommmand = null;
+        String firstCommmand;
         String secondCommmand = null;
 
         // decide which commands to call
@@ -424,7 +421,7 @@ public class TelnetScheduler {
      * @throws IOException
      */
     private List<String> readUntilPrompt() throws IOException {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         synchronized (socketLock) {
             if (socket == null || socket.isClosed() || !socket.isConnected()) {

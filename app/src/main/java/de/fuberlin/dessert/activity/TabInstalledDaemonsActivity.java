@@ -129,8 +129,8 @@ public class TabInstalledDaemonsActivity extends ListActivity {
 
         setContentView(R.layout.daemon_list);
 
-        List<InstalledDaemonInfo> listContent = new ArrayList<InstalledDaemonInfo>();
-        DaemonListAdapter<InstalledDaemonInfo> adapter = new DaemonListAdapter<InstalledDaemonInfo>(this, listContent, false, true);
+        List<InstalledDaemonInfo> listContent = new ArrayList<>();
+        DaemonListAdapter<InstalledDaemonInfo> adapter = new DaemonListAdapter<>(this, listContent, false, true);
         setListAdapter(adapter);
 
         ListView listView = getListView();

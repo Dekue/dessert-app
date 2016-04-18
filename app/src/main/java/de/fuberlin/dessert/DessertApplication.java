@@ -31,8 +31,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,9 +41,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
-
 import org.xml.sax.SAXException;
-
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -150,7 +146,7 @@ public class DessertApplication extends Application {
     public DessertApplication() {
         super();
 
-        this.daemonEventListeners = new ArrayList<DaemonStartStopEventListener>();
+        this.daemonEventListeners = new ArrayList<>();
     }
 
     /**
@@ -209,7 +205,7 @@ public class DessertApplication extends Application {
      * @return list of all currently installed daemons (might be cached)
      */
     public synchronized List<InstalledDaemonInfo> getInstalledDaemons() {
-        return new ArrayList<InstalledDaemonInfo>(readInstalledDaemons().values());
+        return new ArrayList<>(readInstalledDaemons().values());
     }
 
     /**
@@ -313,10 +309,6 @@ public class DessertApplication extends Application {
             tmpFile = new File(FileTasks.getTemporaryDir(), "tmp-daemon-zip-download.zip");
             FileTasks.writeInputStreamToFile(inputStream, tmpFile);
             result = installDaemonFromZip(tmpFile);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -648,7 +640,7 @@ public class DessertApplication extends Application {
     }
 
     private List<InstalledDaemonInfo> readDaemonInfos() {
-        List<InstalledDaemonInfo> result = new ArrayList<InstalledDaemonInfo>();
+        List<InstalledDaemonInfo> result = new ArrayList<>();
 
         List<File> daemonDirs = FileTasks.getDirectoriesForInstalledDaemons();
         for (File daemonDir : daemonDirs) {
@@ -665,7 +657,7 @@ public class DessertApplication extends Application {
         if (installedDaemons == null) {
             // load daemons information
             List<InstalledDaemonInfo> list = readDaemonInfos();
-            installedDaemons = new HashMap<String, InstalledDaemonInfo>(list.size());
+            installedDaemons = new HashMap<>(list.size());
 
             for (InstalledDaemonInfo daemonInfo : list) {
                 installedDaemons.put(daemonInfo.getDaemonID(), daemonInfo);

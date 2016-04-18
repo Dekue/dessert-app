@@ -36,7 +36,7 @@ public class DaemonInfo {
 
         @Override
         public int compare(DaemonInfo left, DaemonInfo right) {
-            int tmp = 0;
+            int tmp;
 
             if (left == right) {
                 return 0;
@@ -121,11 +121,8 @@ public class DaemonInfo {
     }
 
     public String getDaemonID() {
-        StringBuilder sb = new StringBuilder();
 
-        sb.append(name).append('-').append(version);
-
-        return sb.toString().replaceAll("\\\\", "\\\\");
+        return (name + '-' + version).replaceAll("\\\\", "\\\\");
     }
 
     public Drawable getIconDrawable() {

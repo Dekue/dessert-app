@@ -142,15 +142,7 @@ public class LibraryVersion implements Comparable<LibraryVersion> {
      *         number
      */
     public boolean isCompatible(int expectedVersion) {
-        if (expectedVersion > current) {
-            return false;
-        }
-
-        if (expectedVersion < current - age) {
-            return false;
-        }
-
-        return true;
+        return expectedVersion <= current && expectedVersion >= current - age;
     }
 
     @Override
@@ -159,10 +151,7 @@ public class LibraryVersion implements Comparable<LibraryVersion> {
     }
 
     private String buildVersionString(int major, int minor, int iteration) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(major).append('.').append(minor).append('.').append(iteration);
-
-        return sb.toString();
+        return String.valueOf(major) + '.' + minor + '.' + iteration;
     }
 
     private int compareVersionNumber(int left, int right) {

@@ -62,7 +62,7 @@ public class AboutDialog extends AlertDialog {
         appVersionText.setText(DessertApplication.instance.getApplicationVersion().toString());
 
         Map<String, LibraryVersion> installedLibs = DessertApplication.instance.getInstalledLibrariesVersions();
-        List<String> sortedLibNames = new ArrayList<String>(installedLibs.keySet());
+        List<String> sortedLibNames = new ArrayList<>(installedLibs.keySet());
         Collections.sort(sortedLibNames);
 
         int nameLength = 0;

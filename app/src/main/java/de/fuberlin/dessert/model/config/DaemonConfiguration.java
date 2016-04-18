@@ -30,7 +30,7 @@ public class DaemonConfiguration {
     private final List<ConfigEntry> configEntries;
 
     public DaemonConfiguration() {
-        this.configEntries = new ArrayList<ConfigEntry>();
+        this.configEntries = new ArrayList<>();
     }
 
     public void addEntry(ConfigEntry entry) {

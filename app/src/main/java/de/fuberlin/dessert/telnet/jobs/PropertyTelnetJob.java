@@ -45,7 +45,7 @@ public class PropertyTelnetJob implements TelnetJob {
             EnumSet<TelnetCommandMode> modes) {
         this.entry = entry;
         this.changeListener = changeListener;
-        this.setterCommands = new LinkedList<TelnetCommand>();
+        this.setterCommands = new LinkedList<>();
         this.getterCommand = new TelnetCommand(commandString, modes);
     }
 

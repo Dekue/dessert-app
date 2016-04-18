@@ -23,6 +23,7 @@
 package de.fuberlin.dessert.telnet.jobs;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,8 +42,8 @@ public class CommandTelnetJob implements TelnetJob {
 
     public CommandTelnetJob(CommandResultEventListener resultListener) {
         this.resultListener = resultListener;
-        this.commands = new LinkedList<TelnetCommand>();
-        this.results = new ArrayList<String>();
+        this.commands = new LinkedList<>();
+        this.results = new ArrayList<>();
     }
 
     public void addCommand(String commandString, EnumSet<TelnetCommandMode> modes) {
@@ -85,9 +86,7 @@ public class CommandTelnetJob implements TelnetJob {
 
     @Override
     public void onResult(String[] resultValues, TelnetCommand command) {
-        for (String string : resultValues) {
-            results.add(string);
-        }
+        Collections.addAll(results, resultValues);
     }
 
     @Override

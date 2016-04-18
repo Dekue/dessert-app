@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 
 /**
  * A ManageEntry represents a single element in a list of operations and
- * informations of a running daemon.
+ * information of a running daemon.
  * <p>
  * Each entry is of a specific type and can create a view that represents this
  * entry.

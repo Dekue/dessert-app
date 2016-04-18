@@ -33,10 +33,10 @@ public interface DaemonStartStopEventListener extends EventListener {
      * 
      * @param daemonInfo the daemon info that got started
      */
-    public void onDaemonStarted(RunningDaemonInfo daemonInfo);
+    void onDaemonStarted(RunningDaemonInfo daemonInfo);
 
     /**
      * Called when the running daemon is stopped.
      */
-    public void onDaemonStopped();
+    void onDaemonStopped();
 }

@@ -25,9 +25,9 @@ package de.fuberlin.dessert.event;
 import java.util.EventListener;
 
 public interface CommandResultEventListener extends EventListener {
-    public void onAborted();
+    void onAborted();
 
-    public void onCompleted(String[] values);
+    void onCompleted(String[] values);
 
-    public void onError();
+    void onError();
 }

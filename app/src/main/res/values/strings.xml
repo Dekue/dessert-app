@@ -38,9 +38,9 @@
 	<string name="no_filemanager_installed">No file manager installed</string>
 	<string name="no_sdcard_installed">No SD card mounted</string>
 	<string name="install_progress_title">Installing daemon</string>
-	<string name="install_progress_msg_prepare">Preparing daemon installation...</string>
-	<string name="install_progress_msg_download">Downloading daemon package...</string>
-	<string name="install_progress_msg_unpack">Unpacking daemon pack...</string>
+	<string name="install_progress_msg_prepare">Preparing daemon installation&#8230;</string>
+	<string name="install_progress_msg_download">Downloading daemon package&#8230;</string>
+	<string name="install_progress_msg_unpack">Unpacking daemon pack&#8230;</string>
 	<string name="install_daemon_success">Daemon installed successfully.</string>
 	<string name="install_daemon_failure">Failure while installing daemon.</string>
 	<string name="install_daemon_error">An error occurred while installing the daemon:\n%s</string>

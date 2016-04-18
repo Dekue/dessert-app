@@ -46,7 +46,7 @@ public interface TelnetJob {
      * @return <code>true</code> if there are more commands to be returned from
      *         {@link #nextCommand()}
      */
-    public boolean hasMoreCommands();
+    boolean hasMoreCommands();
 
     /**
      * Gets the next command in this job as long as {@link #hasMoreCommands()}
@@ -55,7 +55,7 @@ public interface TelnetJob {
      * 
      * @return the next command or undefined if there aren't anymore
      */
-    public TelnetCommand nextCommand();
+    TelnetCommand nextCommand();
 
     /**
      * Callback method called by the telnet service when the job is abandoned
@@ -63,33 +63,33 @@ public interface TelnetJob {
      * <p>
      * Can only occur until {@link #onStart()} was called.
      */
-    public void onAborted();
+    void onAborted();
 
     /**
      * Callback method called by the telnet service when the job is successfully
      * executed and any result supplied to this job.
      */
-    public void onCompleted();
+    void onCompleted();
 
     /**
-     * Callback method called by the telnet service when an error occured while
+     * Callback method called by the telnet service when an error occurred while
      * executing this job. The job will be discarded and no outstanding command
      * will be processed.
      * <p>
      * Can only occur after {@link #onStart()} was called but before
      * {@link #onCompleted()}.
      */
-    public void onError();
+    void onError();
 
     /**
      * Callback method called by the telnet service when a single TelnetCommand
      * was executed and the return value from the telnet server was received.
      * 
-     * @param resultValues the reponse lines as read from the telnet server
+     * @param resultValues the response lines as read from the telnet server
      * @param command the command that caused this return value; this object is
      *            the last object returned by {@link #nextCommand()}
      */
-    public void onResult(String[] resultValues, TelnetCommand command);
+    void onResult(String[] resultValues, TelnetCommand command);
 
     /**
      * Callback method called by the telnet service when the execution of this
@@ -99,5 +99,5 @@ public interface TelnetJob {
      * are necessary in the processing but might be memory intensive while not
      * being processed.
      */
-    public void onStart();
+    void onStart();
 }
