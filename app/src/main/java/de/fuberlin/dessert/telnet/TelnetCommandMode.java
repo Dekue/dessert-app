@@ -38,7 +38,7 @@ public enum TelnetCommandMode {
     PRIVILEGED,
     CONFIG;
 
-    private static final String LOG_TAG = "DESSERT -> TelnetCommandMode";
+    private static final String LOG_TAG = "TelnetCommandMode";
 
     public static TelnetCommandMode parseString(String value) {
         if (value == null || value.length() == 0) {

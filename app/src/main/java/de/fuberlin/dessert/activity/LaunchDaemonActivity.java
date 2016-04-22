@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-
+import java.lang.ref.WeakReference;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -74,7 +74,7 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
         }
     }
 
-    private static final String LOG_TAG = "DESSERT -> LaunchDaemonActivity";
+    private static final String LOG_TAG = "LaunchDaemonActivity";
 
     /**
      * Key to a string containing the daemon id to be shown in the activity. To
@@ -90,30 +90,41 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
      * messages to indicate a need for UI changes, updates or any other activity
      * in general.
      */
-    public final Handler viewUpdateHandler = new Handler() {
+    public static class StaticHandler extends Handler {
+        private final WeakReference<LaunchDaemonActivity> mActivity;
+
+        public StaticHandler(LaunchDaemonActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-            case MESSAGE_STARTED_DAEMON:
-                setResult(RESULT_OK);
-                Toast.makeText(LaunchDaemonActivity.this, R.string.daemon_started, Toast.LENGTH_SHORT).show();
-                finish();
-                break;
-            case MESSAGE_EXCEPTION_START_DAEMON:
-                String exceptionText = getString(R.string.value_unknown);
-                if (msg.obj != null) {
-                    Exception exception = (Exception) msg.obj;
-                    exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
+            LaunchDaemonActivity activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case MESSAGE_STARTED_DAEMON:
+                        activity.setResult(RESULT_OK);
+                        Toast.makeText(activity, R.string.daemon_started, Toast.LENGTH_SHORT).show();
+                        activity.finish();
+                        break;
+                    case MESSAGE_EXCEPTION_START_DAEMON:
+                        String exceptionText = activity.getString(R.string.value_unknown);
+                        if (msg.obj != null) {
+                            Exception exception = (Exception) msg.obj;
+                            exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
+                        }
+                        String msgText = activity.getString(R.string.start_daemon_error, exceptionText);
+                        Toast.makeText(activity, msgText, Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
                 }
-                String msgText = getString(R.string.start_daemon_error, exceptionText);
-                Toast.makeText(LaunchDaemonActivity.this, msgText, Toast.LENGTH_LONG).show();
-                break;
-            default:
-                Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
+                super.handleMessage(msg);
             }
-            super.handleMessage(msg);
         }
-    };
+    }
+    public final StaticHandler viewUpdateHandler = new StaticHandler(this);
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

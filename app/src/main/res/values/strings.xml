@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="none"/>
+	<string name="desc">Description</string>
+	<string name="one2345">12345</string>
+	<string name="content">content</string>
+
 	<string name="about">About</string>
 	<string name="app_version">Application Version:</string>
 	<string name="lib_versions">Library Versions:</string>
@@ -95,13 +100,13 @@
 	<string name="native_command_not_found_msg">The native binary could not be found. You should check the
 		value: %s</string>
 	<string name="ignore">Ignore</string>
-	<string name="install_start_script_error">An error occurred while installing the daemon helper
+	<string name="install_start_script_error">%1$sAn error occurred while installing the daemon helper
 		script:\n</string>
 	<string name="install_libraries_success">Successfully installed the DES-SERT shared library files
 	</string>
 	<string name="install_libraries_failure">Installing the DES-SERT shared library files failed
 	</string>
-	<string name="install_libraries_error">An error occurred while installing the DES-SERT shared
+	<string name="install_libraries_error">%1$sAn error occurred while installing the DES-SERT shared
 		library files:\n</string>
 
 	<!-- setup strings -->

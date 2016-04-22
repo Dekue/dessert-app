@@ -83,7 +83,7 @@ public abstract class ConfigEntry {
     public void setValue(SharedPreferences preferences, String value) {
         Editor editor = preferences.edit();
         editor.putString(getKey(), value);
-        editor.commit();
+        editor.apply();
     }
 
     public void writeValueToProperties(SharedPreferences preferences, Properties properties) {

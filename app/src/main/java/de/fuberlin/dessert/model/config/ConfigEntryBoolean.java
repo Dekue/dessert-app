@@ -110,6 +110,6 @@ public class ConfigEntryBoolean extends ConfigEntry {
     protected void setInternalValue(SharedPreferences preferences, boolean value) {
         Editor editor = preferences.edit();
         editor.putBoolean(getKey() + INTERNAL_NAME_SUFFIX, value);
-        editor.commit();
+        editor.apply();
     }
 }

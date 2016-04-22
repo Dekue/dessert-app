@@ -177,7 +177,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
         }
     }
 
-    private static final String LOG_TAG = "DESSERT -> TabRunningDaemonActivity";
+    private static final String LOG_TAG = "TabRunningDaemonActv";
 
     private static final boolean USE_PROGRESS_BAR = false;
     private volatile ProgressDialog progressDialog;

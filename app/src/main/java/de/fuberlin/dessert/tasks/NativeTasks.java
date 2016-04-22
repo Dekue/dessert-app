@@ -185,7 +185,7 @@ public class NativeTasks {
                 File commandFile = new File(prefix, name);
                 if (commandFile.exists() && commandFile.isFile()) {
                     // and set to prefs if found
-                    prefs.edit().putString(key, commandFile.getAbsolutePath()).commit();
+                    prefs.edit().putString(key, commandFile.getAbsolutePath()).apply();
                     break;
                 }
             }
@@ -355,7 +355,7 @@ public class NativeTasks {
     public static void setCheckedForNativeCommands(boolean isChecked) {
         SharedPreferences prefs = DessertApplication.instance.getApplicationPreferences();
         prefs.edit().putString(OPT_CHECKED_NATIVE_COMMANDS,
-                        isChecked ? DessertApplication.instance.getApplicationVersion().toString() : "").commit();
+                        isChecked ? DessertApplication.instance.getApplicationVersion().toString() : "").apply();
     }
 
     /**
@@ -365,7 +365,7 @@ public class NativeTasks {
      */
     public static void setNativeCommandsGuessed(boolean isChecked) {
         SharedPreferences prefs = DessertApplication.instance.getApplicationPreferences();
-        prefs.edit().putBoolean(OPT_GUESSED_NATIVE_COMMANDS, isChecked).commit();
+        prefs.edit().putBoolean(OPT_GUESSED_NATIVE_COMMANDS, isChecked).apply();
     }
 
     /**

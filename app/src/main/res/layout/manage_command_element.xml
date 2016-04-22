@@ -3,6 +3,6 @@
 	android:layout_width="fill_parent" android:orientation="vertical" android:padding="5dip">
 	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/command_title"
 		android:textStyle="bold" android:textAppearance="?android:attr/textAppearanceSmall"/>
-	<TextView android:id="@+id/Description" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Description"
+	<TextView android:id="@+id/Description" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/desc"
 		android:typeface="serif" android:textAppearance="?android:attr/textAppearanceMedium" />
 </LinearLayout>

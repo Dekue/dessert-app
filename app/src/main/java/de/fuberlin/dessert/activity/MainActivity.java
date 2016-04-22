@@ -36,6 +36,9 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.TabHost;
 import android.widget.Toast;
+
+import java.lang.ref.WeakReference;
+
 import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.tasks.FileTasks;
@@ -99,46 +102,56 @@ public class MainActivity extends TabActivity {
      * messages to indicate a need for UI changes, updates or any other activity
      * in general.
      */
-    public final Handler viewUpdateHandler = new Handler() {
+    public static class StaticHandler extends Handler {
+        private final WeakReference<MainActivity> mActivity;
+
+        public StaticHandler(MainActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-            case MESSAGE_INSTALL_LIBRARIES_SUCCESS: {
-                Toast.makeText(MainActivity.this, R.string.install_libraries_success, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case MESSAGE_INSTALL_LIBRARIES_FAILURE: {
-                Toast.makeText(MainActivity.this, R.string.install_libraries_failure, Toast.LENGTH_LONG).show();
-                break;
-            }
-            case MESSAGE_EXCEPTION_INSTALL_SCRIPT: {
-                String exceptionText = getString(R.string.value_unknown);
-                if (msg.obj != null) {
-                    Exception exception = (Exception) msg.obj;
-                    exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
+            MainActivity activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case MESSAGE_INSTALL_LIBRARIES_SUCCESS: {
+                        Toast.makeText(activity, R.string.install_libraries_success, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case MESSAGE_INSTALL_LIBRARIES_FAILURE: {
+                        Toast.makeText(activity, R.string.install_libraries_failure, Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    case MESSAGE_EXCEPTION_INSTALL_SCRIPT: {
+                        String exceptionText = activity.getString(R.string.value_unknown);
+                        if (msg.obj != null) {
+                            Exception exception = (Exception) msg.obj;
+                            exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
+                        }
+                        String msgText = activity.getString(R.string.install_start_script_error, exceptionText);
+                        Toast.makeText(activity, msgText, Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    case MESSAGE_EXCEPTION_INSTALL_LIBRARIES: {
+                        String exceptionText = activity.getString(R.string.value_unknown);
+                        if (msg.obj != null) {
+                            Exception exception = (Exception) msg.obj;
+                            exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
+                        }
+                        String msgText = activity.getString(R.string.install_libraries_error, exceptionText);
+                        Toast.makeText(activity, msgText, Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    default:
+                        Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
                 }
-                String msgText = getString(R.string.install_start_script_error, exceptionText);
-                Toast.makeText(MainActivity.this, msgText, Toast.LENGTH_LONG).show();
-                break;
+                super.handleMessage(msg);
             }
-            case MESSAGE_EXCEPTION_INSTALL_LIBRARIES: {
-                String exceptionText = getString(R.string.value_unknown);
-                if (msg.obj != null) {
-                    Exception exception = (Exception) msg.obj;
-                    exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
-                }
-                String msgText = getString(R.string.install_libraries_error, exceptionText);
-                Toast.makeText(MainActivity.this, msgText, Toast.LENGTH_LONG).show();
-                break;
-            }
-            default:
-                Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
-            }
-            super.handleMessage(msg);
         }
-    };
+    }
+    public final StaticHandler viewUpdateHandler = new StaticHandler(this);
     
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
             // established, giving us the service object we can use to

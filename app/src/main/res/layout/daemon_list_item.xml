@@ -5,24 +5,24 @@
 	<ImageView android:layout_width="wrap_content" android:maxHeight="25dip"
 		android:maxWidth="25dip" android:id="@+id/Icon" android:scaleType="fitXY"
 		android:minHeight="25dip" android:minWidth="25dip" android:adjustViewBounds="true"
-		android:src="@drawable/icon" android:visibility="visible"
-		android:layout_height="wrap_content" android:layout_alignParentLeft="true" />
+		android:src="@drawable/icon" android:visibility="visible" android:contentDescription="@string/none"
+		android:layout_height="wrap_content" android:layout_alignParentStart="true" />
 	<TextView android:id="@+id/UpperLeftText" android:textAppearance="?android:attr/textAppearanceMedium"
-		android:gravity="left" android:layout_height="wrap_content"
+		android:gravity="start" android:layout_height="wrap_content"
 		android:text="SAMPLE Text Size Long long loooooong"
 		android:scrollHorizontally="true" android:ellipsize="end" android:lines="1"
-		android:layout_width="fill_parent" android:layout_toRightOf="@+id/Icon"
-		android:layout_toLeftOf="@+id/UpperRightText" />
+		android:layout_width="fill_parent" android:layout_toEndOf="@+id/Icon"
+		android:layout_toStartOf="@+id/UpperRightText" />
 	<TextView android:text="1.2.3.4-dev" android:id="@+id/UpperRightText"
 		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
-		android:gravity="right" android:layout_width="wrap_content" android:lines="1"
-		android:scrollHorizontally="false" android:layout_alignParentRight="true" />
+		android:gravity="end" android:layout_width="wrap_content" android:lines="1"
+		android:scrollHorizontally="false" android:layout_alignParentEnd="true" />
 	<TextView android:id="@+id/LowerCenterText1" android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceSmall" android:typeface="monospace"
-		android:textSize="10dip" android:gravity="left" android:layout_width="fill_parent"
+		android:textSize="10sp" android:gravity="start" android:layout_width="fill_parent"
 		android:text="APP VERSION 1.1.1" android:layout_below="@+id/UpperLeftText" />
 	<TextView android:text="LIBRARY VERSION 1" android:id="@+id/LowerCenterText2"
 		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall"
-		android:typeface="monospace" android:textSize="10dip" android:gravity="left"
+		android:typeface="monospace" android:textSize="10sp" android:gravity="start"
 		android:layout_width="fill_parent" android:layout_below="@+id/LowerCenterText1" />
 </RelativeLayout>

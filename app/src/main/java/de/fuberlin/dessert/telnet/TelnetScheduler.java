@@ -172,7 +172,7 @@ public class TelnetScheduler {
         }
     }
 
-    private static final String LOG_TAG = "DESSERT -> TelnetScheduler";
+    private static final String LOG_TAG = "TelnetScheduler";
 
     private static final String COMMAND_ENABLE = "enable";
     private static final String COMMAND_CONFIG = "configure terminal";
@@ -183,7 +183,7 @@ public class TelnetScheduler {
 
     private static final int DEFAULT_CONNECTION_PORT = -1;
 
-    private Pattern PROMPT_PATTERN = Pattern.compile("^localhost:[0-9a-zA-z]{1,4}(>|#|\\(config\\)#)");
+    private final Pattern PROMPT_PATTERN = Pattern.compile("^localhost:[0-9a-zA-z]{1,4}(>|#|\\(config\\)#)");
 
     private int port = DEFAULT_CONNECTION_PORT;
 
@@ -207,8 +207,8 @@ public class TelnetScheduler {
     private TelnetCommandMode currentMode;
 
     // monitor objects
-    private Object queueLock = new Object();
-    private Object socketLock = new Object();
+    private final Object queueLock = new Object();
+    private final Object socketLock = new Object();
 
     public TelnetScheduler() {
         this.workerThread = new WorkerThread();

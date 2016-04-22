@@ -109,7 +109,7 @@ public class DessertApplication extends Application {
         }
     }
 
-    private static final String LOG_TAG = "DESSERT -> DessertApplication";
+    private static final String LOG_TAG = "DessertApplication";
 
     private static final String REPO_INDEX_FILENAME = "index.xml";
     private static final String TEMP_CONFIG_FILENAME = "dessert.config";
@@ -685,7 +685,7 @@ public class DessertApplication extends Application {
             editor.putInt(OPT_DAEMON_PID_INTEGER, daemon.getPID());
             editor.putInt(OPT_DAEMON_PORT_INTEGER, daemon.getCLIPort());
         }
-        editor.commit();
+        editor.apply();
     }
 
     /**

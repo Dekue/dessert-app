@@ -22,6 +22,7 @@
  ******************************************************************************/
 package de.fuberlin.dessert.activity;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,7 +65,7 @@ public class TabInstalledDaemonsActivity extends ListActivity {
         }
     }
 
-    private static final String LOG_TAG = "DESSERT -> TabInstalledDaemonsActivity";
+    private static final String LOG_TAG = "TabInstalledDaemonsActv";
 
     private static final int LAUNCH_ACTIVITY_REQUESTCODE = 1;
 
@@ -81,28 +82,37 @@ public class TabInstalledDaemonsActivity extends ListActivity {
      * messages to indicate a need for UI changes, updates or any other activity
      * in general.
      */
-    public final Handler viewUpdateHandler = new Handler() {
+    public static class StaticHandler extends Handler {
+        private final WeakReference<TabInstalledDaemonsActivity> mActivity;
+
+        public StaticHandler(TabInstalledDaemonsActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-            case MESSAGE_CLEAR_LIST:
-                getAdapter().clear();
-                break;
-            case MESSAGE_APPEND_LIST:
-                @SuppressWarnings("unchecked")
-                List<InstalledDaemonInfo> installedDaemons = (List<InstalledDaemonInfo>) msg.obj;
-                Collections.sort(installedDaemons, DaemonInfo.DAEMON_LIST_COMPARATOR);
-                DaemonListAdapter<InstalledDaemonInfo> adapter = getAdapter();
-                for (InstalledDaemonInfo daemon : installedDaemons) {
-                    adapter.add(daemon);
+            TabInstalledDaemonsActivity activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case MESSAGE_CLEAR_LIST:
+                        activity.getAdapter().clear();
+                        break;
+                    case MESSAGE_APPEND_LIST:
+                        @SuppressWarnings("unchecked")
+                        List<InstalledDaemonInfo> installedDaemons = (List<InstalledDaemonInfo>) msg.obj;
+                        Collections.sort(installedDaemons, DaemonInfo.DAEMON_LIST_COMPARATOR);
+                        DaemonListAdapter<InstalledDaemonInfo> adapter = activity.getAdapter();
+                        for (InstalledDaemonInfo daemon : installedDaemons) {
+                            adapter.add(daemon);
+                        }
+                        break;
+                    default:
+                        Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
                 }
-                break;
-            default:
-                Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
+                super.handleMessage(msg);
             }
-            super.handleMessage(msg);
         }
-    };
+    }
+    public final StaticHandler viewUpdateHandler = new StaticHandler(this);
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {

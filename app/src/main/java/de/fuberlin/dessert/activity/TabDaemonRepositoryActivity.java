@@ -23,6 +23,7 @@
 package de.fuberlin.dessert.activity;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
         }
     }
 
-    private static final String LOG_TAG = "DESSERT -> TabDaemonRepositoryActivity";
+    private static final String LOG_TAG = "TabDaemonRepositoryActv";
 
     private static final int REQUEST_CODE_PICK_ZIP_FILE = 0;
 
@@ -115,74 +116,84 @@ public class TabDaemonRepositoryActivity extends ListActivity {
      * messages to indicate a need for UI changes, updates or any other activity
      * in general.
      */
-    public final Handler viewUpdateHandler = new Handler() {
+    public static class StaticHandler extends Handler {
+        private final WeakReference<TabDaemonRepositoryActivity> mActivity;
+
+        public StaticHandler(TabDaemonRepositoryActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-            case MESSAGE_CLEAR_LIST: {
-                getAdapter().clear();
-                break;
-            }
-            case MESSAGE_APPEND_LIST: {
-                @SuppressWarnings("unchecked")
-                List<RepositoryDaemonInfo> daemons = (List<RepositoryDaemonInfo>) msg.obj;
-                Collections.sort(daemons, DaemonInfo.DAEMON_LIST_COMPARATOR);
-                DaemonListAdapter<RepositoryDaemonInfo> adapter = getAdapter();
-                for (RepositoryDaemonInfo daemon : daemons) {
-                    adapter.add(daemon);
+            TabDaemonRepositoryActivity activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case MESSAGE_CLEAR_LIST: {
+                        activity.getAdapter().clear();
+                        break;
+                    }
+                    case MESSAGE_APPEND_LIST: {
+                        @SuppressWarnings("unchecked")
+                        List<RepositoryDaemonInfo> daemons = (List<RepositoryDaemonInfo>) msg.obj;
+                        Collections.sort(daemons, DaemonInfo.DAEMON_LIST_COMPARATOR);
+                        DaemonListAdapter<RepositoryDaemonInfo> adapter = activity.getAdapter();
+                        for (RepositoryDaemonInfo daemon : daemons) {
+                            adapter.add(daemon);
+                        }
+                        break;
+                    }
+                    case MESSAGE_INSTALL_STARTED: {
+                        activity.installProgressDialog = ProgressDialog.show(
+                                activity,
+                                activity.getString(R.string.install_progress_title),
+                                activity.getString(R.string.install_progress_msg_download),
+                                true,
+                                false);
+                        break;
+                    }
+                    case MESSAGE_INSTALL_SUCCESS: {
+                        if (activity.installProgressDialog != null) {
+                            activity.installProgressDialog.dismiss();
+                        }
+                        Toast.makeText(activity, R.string.install_daemon_success, Toast.LENGTH_SHORT).show();
+                        activity.getAdapter().notifyDataSetChanged();
+                        break;
+                    }
+                    case MESSAGE_INSTALL_FAILURE: {
+                        if (activity.installProgressDialog != null) {
+                            activity.installProgressDialog.dismiss();
+                        }
+                        Toast.makeText(activity, R.string.install_daemon_failure, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case MESSAGE_EXCEPTION_REPO_QUERY: {
+                        String exceptionText = activity.getString(R.string.value_unknown);
+                        if (msg.obj != null) {
+                            Exception exception = (Exception) msg.obj;
+                            exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
+                        }
+                        String msgText = activity.getString(R.string.getting_repo_error, exceptionText);
+                        Toast.makeText(activity, msgText, Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    case MESSAGE_EXCEPTION_INSTALL_DAEMON: {
+                        String exceptionText = activity.getString(R.string.value_unknown);
+                        if (msg.obj != null) {
+                            Exception exception = (Exception) msg.obj;
+                            exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
+                        }
+                        String msgText = activity.getString(R.string.install_daemon_error, exceptionText);
+                        Toast.makeText(activity, msgText, Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    default:
+                        Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
                 }
-                break;
+                super.handleMessage(msg);
             }
-            case MESSAGE_INSTALL_STARTED: {
-                installProgressDialog = ProgressDialog.show(
-                        TabDaemonRepositoryActivity.this,
-                        getString(R.string.install_progress_title),
-                        getString(R.string.install_progress_msg_download),
-                        true,
-                        false);
-                break;
-            }
-            case MESSAGE_INSTALL_SUCCESS: {
-                if (installProgressDialog != null) {
-                    installProgressDialog.dismiss();
-                }
-                Toast.makeText(TabDaemonRepositoryActivity.this, R.string.install_daemon_success, Toast.LENGTH_SHORT).show();
-                getAdapter().notifyDataSetChanged();
-                break;
-            }
-            case MESSAGE_INSTALL_FAILURE: {
-                if (installProgressDialog != null) {
-                    installProgressDialog.dismiss();
-                }
-                Toast.makeText(TabDaemonRepositoryActivity.this, R.string.install_daemon_failure, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case MESSAGE_EXCEPTION_REPO_QUERY: {
-                String exceptionText = getString(R.string.value_unknown);
-                if (msg.obj != null) {
-                    Exception exception = (Exception) msg.obj;
-                    exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
-                }
-                String msgText = getString(R.string.getting_repo_error, exceptionText);
-                Toast.makeText(TabDaemonRepositoryActivity.this, msgText, Toast.LENGTH_LONG).show();
-                break;
-            }
-            case MESSAGE_EXCEPTION_INSTALL_DAEMON: {
-                String exceptionText = getString(R.string.value_unknown);
-                if (msg.obj != null) {
-                    Exception exception = (Exception) msg.obj;
-                    exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
-                }
-                String msgText = getString(R.string.install_daemon_error, exceptionText);
-                Toast.makeText(TabDaemonRepositoryActivity.this, msgText, Toast.LENGTH_LONG).show();
-                break;
-            }
-            default:
-                Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
-            }
-            super.handleMessage(msg);
         }
-    };
+    }
+    public final StaticHandler viewUpdateHandler = new StaticHandler(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

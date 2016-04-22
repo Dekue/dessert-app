@@ -51,6 +51,7 @@ public class TelnetCommand {
         return modes;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isModeValid(TelnetCommandMode mode) {
         return modes.contains(mode);
     }
