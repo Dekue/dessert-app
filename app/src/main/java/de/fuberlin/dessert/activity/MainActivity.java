@@ -149,7 +149,7 @@ public class MainActivity extends TabActivity {
             }
         }
     }
-    public final StaticHandler viewUpdateHandler = new StaticHandler(this);
+    private final StaticHandler viewUpdateHandler = new StaticHandler(this);
     
     private final ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {

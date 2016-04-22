@@ -123,7 +123,7 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
             }
         }
     }
-    public final StaticHandler viewUpdateHandler = new StaticHandler(this);
+    private final StaticHandler viewUpdateHandler = new StaticHandler(this);
 
 
     @Override

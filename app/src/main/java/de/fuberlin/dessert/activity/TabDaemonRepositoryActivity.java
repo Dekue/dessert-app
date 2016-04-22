@@ -193,7 +193,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
             }
         }
     }
-    public final StaticHandler viewUpdateHandler = new StaticHandler(this);
+    private final StaticHandler viewUpdateHandler = new StaticHandler(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
