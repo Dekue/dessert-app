@@ -88,6 +88,7 @@ public class TabInstalledDaemonsActivity extends ListActivity {
         public StaticHandler(TabInstalledDaemonsActivity activity) {
             mActivity = new WeakReference<>(activity);
         }
+
         @Override
         public void handleMessage(Message msg) {
             TabInstalledDaemonsActivity activity = mActivity.get();
