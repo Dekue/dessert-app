@@ -36,24 +36,24 @@
 #include <android/log.h>
 
 #define LOGI(...) do { __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__); } while(0)
-#define LOGW(...) do { __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__); } while(0)
+//#define LOGW(...) do { __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__); } while(0)
 #define LOGE(...) do { __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__); } while(0)
 
 #include <sys/types.h>
-#include <sys/ioctl.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
-#include <pthread.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <termios.h>
+//#include <string.h>
+//#include <sys/ioctl.h>
+//#include <pthread.h>
+//#include <errno.h>
+//#include <fcntl.h>
+//#include <termios.h>
 
-static jclass class_fileDescriptor;
-static jfieldID field_fileDescriptor_descriptor;
-static jmethodID method_fileDescriptor_init;
+//static jclass class_fileDescriptor;
+//static jfieldID field_fileDescriptor_descriptor;
+//static jmethodID method_fileDescriptor_init;
 
 /*---------------------------------------------------------------------
  * internal methods

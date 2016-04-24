@@ -65,10 +65,10 @@ public class NativeTasks {
 
     static {
         try {
-            Log.i("NativeTask", "Trying to load libNativeTask.so");
-            System.loadLibrary("NativeTask");
+            Log.i("NativeTask", "Trying to load libnative_task.so");
+            System.loadLibrary("native_task");
         } catch (UnsatisfiedLinkError ule) {
-            Log.e("NativeTask", "Could not load libNativeTask.so");
+            Log.e("NativeTask", "Could not load libnative_task.so");
         }
     }
 
