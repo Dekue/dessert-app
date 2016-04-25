@@ -125,7 +125,6 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
     }
     private final StaticHandler viewUpdateHandler = new StaticHandler(this);
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);

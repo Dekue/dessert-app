@@ -144,7 +144,6 @@ public class FileTasks {
                 scriptFile,
                 new String[] { daemonFile.getAbsolutePath(), configFile.getAbsolutePath(), getLibrariesDir().getAbsolutePath() },
                 true);
-
         return result == 0;
     }
 

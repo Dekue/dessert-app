@@ -320,7 +320,6 @@ public class NativeTasks {
         } else {
             sb.append(command);
         }
-
         return NativeTasks.runCommand(sb.toString());
     }
 
@@ -342,7 +341,6 @@ public class NativeTasks {
                 sb.append(" ").append(arg);
             }
         }
-
         return NativeTasks.runCommand(sb.toString(), runAsSU);
     }
 

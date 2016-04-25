@@ -96,7 +96,6 @@ static jstring Java_de_fuberlin_dessert_tasks_NativeTasks_getEnvironmentValue(JN
 
 static jint Java_de_fuberlin_dessert_tasks_NativeTasks_runCommand(JNIEnv *env, jclass class, jstring command) {
 	const char *commandString = (*env)->GetStringUTFChars(env, command, 0);
-
 	LOGI("runCommand: %s", commandString);
 
 	int exitcode = system(commandString);
