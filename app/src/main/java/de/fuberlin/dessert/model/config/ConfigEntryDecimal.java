@@ -34,8 +34,8 @@ import de.fuberlin.dessert.Utils;
 
 public class ConfigEntryDecimal extends ConfigEntry {
 
-    protected final double minValue;
-    protected final double maxValue;
+    private final double minValue;
+    private final double maxValue;
 
     public ConfigEntryDecimal(String name, String defaultValue, String description, String minValue, String maxValue) {
         super(name, defaultValue, description);

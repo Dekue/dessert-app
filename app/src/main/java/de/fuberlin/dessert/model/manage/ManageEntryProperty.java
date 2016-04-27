@@ -31,11 +31,11 @@ import de.fuberlin.dessert.R;
 
 public class ManageEntryProperty extends ManageEntry {
 
-    protected final CommandLine getterCommand;
-    protected final CommandLine[] setterCommands;
-    protected final CommandOption[] setterCommandOptions;
-    protected String currentValue;
-    protected boolean isQuerying;
+    private final CommandLine getterCommand;
+    private final CommandLine[] setterCommands;
+    private final CommandOption[] setterCommandOptions;
+    private String currentValue;
+    private boolean isQuerying;
 
     public ManageEntryProperty(String description, CommandLine getterCommand, CommandLine[] setterCommands,
             CommandOption[] setterCommandOptions) {
@@ -60,7 +60,7 @@ public class ManageEntryProperty extends ManageEntry {
 
     @Override
     public ManageEntryType getType() {
-        ManageEntryType result = null;
+        ManageEntryType result;
         if (setterCommands == null || setterCommands.length == 0) {
             result = ManageEntryType.PROPERTY_GETTER_ONLY;
         } else {
@@ -102,7 +102,7 @@ public class ManageEntryProperty extends ManageEntry {
         }
 
         // set current value
-        String value = null;
+        String value;
         if (currentValue == null) {
             value = layoutInflater.getContext().getString(R.string.value_unknown);
         } else {

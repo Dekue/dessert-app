@@ -25,14 +25,14 @@ package de.fuberlin.dessert.model;
 import de.fuberlin.dessert.Utils;
 
 public class ApplicationVersion implements Comparable<ApplicationVersion> {
-    protected final int major;
-    protected final int minor;
-    protected final int revision;
-    protected final String extra;
-    protected final String versionString;
+    private final int major;
+    private final int minor;
+    private final int revision;
+    private final String extra;
+    private final String versionString;
 
-    public static final ApplicationVersion EMPTY_VERSION = new ApplicationVersion(-1, -1, -1, "", "-");
-    public static final ApplicationVersion FAULTY_VERSION = new ApplicationVersion(-2, -2, -2, "", "<error>");
+    private static final ApplicationVersion EMPTY_VERSION = new ApplicationVersion(-1, -1, -1, "", "-");
+    private static final ApplicationVersion FAULTY_VERSION = new ApplicationVersion(-2, -2, -2, "", "<error>");
 
     public static ApplicationVersion getVersionFromString(String versionString) {
         if (versionString == null || versionString.length() == 0) {

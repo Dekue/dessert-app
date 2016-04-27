@@ -33,15 +33,15 @@ import de.fuberlin.dessert.Utils;
  */
 public class LibraryVersion implements Comparable<LibraryVersion> {
 
-    protected final int current;
-    protected final int revision;
-    protected final int age;
-    protected final String versionString;
+    private final int current;
+    private final int revision;
+    private final int age;
+    private final String versionString;
 
     /** marker object to identify empty versions of an library */
-    public static final LibraryVersion EMPTY_VERSION = new LibraryVersion(-1, -1, -1, "-");
+    private static final LibraryVersion EMPTY_VERSION = new LibraryVersion(-1, -1, -1, "-");
     /** marker object to identify faulty versions of an library */
-    public static final LibraryVersion FAULTY_VERSION = new LibraryVersion(-2, -2, -2, "<error>");
+    private static final LibraryVersion FAULTY_VERSION = new LibraryVersion(-2, -2, -2, "<error>");
 
     /**
      * Parse the given <code>versionString</code> and create a new

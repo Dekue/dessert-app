@@ -308,7 +308,7 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
         }
         
         // set the daemon name
-        launchButton.setText("Launch " + info.getName());
+        launchButton.setText(getString(R.string.launch, info.getName()));
         
         // generate configuration elements
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ConfigLayout);

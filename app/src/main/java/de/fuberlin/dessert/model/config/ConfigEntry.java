@@ -33,7 +33,7 @@ import android.view.View;
 
 public abstract class ConfigEntry {
 
-    protected final class TextEditWatcher implements TextWatcher {
+    final class TextEditWatcher implements TextWatcher {
         private final SharedPreferences preferences;
 
         public TextEditWatcher(SharedPreferences preferences) {
@@ -56,11 +56,11 @@ public abstract class ConfigEntry {
         }
     }
 
-    protected final String name;
-    protected final String description;
-    protected final String defaultValue;
+    final String name;
+    final String description;
+    final String defaultValue;
 
-    public ConfigEntry(String name, String defaultValue, String description) {
+    ConfigEntry(String name, String defaultValue, String description) {
         this.name = name;
         this.defaultValue = defaultValue;
         this.description = description;
@@ -72,7 +72,7 @@ public abstract class ConfigEntry {
         }
     }
 
-    public String getValue(SharedPreferences preferences) {
+    String getValue(SharedPreferences preferences) {
         return preferences.getString(getKey(), null);
     }
 
@@ -80,7 +80,7 @@ public abstract class ConfigEntry {
 
     abstract public void readValueFromProperties(SharedPreferences preferences, Properties properties);
 
-    public void setValue(SharedPreferences preferences, String value) {
+    void setValue(SharedPreferences preferences, String value) {
         Editor editor = preferences.edit();
         editor.putString(getKey(), value);
         editor.apply();
@@ -94,7 +94,7 @@ public abstract class ConfigEntry {
      * @return the lookup key of this config entry for use in the preference
      *         objects
      */
-    protected String getKey() {
+    String getKey() {
         return name.toUpperCase();
     }
 }

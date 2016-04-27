@@ -76,19 +76,19 @@ public class DaemonInfo {
     public static final String PROPERTY_APPLICATION_VERSION = "daemon.dessert.application.version";
     public static final String PROPERTY_LIBRARY_VERSION = "daemon.dessert.library.version";
 
-    public static final String DEFAULT_EMPTY_NAME = "no-name-given-check-file";
+    private static final String DEFAULT_EMPTY_NAME = "no-name-given-check-file";
     public static final String DEFAULT_EMPTY_CLI_ID = "---";
-    public static final String DEFAULT_EMPTY_VERSION = "-1";
-    public static final String DEFAULT_EMPTY_APPLICATION_VERSION = "-1,-1,-1";
-    public static final String DEFAULT_EMPTY_LIBRARY_VERSION = "-1";
+    private static final String DEFAULT_EMPTY_VERSION = "-1";
+    private static final String DEFAULT_EMPTY_APPLICATION_VERSION = "-1,-1,-1";
+    private static final String DEFAULT_EMPTY_LIBRARY_VERSION = "-1";
 
-    protected final String name;
-    protected final String version;
-    protected final String applicationVersion;
-    protected final int libraryVersion;
-    protected final Drawable icon;
+    private final String name;
+    private final String version;
+    private final String applicationVersion;
+    private final int libraryVersion;
+    private final Drawable icon;
 
-    public DaemonInfo(DaemonInfo other) {
+    DaemonInfo(DaemonInfo other) {
         this.name = other.name;
         this.version = other.version;
         this.applicationVersion = other.applicationVersion;
@@ -104,7 +104,7 @@ public class DaemonInfo {
                 icon);
     }
 
-    public DaemonInfo(String name, String version, String applicationVersion, int libraryVersion, Drawable icon) {
+    private DaemonInfo(String name, String version, String applicationVersion, int libraryVersion, Drawable icon) {
         this.name = name;
         this.version = version;
         this.applicationVersion = applicationVersion;
@@ -112,7 +112,7 @@ public class DaemonInfo {
         this.icon = icon;
     }
 
-    public DaemonInfo(String name, String version, String applicationVersion, String libraryVersion, Drawable Icon) {
+    DaemonInfo(String name, String version, String applicationVersion, String libraryVersion, Drawable Icon) {
         this(name, version, applicationVersion, Utils.safelyParseInteger(libraryVersion, -1), Icon);
     }
 

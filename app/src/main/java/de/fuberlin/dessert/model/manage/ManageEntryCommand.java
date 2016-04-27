@@ -30,8 +30,8 @@ import de.fuberlin.dessert.R;
 
 public class ManageEntryCommand extends ManageEntry {
 
-    protected final CommandLine[] commands;
-    protected final CommandOption[] options;
+    private final CommandLine[] commands;
+    private final CommandOption[] options;
 
     public ManageEntryCommand(String description, CommandLine[] commandLines, CommandOption[] commandOptions) {
         super(description);

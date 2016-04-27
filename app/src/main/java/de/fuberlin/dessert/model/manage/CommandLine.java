@@ -28,8 +28,8 @@ import de.fuberlin.dessert.telnet.TelnetCommandMode;
 
 public class CommandLine {
 
-    protected final String line;
-    protected final EnumSet<TelnetCommandMode> modes;
+    private final String line;
+    private final EnumSet<TelnetCommandMode> modes;
 
     public CommandLine(String commandLine, EnumSet<TelnetCommandMode> modes) {
         this.line = commandLine;

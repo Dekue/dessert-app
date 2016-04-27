@@ -661,7 +661,7 @@ public class FileTasks {
      * @throws IOException thrown when the source could not be read or the
      *             target could not be written to
      */
-    public static void writeZipEntryToFile(ZipFile zipFile, ZipEntry zipEntry, File targetFile) throws IOException {
+    private static void writeZipEntryToFile(ZipFile zipFile, ZipEntry zipEntry, File targetFile) throws IOException {
         InputStream is = null;
         try {
             writeInputStreamToFile(zipFile.getInputStream(zipEntry), targetFile);

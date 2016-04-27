@@ -40,7 +40,7 @@ public class ManageConfigurationListAdapter extends BaseAdapter {
         this(context, null);
     }
 
-    public ManageConfigurationListAdapter(Context context, ManageConfiguration configuration) {
+    private ManageConfigurationListAdapter(Context context, ManageConfiguration configuration) {
         super();
 
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

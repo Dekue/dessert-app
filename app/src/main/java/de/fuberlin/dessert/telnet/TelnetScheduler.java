@@ -230,7 +230,7 @@ public class TelnetScheduler {
         enqueueJob(job, Priority.DEFAULT);
     }
 
-    public void enqueueJob(TelnetJob job, Priority priority) {
+    private void enqueueJob(TelnetJob job, Priority priority) {
         synchronized (queueLock) {
             queue.offer(new JobWrapper(job, priority, ++lastJobID));
             queueLock.notifyAll();

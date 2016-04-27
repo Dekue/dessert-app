@@ -34,8 +34,8 @@ import de.fuberlin.dessert.Utils;
 
 public class ConfigEntryInteger extends ConfigEntry {
 
-    protected final int minValue;
-    protected final int maxValue;
+    private final int minValue;
+    private final int maxValue;
 
     public ConfigEntryInteger(String name, String defaultValue, String description, String minValue, String maxValue) {
         super(name, defaultValue, description);

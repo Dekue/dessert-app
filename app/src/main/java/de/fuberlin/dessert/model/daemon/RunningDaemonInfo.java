@@ -23,8 +23,8 @@
 package de.fuberlin.dessert.model.daemon;
 
 public class RunningDaemonInfo extends InstalledDaemonInfo {
-    protected final int pid;
-    protected final int cliPort;
+    private final int pid;
+    private final int cliPort;
 
     public RunningDaemonInfo(InstalledDaemonInfo daemonInfo, int pid, int cliPort) {
         super(daemonInfo, daemonInfo.directory);

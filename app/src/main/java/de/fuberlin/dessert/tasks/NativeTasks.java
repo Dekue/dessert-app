@@ -309,7 +309,7 @@ public class NativeTasks {
      * @param runAsSU if <code>true</code> runs the process as super user
      * @return return code of the executed command
      */
-    public static int runCommand(String command, boolean runAsSU) {
+    private static int runCommand(String command, boolean runAsSU) {
         StringBuilder sb = new StringBuilder();
 
         if (runAsSU && command != null) {

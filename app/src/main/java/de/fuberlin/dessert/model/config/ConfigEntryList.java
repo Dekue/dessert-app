@@ -35,7 +35,7 @@ import de.fuberlin.dessert.R;
 
 public class ConfigEntryList extends ConfigEntry {
 
-    protected final String[] values;
+    private final String[] values;
 
     public ConfigEntryList(String name, String defaultValue, String description, String[] values) {
         super(name, defaultValue, description);

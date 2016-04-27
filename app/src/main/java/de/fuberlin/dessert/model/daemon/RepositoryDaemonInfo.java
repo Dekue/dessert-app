@@ -25,7 +25,7 @@ package de.fuberlin.dessert.model.daemon;
 import java.net.URL;
 
 public class RepositoryDaemonInfo extends DaemonInfo {
-    protected final URL packageURL;
+    private final URL packageURL;
 
     public RepositoryDaemonInfo(String name, String version, String applicationVersion, String libraryVersion, URL packageURL) {
         super(name, version, applicationVersion, libraryVersion, null);

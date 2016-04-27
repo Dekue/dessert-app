@@ -17,6 +17,4 @@
 	</LinearLayout>
 	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Value: &lt;unknown&gt;"
 		android:id="@+id/ValueField" android:typeface="monospace" android:textSize="10sp" android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
 </LinearLayout>

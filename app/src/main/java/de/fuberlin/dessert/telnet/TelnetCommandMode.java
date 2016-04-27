@@ -40,7 +40,7 @@ public enum TelnetCommandMode {
 
     private static final String LOG_TAG = "TelnetCommandMode";
 
-    public static TelnetCommandMode parseString(String value) {
+    private static TelnetCommandMode parseString(String value) {
         if (value == null || value.length() == 0) {
             return null;
         }

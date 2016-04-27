@@ -44,7 +44,7 @@ public class SingleCommandTelnetJob implements TelnetJob {
         this(new TelnetCommand(commandLine, mode));
     }
 
-    public SingleCommandTelnetJob(TelnetCommand command) {
+    private SingleCommandTelnetJob(TelnetCommand command) {
         this.command = command;
     }
 

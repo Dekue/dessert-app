@@ -31,8 +31,8 @@ import de.fuberlin.dessert.Utils;
 
 public class CommandOptionInteger extends CommandOption {
 
-    protected final int minValue;
-    protected final int maxValue;
+    private final int minValue;
+    private final int maxValue;
 
     public CommandOptionInteger(String name, String description, String minValue, String maxValue) {
         super(name, description);

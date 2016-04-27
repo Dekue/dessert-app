@@ -50,14 +50,14 @@ public abstract class ManageEntry {
         COMMAND
     }
 
-    protected final String description;
+    final String description;
 
     /**
      * Constructs a new manage entry with the given <code>description/code>.
      * 
      * @param description the description of this entry
      */
-    public ManageEntry(String description) {
+    ManageEntry(String description) {
         this.description = description;
     }
 

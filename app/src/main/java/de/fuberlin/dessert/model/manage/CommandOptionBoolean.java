@@ -31,7 +31,7 @@ import de.fuberlin.dessert.R;
 
 public class CommandOptionBoolean extends CommandOption {
 
-    protected final class CheckBoxWatcher implements OnCheckedChangeListener {
+    private final class CheckBoxWatcher implements OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             CommandOptionBoolean.this.setInternalValue(isChecked);
@@ -39,13 +39,13 @@ public class CommandOptionBoolean extends CommandOption {
         }
     }
 
-    public static final String DEFAULT_TRUE = Boolean.TRUE.toString();
-    public static final String DEFAULT_FALSE = Boolean.FALSE.toString();
+    private static final String DEFAULT_TRUE = Boolean.TRUE.toString();
+    private static final String DEFAULT_FALSE = Boolean.FALSE.toString();
 
-    protected final String trueValue;
-    protected final String falseValue;
+    private final String trueValue;
+    private final String falseValue;
 
-    protected boolean internalValue;
+    private boolean internalValue;
 
     public CommandOptionBoolean(String name, String description, String trueValue, String falseValue) {
         super(name, description);

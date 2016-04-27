@@ -29,7 +29,7 @@ import android.view.View;
 
 public abstract class CommandOption {
 
-    protected final class TextEditWatcher implements TextWatcher {
+    final class TextEditWatcher implements TextWatcher {
         private final CommandOption option;
 
         public TextEditWatcher(CommandOption option) {
@@ -52,11 +52,11 @@ public abstract class CommandOption {
         }
     }
 
-    protected final String name;
-    protected final String description;
-    protected String value = "";
+    private final String name;
+    final String description;
+    private String value = "";
 
-    public CommandOption(String name, String description) {
+    CommandOption(String name, String description) {
         this.name = name;
         this.description = description;
     }
@@ -75,7 +75,7 @@ public abstract class CommandOption {
 
     abstract public View getView(LayoutInflater inflater);
 
-    public void setValue(String value) {
+    void setValue(String value) {
         this.value = value;
     }
 }

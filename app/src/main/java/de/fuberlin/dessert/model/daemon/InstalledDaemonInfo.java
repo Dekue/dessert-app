@@ -28,9 +28,9 @@ import java.util.Properties;
 import android.graphics.drawable.Drawable;
 
 public class InstalledDaemonInfo extends DaemonInfo {
-    protected final File directory;
+    final File directory;
 
-    public InstalledDaemonInfo(DaemonInfo daemonInfo, File directory) {
+    InstalledDaemonInfo(DaemonInfo daemonInfo, File directory) {
         super(daemonInfo);
         this.directory = directory;
     }

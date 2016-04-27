@@ -32,7 +32,7 @@ import de.fuberlin.dessert.R;
 
 public class CommandOptionList extends CommandOption {
 
-    protected final String[] values;
+    private final String[] values;
 
     public CommandOptionList(String name, String description, String[] values) {
         super(name, description);

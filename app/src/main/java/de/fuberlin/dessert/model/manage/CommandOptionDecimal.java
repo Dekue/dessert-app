@@ -31,8 +31,8 @@ import de.fuberlin.dessert.Utils;
 
 public class CommandOptionDecimal extends CommandOption {
 
-    protected final double minValue;
-    protected final double maxValue;
+    private final double minValue;
+    private final double maxValue;
 
     public CommandOptionDecimal(String name, String description, String minValue, String maxValue) {
         super(name, description);

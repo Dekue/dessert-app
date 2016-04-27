@@ -76,8 +76,9 @@ public class DaemonListAdapter<T extends DaemonInfo> extends ArrayAdapter<T> {
         Drawable icon = item.getIconDrawable();
         upperLeftText.setText(item.getName(), TextView.BufferType.SPANNABLE);
         upperRightText.setText(item.getVersion(), TextView.BufferType.SPANNABLE);
-        lowerCenterText1.setText("Library Version:\t\t\t" + item.getLibraryVersion(), TextView.BufferType.SPANNABLE);
-        lowerCenterText2.setText("Application Version:\t" + item.getApplicationVersion(), TextView.BufferType.SPANNABLE);
+
+        lowerCenterText1.setText(getContext().getString(R.string.lib_version_tab, item.getLibraryVersion()), TextView.BufferType.SPANNABLE);
+        lowerCenterText2.setText(getContext().getString(R.string.app_version_tab, item.getApplicationVersion()), TextView.BufferType.SPANNABLE);
 
         // format it if not compatible
         boolean libOK = DessertApplication.instance.getLibraryVersion().isCompatible(item.getLibraryVersion());

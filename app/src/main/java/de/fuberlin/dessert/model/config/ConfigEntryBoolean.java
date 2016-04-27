@@ -35,7 +35,7 @@ import de.fuberlin.dessert.R;
 
 public class ConfigEntryBoolean extends ConfigEntry {
 
-    protected final class CheckBoxWatcher implements OnCheckedChangeListener {
+    final class CheckBoxWatcher implements OnCheckedChangeListener {
         private final SharedPreferences preferences;
 
         public CheckBoxWatcher(SharedPreferences preferences) {
@@ -51,11 +51,11 @@ public class ConfigEntryBoolean extends ConfigEntry {
 
     private static final String INTERNAL_NAME_SUFFIX = ".internalvalue";
 
-    public static final String DEFAULT_TRUE = Boolean.TRUE.toString();
-    public static final String DEFAULT_FALSE = Boolean.FALSE.toString();
+    private static final String DEFAULT_TRUE = Boolean.TRUE.toString();
+    private static final String DEFAULT_FALSE = Boolean.FALSE.toString();
 
-    protected final String trueValue;
-    protected final String falseValue;
+    private final String trueValue;
+    private final String falseValue;
 
     public ConfigEntryBoolean(String name, String defaultValue, String description, String trueValue, String falseValue) {
         super(name, defaultValue, description);
@@ -103,11 +103,11 @@ public class ConfigEntryBoolean extends ConfigEntry {
         properties.setProperty(name, Boolean.toString(getInternalValue(preferences)));
     }
 
-    protected boolean getInternalValue(SharedPreferences preferences) {
+    private boolean getInternalValue(SharedPreferences preferences) {
         return preferences.getBoolean(getKey() + INTERNAL_NAME_SUFFIX, Boolean.parseBoolean(defaultValue));
     }
 
-    protected void setInternalValue(SharedPreferences preferences, boolean value) {
+    private void setInternalValue(SharedPreferences preferences, boolean value) {
         Editor editor = preferences.edit();
         editor.putBoolean(getKey() + INTERNAL_NAME_SUFFIX, value);
         editor.apply();

@@ -31,7 +31,7 @@ import java.util.EnumSet;
 public class TelnetCommand {
 
     private final String command;
-    protected final EnumSet<TelnetCommandMode> modes;
+    private final EnumSet<TelnetCommandMode> modes;
 
     public TelnetCommand(String command, EnumSet<TelnetCommandMode> modes) {
         this.command = command;

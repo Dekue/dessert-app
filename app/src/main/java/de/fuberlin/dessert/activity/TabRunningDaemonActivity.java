@@ -271,7 +271,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                boolean result = false;
+                boolean result;
 
                 ManageEntry entry = (ManageEntry) adapterView.getItemAtPosition(position);
                 switch (entry.getType()) {
