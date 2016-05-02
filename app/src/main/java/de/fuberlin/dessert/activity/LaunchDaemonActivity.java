@@ -205,7 +205,7 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
                     }
 
                     if (targetFile.exists()) {
-                        // ask the user if he want's to overwrite the file
+                        // ask the user if he wants to overwrite the file
                         AlertDialog.Builder alertbox = new AlertDialog.Builder(LaunchDaemonActivity.this);
                         alertbox.setMessage(R.string.ask_overwrite_file);
 
@@ -213,7 +213,8 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
                         alertbox.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dlg, int which) {
-                                targetFile.delete();
+                                if(!targetFile.delete())
+									Log.d(LOG_TAG, "Could not delete old options file");
                                 FileTasks.writePropertiesFile(targetFile, properties, daemonID);
                             }
                         });
@@ -360,7 +361,7 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
     /**
      * Let's the user pick a file from the sdcard root directory.
      */
-    protected void pickFlatFileLoad() {
+    private void pickFlatFileLoad() {
         // Don't show a dialog if the SD card is completely absent.
         final String state = Environment.getExternalStorageState();
         if (!Environment.MEDIA_MOUNTED_READ_ONLY.equals(state) && !Environment.MEDIA_MOUNTED.equals(state)) {

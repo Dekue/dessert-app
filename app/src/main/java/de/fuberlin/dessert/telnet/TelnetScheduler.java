@@ -142,8 +142,8 @@ public class TelnetScheduler {
 
         @Override
         public void run() {
-            boolean isRunning = true;
-            while (isRunning) {
+            //noinspection InfiniteLoopStatement
+            while (true) {
                 Thread.interrupted();
 
                 try {
@@ -301,10 +301,8 @@ public class TelnetScheduler {
             throw new IllegalArgumentException("Got unsupported telnet command mode " + currentMode);
         }
 
-        if (firstCommmand != null) {
-            sendCommand(firstCommmand);
-            readUntilPrompt();
-        }
+        sendCommand(firstCommmand);
+        readUntilPrompt();
 
         if (secondCommmand != null) {
             sendCommand(secondCommmand);

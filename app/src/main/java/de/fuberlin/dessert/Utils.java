@@ -40,8 +40,8 @@ public class Utils {
      * Returns true if the given <code>str</code> is either <code>null</code> or
      * has a length of 0.
      * 
-     * @param str
-     * @return <code>true</code> if he string is either <code>null</code> or has
+     * @param str string to check
+     * @return <code>true</code> if the string is either <code>null</code> or has
      *         a length of 0
      */
     public static boolean isStringEmpty(String str) {
@@ -80,18 +80,20 @@ public class Utils {
         }
     }
 
-    /**
-     * Parses the given <code>str</code> to return a double value ignoring any
-     * parsing exceptions. If the string could not be parsed the returned value
-     * is <code>0</code>.
-     * 
-     * @param str string to parse
-     * @return the parsed value or the value <code>0</code> if parsing did not
-     *         succeed
-     */
+	/**
+	 * Parses the given <code>str</code> to return a double value ignoring any
+	 * parsing exceptions. If the string could not be parsed the returned value
+	 * is <code>0</code>.
+	 *
+	 * @param str string to parse
+	 * @return the parsed value or the value <code>0</code> if parsing did not
+	 *         succeed
+	 */
+	/* TODO: delete never used method
     public static double safelyParseDouble(String str) {
         return safelyParseDouble(str, 0);
     }
+    */
 
     /**
      * Parses the given <code>str</code> to return a double value ignoring any
@@ -163,8 +165,8 @@ public class Utils {
      * the array in a new line. It can also trim empty lines if
      * <code>trim</code> is set.
      * 
-     * @param strings
-     * @param trim
+     * @param strings strings to convert
+     * @param trim enabling of empty line trimming
      * @return concatenation of all elements in <code>strings</code> and
      *         optionally trimmed of empty elements
      */

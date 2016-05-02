@@ -163,8 +163,8 @@ public class NativeTasks {
      * is not part of the environment list, the function returns
      * <code>null</code>.
      * 
-     * @param key
-     * @return value of the enviromnent variable or <code>null</code>
+     * @param key string name
+     * @return value of the environment variable or <code>null</code>
      */
     public static native String getEnvironmentValue(String key);
 

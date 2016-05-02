@@ -4,6 +4,7 @@
 	<string name="desc">Description</string>
 	<string name="one2345">12345</string>
 	<string name="content">content</string>
+	<string name="sample">Sample output text with a lot of characters</string>
 
 	<string name="about">About</string>
 	<string name="app_version">Application Version:</string>

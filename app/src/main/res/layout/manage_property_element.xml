@@ -16,5 +16,5 @@
 			android:src="@android:drawable/ic_menu_manage" android:maxHeight="25dip" android:maxWidth="25dip"/>
 	</LinearLayout>
 	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Value: &lt;unknown&gt;"
-		android:id="@+id/ValueField" android:typeface="monospace" android:textSize="10sp" android:textAppearance="?android:attr/textAppearanceSmall" />
+		android:id="@+id/ValueField" android:typeface="monospace" android:textSize="12sp" android:textAppearance="?android:attr/textAppearanceSmall" />
 </LinearLayout>

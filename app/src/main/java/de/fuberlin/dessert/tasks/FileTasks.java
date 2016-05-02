@@ -158,7 +158,7 @@ public class FileTasks {
     /**
      * Get the binary file of this daemon directory
      * 
-     * @param directory
+     * @param directory daemon directory
      * @return binary file of daemon directory
      */
     public static File getBinaryFile(File directory) {
@@ -168,7 +168,7 @@ public class FileTasks {
     /**
      * Get the configuration file of this daemon directory
      * 
-     * @param directory
+     * @param directory daemon directory
      * @return configuration file of daemon directory
      */
     public static File getConfigFile(File directory) {
@@ -178,7 +178,7 @@ public class FileTasks {
     /**
      * Get the configuration template file of this daemon directory
      * 
-     * @param directory
+     * @param directory daemon directory
      * @return configuration template of daemon directory
      */
     public static File getConfigTemplateFile(File directory) {
@@ -200,7 +200,7 @@ public class FileTasks {
     /**
      * Get the icon file of this daemon directory
      * 
-     * @param directory
+     * @param directory daemon directory
      * @return configuration file of daemon directory
      */
     public static File getIconFile(File directory) {
@@ -262,7 +262,7 @@ public class FileTasks {
     /**
      * Get the management file of this daemon directory
      * 
-     * @param directory
+     * @param directory daemon directory
      * @return management file of daemon directory
      */
     public static File getManageFile(File directory) {
@@ -276,7 +276,9 @@ public class FileTasks {
      * @return directory for temporary files
      */
     public static File getTemporaryDir() {
-        return DessertApplication.instance.getDir("tmp", Context.MODE_WORLD_WRITEABLE).getAbsoluteFile();
+		// TODO: Check if MODE_WORLD_WRITABLE can be replaced by MODE_PRIVATE without problems.
+		// Change Doxygen-Comment if so.
+        return DessertApplication.instance.getDir("tmp", Context.MODE_PRIVATE).getAbsoluteFile();
     }
 
     /**
@@ -291,7 +293,7 @@ public class FileTasks {
      * Any files residing in the target directory (e.g. an existing installation
      * of the same daemon with the same version) will be overwritten.
      * 
-     * @param daemonZip
+     * @param daemonZip zip file with daemon
      * @return <code>true</code> if installation was successful
      */
     public static boolean installDaemonFromZip(File daemonZip) {
@@ -356,7 +358,9 @@ public class FileTasks {
 
             // get daemon directory
             File directory = new File(getDaemonsDir(), daemonInfo.getDaemonID());
-            directory.mkdir();
+            if(!directory.mkdir()) {
+				Log.d(LOG_TAG, "Could not create daemon directory / directory existed before.");
+			}
 
             // finally install the file           
             writeZipEntryToFile(zipFile, propertyEntry, getPropertyFile(directory));
@@ -387,12 +391,10 @@ public class FileTasks {
      *             library files
      */
     public static boolean installLibraryFiles() throws IOException {
-        boolean result = true;
-
         File librariesDir = getLibrariesDir();
 
         // empty directory
-        result &= clearDirectory(librariesDir);
+        clearDirectory(librariesDir);
 
         // first read the library file descriptions
         Properties libProps = new Properties();
@@ -440,7 +442,7 @@ public class FileTasks {
         // write version tag here
         File versionFile = new File(librariesDir, LIBRARIES_VERSION_FILE);
         ApplicationVersion appVersion = DessertApplication.instance.getApplicationVersion();
-        writeVersionToFile(appVersion, versionFile, false);
+        writeVersionToFile(appVersion, versionFile);
 
         return true;
     }
@@ -454,7 +456,7 @@ public class FileTasks {
      */
     public static void installStartScript() throws IOException {
         File scriptFile = new File(getDaemonsDir(), START_DAEMON_SCRIPT);
-        installRawFile(R.raw.start_daemon_script, scriptFile);
+        installRawFile(scriptFile);
         NativeTasks.chmod(scriptFile, DEFAULT_FULL_MODE, false);
     }
 
@@ -559,7 +561,8 @@ public class FileTasks {
      */
     public static void uninstallDaemon(File daemonDirectory) {
         clearDirectory(daemonDirectory);
-        daemonDirectory.delete();
+		if(!daemonDirectory.delete())
+			Log.d(LOG_TAG, "Could not delete daemon directory.");
     }
 
     /**
@@ -616,7 +619,7 @@ public class FileTasks {
             OutputStream outputStream = null;
             try {
                 outputStream = new FileOutputStream(propertiesFile);
-                properties.save(outputStream, comment == null ? "" : comment);
+                properties.store(outputStream, comment == null ? "" : comment);
                 result = true;
             } catch (NotFoundException e) {
                 Log.e(LOG_TAG, "Could not find the property file", e);
@@ -642,7 +645,8 @@ public class FileTasks {
         FileWriter writer = null;
         try {
             if (targetFile.getParentFile() != null) {
-                targetFile.getParentFile().mkdirs();
+				//noinspection ResultOfMethodCallIgnored
+				targetFile.getParentFile().mkdirs();
             }
             writer = new FileWriter(targetFile, true);
             writer.write(text == null ? "" : text);
@@ -662,39 +666,35 @@ public class FileTasks {
      *             target could not be written to
      */
     private static void writeZipEntryToFile(ZipFile zipFile, ZipEntry zipEntry, File targetFile) throws IOException {
-        InputStream is = null;
         try {
             writeInputStreamToFile(zipFile.getInputStream(zipEntry), targetFile);
         } finally {
-            Utils.safelyClose(is);
+            Utils.safelyClose((java.io.Closeable) null);
         }
     }
 
-    private static boolean clearDirectory(File directory) {
-        boolean result = true;
-
+    private static void clearDirectory(File directory) {
         for (File file : directory.listFiles()) {
             if (!file.delete()) {
                 Log.w(LOG_TAG, "Could not delete the file: " + file.getAbsolutePath());
-                result = false;
             }
         }
-
-        return result;
     }
 
     private static File getDaemonsDir() {
-        return DessertApplication.instance.getDir("daemons", Context.MODE_WORLD_WRITEABLE).getAbsoluteFile();
+		// TODO: Check if MODE_WORLD_WRITABLE can be replaced by MODE_PRIVATE without problems.
+        return DessertApplication.instance.getDir("daemons", Context.MODE_PRIVATE).getAbsoluteFile();
     }
 
     private static File getLibrariesDir() {
-        return DessertApplication.instance.getDir("libraries", Context.MODE_WORLD_WRITEABLE).getAbsoluteFile();
+		// TODO: Check if MODE_WORLD_WRITABLE can be replaced by MODE_PRIVATE without problems.
+        return DessertApplication.instance.getDir("libraries", Context.MODE_PRIVATE).getAbsoluteFile();
     }
 
     /**
      * Get the property file of this daemon directory
      * 
-     * @param directory
+     * @param directory daemon directory
      * @return property file of daemon directory
      */
     private static File getPropertyFile(File directory) {
@@ -718,18 +718,17 @@ public class FileTasks {
     /**
      * Installs the file identified by <code>sourceResourceID</code> from the
      * raw folder of the packaged application to the <code>targetFile</code>.
-     * 
-     * @param sourceResourceID raw resource to install
+     *
      * @param targetFile target file to write to
      * @throws IOException thrown when an I/O error occurred while accessing the
      *             target file
      */
-    private static void installRawFile(int sourceResourceID, File targetFile) throws IOException {
+    private static void installRawFile(File targetFile) throws IOException {
         Log.d(LOG_TAG, "Installing raw file to: " + targetFile.getAbsolutePath());
 
         InputStream inputStream = null;
         try {
-            inputStream = DessertApplication.instance.getResources().openRawResource(sourceResourceID);
+            inputStream = DessertApplication.instance.getResources().openRawResource(R.raw.start_daemon_script);
             writeInputStreamToFile(inputStream, targetFile);
         } finally {
             Utils.safelyClose(inputStream);
@@ -740,7 +739,7 @@ public class FileTasks {
      * Reads an application version as stored in the <code>sourceFile</code> as
      * a single line containing the version string.
      * 
-     * @param sourceFile
+     * @param sourceFile file to read the version from
      * @return application version as stored in the <code>sourceFile</code>
      */
     private static ApplicationVersion readAppVersionFromFile(File sourceFile) {
@@ -768,14 +767,13 @@ public class FileTasks {
      * 
      * @param version version to store in the target file
      * @param targetFile file to write to
-     * @param doAppend if <code>true</code> appends instead of replaces
      * @throws IOException thrown when an I/O error occurred while writing the
      *             file
      */
-    private static void writeVersionToFile(ApplicationVersion version, File targetFile, boolean doAppend) throws IOException {
+    private static void writeVersionToFile(ApplicationVersion version, File targetFile) throws IOException {
         FileWriter writer = null;
         try {
-            writer = new FileWriter(targetFile, doAppend);
+            writer = new FileWriter(targetFile, false);
             writer.write(version.toString());
         } finally {
             Utils.safelyClose(writer);

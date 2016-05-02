@@ -30,7 +30,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +39,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.regex.Pattern;
 import org.xml.sax.SAXException;
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -314,7 +312,8 @@ public class DessertApplication extends Application {
         } finally {
             Utils.safelyClose(inputStream);
             if (tmpFile != null) {
-                tmpFile.delete();
+                if(!tmpFile.delete())
+					Log.d(LOG_TAG, "Could not delete temporary file");
             }
         }
 
@@ -450,8 +449,10 @@ public class DessertApplication extends Application {
         File configFile = new File(tmpDirectory, TEMP_CONFIG_FILENAME);
         File pidFile = new File(tmpDirectory, TEMP_PID_FILENAME);
 
-        configFile.delete();
-        pidFile.delete();
+		if(!configFile.delete())
+			Log.d(LOG_TAG, "Could not delete config file");
+		if(!pidFile.delete())
+			Log.d(LOG_TAG, "Could not delete pid file");
 
         BufferedReader reader = null;
         BufferedWriter writer = null;
@@ -585,6 +586,7 @@ public class DessertApplication extends Application {
         return runningDaemon;
     }
 
+	/* TODO: delete never used method
     public synchronized boolean switchWiFiMode() {
     	// Texas Instruments Transceiver?
 		RandomAccessFile tiwlan = null;
@@ -596,7 +598,7 @@ public class DessertApplication extends Application {
 			Log.i(LOG_TAG, "no tiwlan file found");
 		}
     	return false;
-    }
+    }*/
     
     /**
      * Uninstall the daemon identified by <code>daemonInfo</code>. This will

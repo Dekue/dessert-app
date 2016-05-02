@@ -226,7 +226,7 @@ public class TabInstalledDaemonsActivity extends ListActivity {
     }
 
     @SuppressWarnings("unchecked")
-    protected DaemonListAdapter<InstalledDaemonInfo> getAdapter() {
+    private DaemonListAdapter<InstalledDaemonInfo> getAdapter() {
         return (DaemonListAdapter<InstalledDaemonInfo>) getListAdapter();
     }
 

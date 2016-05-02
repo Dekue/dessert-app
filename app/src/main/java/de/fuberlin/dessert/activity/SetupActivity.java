@@ -55,10 +55,8 @@ public class SetupActivity extends PreferenceActivity {
                             .show();
                 }
             }
-
             return true;
         }
-
     }
 
     /**

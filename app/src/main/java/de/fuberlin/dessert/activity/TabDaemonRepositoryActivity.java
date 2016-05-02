@@ -289,7 +289,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
         return supRetVal;
     }
 
-    public void tryInstallFromFile(File daemonZip) {
+    private void tryInstallFromFile(File daemonZip) {
         if (DessertApplication.instance.installDaemonFromZip(daemonZip)) {
             Toast.makeText(this, getString(R.string.install_daemon_success), Toast.LENGTH_LONG).show();
         } else {
@@ -298,7 +298,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
     }
 
     @SuppressWarnings("unchecked")
-    protected DaemonListAdapter<RepositoryDaemonInfo> getAdapter() {
+    private DaemonListAdapter<RepositoryDaemonInfo> getAdapter() {
         return (DaemonListAdapter<RepositoryDaemonInfo>) getListAdapter();
     }
 
@@ -341,7 +341,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
     /**
      * Let's the user pick a file from the sdcard root directory.
      */
-    protected void pickFlatFileInstall() {
+    private void pickFlatFileInstall() {
         // Don't show a dialog if the SD card is completely absent.
         final String state = Environment.getExternalStorageState();
         if (!Environment.MEDIA_MOUNTED_READ_ONLY.equals(state) && !Environment.MEDIA_MOUNTED.equals(state)) {
