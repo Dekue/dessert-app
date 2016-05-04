@@ -3,7 +3,6 @@ package de.fuberlin.service;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -64,10 +63,6 @@ public class NotificationService extends Service {
 		PendingIntent contentIntent =
 				stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		mBuilder.setContentIntent(contentIntent);
-		NotificationManager mNotificationManager =
-				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		// TODO: get mId to sensible position in code to change notification if needed
-		int mId = 0;
-		mNotificationManager.notify(mId, mBuilder.build());
+		mNM.notify(R.string.local_service_started, mBuilder.build());
 	}
 }
