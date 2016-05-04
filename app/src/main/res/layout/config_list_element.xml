@@ -4,5 +4,5 @@
 	<TextView android:id="@+id/Description" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/desc"
 		android:textAppearance="?android:attr/textAppearanceLarge" />
 	<EditText android:id="@+id/EditBox" android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="@string/content"
-		android:inputType="none" android:cursorVisible="false" android:drawableStart="@android:drawable/ic_menu_more" android:gravity="center_vertical" />
+		android:inputType="none" android:cursorVisible="false" android:drawableLeft="@android:drawable/ic_menu_more" android:drawableStart="@android:drawable/ic_menu_more" android:gravity="center_vertical" />
 </LinearLayout>
