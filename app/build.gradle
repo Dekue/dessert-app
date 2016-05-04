@@ -1,12 +1,12 @@
 apply plugin: 'com.android.model.application'
 model {
     android {
-        compileSdkVersion = 21
+        compileSdkVersion = 23
         buildToolsVersion = "24.0.0 rc3"
 
         defaultConfig.with {
             applicationId "de.fuberlin.dessert"
-            minSdkVersion.apiLevel = 21
+            minSdkVersion.apiLevel = 17
             targetSdkVersion.apiLevel = 23
         }
     }
@@ -26,17 +26,9 @@ model {
         ldLibs.addAll(['log'])
         //ldLibs += ["android"]
     }
-
-    /*
-    productFlavors {
-        create("arm") {
-            ndk.abiFilters += "armeabi"
-        }
-        create("arm7") {
-            ndk.abiFilters += "armeabi-v7a"
-        }
-    }*/
 }
 
 dependencies {
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
 }
