@@ -9,19 +9,19 @@
 		android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_alignParentStart="true" />
 	<TextView android:id="@+id/UpperLeftText" android:textAppearance="?android:attr/textAppearanceMedium"
 		android:gravity="start" android:layout_height="wrap_content"
-		android:text="@string/sampleText"
+		android:text="@string/sample_text"
 		android:scrollHorizontally="true" android:ellipsize="end" android:lines="1"
 		android:layout_width="fill_parent" android:layout_toRightOf="@+id/Icon" android:layout_toEndOf="@+id/Icon"
 		android:layout_toLeftOf="@+id/UpperRightText" android:layout_toStartOf="@+id/UpperRightText" />
-	<TextView android:text="@string/sampleDevVersion" android:id="@+id/UpperRightText"
-		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
-		android:gravity="end" android:layout_width="wrap_content" android:lines="1"
-		android:scrollHorizontally="false" android:layout_alignParentRight="true" android:layout_alignParentEnd="true" />
+	<TextView android:text="@string/sample_dev_version" android:id="@+id/UpperRightText"
+              android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+              android:gravity="end" android:layout_width="wrap_content" android:lines="1"
+              android:scrollHorizontally="false" android:layout_alignParentRight="true" android:layout_alignParentEnd="true" />
 	<TextView android:id="@+id/LowerCenterText1" android:layout_height="wrap_content"
-		android:textAppearance="?android:attr/textAppearanceSmall" android:typeface="monospace"
-		android:textSize="12sp" android:gravity="start" android:layout_width="fill_parent"
-		android:text="@string/sampleVersion" android:layout_below="@+id/UpperLeftText" />
-	<TextView android:text="@string/sampleLibVersion" android:id="@+id/LowerCenterText2"
+              android:textAppearance="?android:attr/textAppearanceSmall" android:typeface="monospace"
+              android:textSize="12sp" android:gravity="start" android:layout_width="fill_parent"
+              android:text="@string/sample_version" android:layout_below="@+id/UpperLeftText" />
+	<TextView android:text="@string/sample_lib_version" android:id="@+id/LowerCenterText2"
               android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall"
               android:typeface="monospace" android:textSize="12sp" android:gravity="start"
               android:layout_width="fill_parent" android:layout_below="@+id/LowerCenterText1" />

@@ -3,7 +3,7 @@
 	android:id="@+id/ContentLayout">
 	<LinearLayout android:padding="5dip" android:orientation="vertical" android:layout_height="wrap_content" android:layout_width="fill_parent">
 		<TextView android:id="@+id/Text" android:layout_height="wrap_content" android:layout_width="wrap_content"
-				  android:text="@string/sampleText" android:typeface="monospace" android:textSize="12sp"
+				  android:text="@string/sample_text" android:typeface="monospace" android:textSize="12sp"
 				  android:textAppearance="?android:attr/textAppearanceSmall" />
 	</LinearLayout>
 </ScrollView>

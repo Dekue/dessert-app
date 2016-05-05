@@ -139,10 +139,10 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
                 final String dateString = DateFormat.format("yyyyMMdd-kkmmss", System.currentTimeMillis()).toString(); // 20101031-211620
 
                 final EditText targetEditText = (EditText) dialog.findViewById(R.id.TargetDirectoryText);
-                targetEditText.setText(sdDir.getAbsolutePath() + "/dessert/" + daemonID + "/");
+				targetEditText.setText(getString(R.string.daemon_path, sdDir.getAbsolutePath(), daemonID));
 
                 final EditText fileEditText = (EditText) dialog.findViewById(R.id.TargetFileText);
-                fileEditText.setText("command.log");
+                fileEditText.setText(getString(R.string.command_log));
 
                 final CheckBox prependTimestampBox = (CheckBox) dialog.findViewById(R.id.TimestampCheckBox);
 
@@ -315,10 +315,10 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
                 headerView.findViewById(R.id.NotRunningLayout).setVisibility(View.GONE);
                 headerView.findViewById(R.id.RunningLayout).setVisibility(View.VISIBLE);
 
-                ((TextView) headerView.findViewById(R.id.NameText)).setText("Name:\t\t\t" + daemonInfo.getName());
-                ((TextView) headerView.findViewById(R.id.VersionText)).setText("Version:\t\t" + daemonInfo.getVersion());
-                ((TextView) headerView.findViewById(R.id.PidText)).setText("PID:\t\t\t\t" + daemonInfo.getPID());
-                ((TextView) headerView.findViewById(R.id.CliportText)).setText("CLI Port:\t" + daemonInfo.getCLIPort());
+                ((TextView) headerView.findViewById(R.id.NameText)).setText(getString(R.string.daemon_name, daemonInfo.getName()));
+                ((TextView) headerView.findViewById(R.id.VersionText)).setText(getString(R.string.daemon_version, daemonInfo.getVersion()));
+                ((TextView) headerView.findViewById(R.id.PidText)).setText(getString(R.string.daemon_pid, daemonInfo.getPID()));
+                ((TextView) headerView.findViewById(R.id.CliportText)).setText(getString(R.string.daemon_cli_port, daemonInfo.getCLIPort()));
 
                 ManageConfigurationListAdapter adapter = getAdapter();
 

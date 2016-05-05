@@ -22,6 +22,7 @@
  ******************************************************************************/
 package de.fuberlin.dessert.model;
 
+import android.support.annotation.NonNull;
 import de.fuberlin.dessert.Utils;
 
 /**
@@ -87,15 +88,11 @@ public class LibraryVersion implements Comparable<LibraryVersion> {
     }
 
     @Override
-    public int compareTo(LibraryVersion other) {
+    public int compareTo(@NonNull LibraryVersion other) {
         int tmp;
 
         if (this == other) {
             return 0;
-        }
-
-        if (other == null) {
-            return 1;
         }
 
         if ((tmp = compareVersionNumber(this.current, other.current)) != 0) {

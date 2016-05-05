@@ -1,13 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="authors">Authors:</string>
+    <string name="author_1">Ramin Baradari (Original Development)</string>
+    <string name="author_2">Bastian Blywis (DES-SERT Project and Further Development)</string>
+
 	<string name="none"/>
 	<string name="desc">Description</string>
 	<string name="one2345">12345</string>
 	<string name="content">content</string>
-	<string name="sampleText">Sample output text with a lot of characters</string>
-    <string name="sampleDevVersion">1.2.3.4-dev</string>
-    <string name="sampleVersion">APP VERSION 1.1.1</string>
-    <string name="sampleLibVersion">LIBRARY VERSION 1</string>
+	<string name="sample_text">Sample output text with a lot of characters</string>
+    <string name="sample_dev_version">1.2.3.4-dev</string>
+    <string name="sample_version">APP VERSION 1.1.1</string>
+    <string name="sample_lib_version">LIBRARY VERSION 1</string>
+
+    <string name="tab_running">Running</string>
+    <string name="tab_installed">Installed</string>
+    <string name="tab_tools">Manage</string>
+
+    <string name="notification_title">DES-SERT started</string>
+    <string name="notification_text">The DES-SERT app has started.</string>
+    <string name="notification_ticker">DES-SERT started</string>
+
+    <string name="daemon_path">%1$s/dessert/%2$s/</string>
+    <string name="daemon_name">Name:\t\t\t%1$s</string>
+    <string name="daemon_version">Version:\t\t%1$s</string>
+    <string name="daemon_pid">PID:\t\t\t\t%1$s</string>
+    <string name="daemon_cli_port">CLI Port:\t%1$s</string>
+
+    <string name="command_log">command.log</string>
+
+    <string name="libcli_home">https://github.com/dparrish/libcli</string>
+    <string name="uthash_home">https://github.com/troydhanson/uthash</string>
+    <string name="dessert_home">http://www.des-testbed.net/DES-SERT</string>
+    <string name="des_home">http://www.des-testbed.net</string>
+    <string name="libpcap_home">http://www.tcpdump.org</string>
+    <string name="gpl_home">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="gpl">GNU General Public License v3</string>
+
+    <string name="target_file_path">/sdcard/file.txt</string>
+    <string name="target_directory_path">/sdcard</string>
+    <string name="target_file_name">file.txt</string>
+
+    <string name="not_set_name">&lt;NOT SET&gt; Name</string>
+    <string name="not_set_version">&lt;NOT SET&gt; Version</string>
+    <string name="not_set_pid">&lt;NOT SET&gt; PID</string>
+    <string name="not_set_cli_port">&lt;NOT SET&gt; CLI Port</string>
 
 	<string name="about">About</string>
 	<string name="app_version">Application Version:</string>
@@ -17,7 +54,6 @@
 
 	<string name="project_page">Project Page:</string>
 	<string name="license">License:</string>
-	<string name="authors">Authors:</string>
 	<string name="third_party_software">3rd-Party-Software</string>
 	<string name="install_file">Install File</string>
 	<string name="launch_daemon">Launch daemon</string>

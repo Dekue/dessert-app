@@ -51,10 +51,10 @@ public class NotificationService extends Service {
 		NotificationCompat.Builder mBuilder =
 				new NotificationCompat.Builder(getApplicationContext())
 						.setSmallIcon(R.drawable.dessert_notification)
-						.setContentTitle("DES-SERT started")
-						.setContentText("The DES-SERT app has started.")
+						.setContentTitle(getString(R.string.notification_title))
+						.setContentText(getString(R.string.notification_text))
 						.setShowWhen(true)
-						.setTicker("DES-SERT started");
+						.setTicker(getString(R.string.notification_ticker));
 		Intent notificationIntent = new Intent(this, MainActivity.class);
 
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

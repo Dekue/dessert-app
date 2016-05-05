@@ -15,6 +15,6 @@
 			android:adjustViewBounds="true" android:layout_gravity="end" android:layout_weight="0"
 			android:src="@android:drawable/ic_menu_manage" android:maxHeight="25dip" android:maxWidth="25dip"/>
 	</LinearLayout>
-	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Value: &lt;unknown&gt;"
+	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/value_unknown"
 		android:id="@+id/ValueField" android:typeface="monospace" android:textSize="12sp" android:textAppearance="?android:attr/textAppearanceSmall" />
 </LinearLayout>

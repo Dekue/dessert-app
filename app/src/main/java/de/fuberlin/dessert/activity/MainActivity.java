@@ -182,17 +182,17 @@ public class MainActivity extends TabActivity {
 		// first tab: running daemons
 		theTabHost.addTab(
 				theTabHost.newTabSpec(TAB_TAG_RUNNING)
-						.setIndicator("Running")
+						.setIndicator(getString(R.string.tab_running))
 						.setContent(new Intent(this, TabRunningDaemonActivity.class)));
 		// second tab: installed daemons
 		theTabHost.addTab(
 				theTabHost.newTabSpec(TAB_TAG_INSTALLED)
-						.setIndicator("Installed")
+						.setIndicator(getString(R.string.tab_installed))
 						.setContent(new Intent(this, TabInstalledDaemonsActivity.class)));
 		// third tab: manage daemons
 		theTabHost.addTab(
 				theTabHost.newTabSpec(TAB_TAG_TOOLS)
-						.setIndicator("Manage")
+						.setIndicator(getString(R.string.tab_tools))
 						.setContent(new Intent(this, TabDaemonRepositoryActivity.class)));
 
 		// set start tab

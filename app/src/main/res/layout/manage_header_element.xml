@@ -11,12 +11,12 @@
 	<LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/RunningLayout"
 		android:orientation="vertical">
 		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
-			android:id="@+id/NameText" android:text="&lt;NOT SET&gt; Name" />
+			android:id="@+id/NameText" android:text="@string/not_set_name" />
 		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
-			android:id="@+id/VersionText" android:text="&lt;NOT SET&gt; Version" />
+			android:id="@+id/VersionText" android:text="@string/not_set_version" />
 		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
-			android:id="@+id/PidText" android:text="&lt;NOT SET&gt; PID" />
+			android:id="@+id/PidText" android:text="@string/not_set_pid" />
 		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
-			android:id="@+id/CliportText" android:text="&lt;NOT SET&gt; CLI Port" />
+			android:id="@+id/CliportText" android:text="@string/not_set_cli_port" />
 	</LinearLayout>
 </LinearLayout> 

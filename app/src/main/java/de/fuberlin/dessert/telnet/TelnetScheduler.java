@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import android.support.annotation.NonNull;
 import android.util.Log;
 import de.fuberlin.dessert.Utils;
 import de.fuberlin.dessert.telnet.jobs.SingleCommandTelnetJob;
@@ -88,7 +88,7 @@ public class TelnetScheduler {
         }
 
         @Override
-        public int compareTo(JobWrapper other) {
+        public int compareTo(@NonNull JobWrapper other) {
             if (this == other) {
                 return 0;
             }

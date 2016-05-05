@@ -6,12 +6,12 @@
 		android:layout_height="wrap_content" android:orientation="vertical">
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:text="@string/target_directory" android:textAppearance="?android:attr/textAppearanceLarge" />
-		<EditText android:layout_height="wrap_content" android:text="/sdcard"
+		<EditText android:layout_height="wrap_content" android:text="@string/target_directory_path"
 			android:layout_width="fill_parent" android:inputType="text"
 			android:id="@+id/TargetDirectoryText" />
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:text="@string/target_file" android:textAppearance="?android:attr/textAppearanceLarge" />
-		<EditText android:layout_height="wrap_content" android:text="file.txt"
+		<EditText android:layout_height="wrap_content" android:text="@string/target_file_name"
 			android:layout_width="fill_parent" android:inputType="text" android:id="@+id/TargetFileText" />
 		<CheckBox android:id="@+id/TimestampCheckBox" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:checked="true"

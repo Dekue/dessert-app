@@ -22,6 +22,7 @@
  ******************************************************************************/
 package de.fuberlin.dessert.model;
 
+import android.support.annotation.NonNull;
 import de.fuberlin.dessert.Utils;
 
 public class ApplicationVersion implements Comparable<ApplicationVersion> {
@@ -68,15 +69,11 @@ public class ApplicationVersion implements Comparable<ApplicationVersion> {
     }
 
     @Override
-    public int compareTo(ApplicationVersion other) {
+    public int compareTo(@NonNull ApplicationVersion other) {
         int tmp;
 
         if (this == other) {
             return 0;
-        }
-
-        if (other == null) {
-            return 1;
         }
 
         if ((tmp = compareVersionNumber(this.major, other.major)) != 0) {
