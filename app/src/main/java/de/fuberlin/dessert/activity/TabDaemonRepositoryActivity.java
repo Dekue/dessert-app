@@ -29,9 +29,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,11 +39,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -55,7 +57,7 @@ import de.fuberlin.dessert.dialog.AboutDialog;
 import de.fuberlin.dessert.model.daemon.DaemonInfo;
 import de.fuberlin.dessert.model.daemon.RepositoryDaemonInfo;
 
-public class TabDaemonRepositoryActivity extends ListActivity {
+public class TabDaemonRepositoryActivity extends ListFragment {
 
     private final class DaemonInstallRunner implements Runnable {
 
@@ -144,7 +146,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
                     }
                     case MESSAGE_INSTALL_STARTED: {
                         activity.installProgressDialog = ProgressDialog.show(
-                                activity,
+                                activity.getActivity(),
                                 activity.getString(R.string.install_progress_title),
                                 activity.getString(R.string.install_progress_msg_download),
                                 true,
@@ -155,7 +157,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
                         if (activity.installProgressDialog != null) {
                             activity.installProgressDialog.dismiss();
                         }
-                        Toast.makeText(activity, R.string.install_daemon_success, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity.getActivity(), R.string.install_daemon_success, Toast.LENGTH_SHORT).show();
                         activity.getAdapter().notifyDataSetChanged();
                         break;
                     }
@@ -163,7 +165,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
                         if (activity.installProgressDialog != null) {
                             activity.installProgressDialog.dismiss();
                         }
-                        Toast.makeText(activity, R.string.install_daemon_failure, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity.getActivity(), R.string.install_daemon_failure, Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case MESSAGE_EXCEPTION_REPO_QUERY: {
@@ -173,7 +175,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
                             exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
                         }
                         String msgText = activity.getString(R.string.getting_repo_error, exceptionText);
-                        Toast.makeText(activity, msgText, Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity.getActivity(), msgText, Toast.LENGTH_LONG).show();
                         break;
                     }
                     case MESSAGE_EXCEPTION_INSTALL_DAEMON: {
@@ -183,7 +185,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
                             exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
                         }
                         String msgText = activity.getString(R.string.install_daemon_error, exceptionText);
-                        Toast.makeText(activity, msgText, Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity.getActivity(), msgText, Toast.LENGTH_LONG).show();
                         break;
                     }
                     default:
@@ -195,62 +197,70 @@ public class TabDaemonRepositoryActivity extends ListActivity {
     }
     private final StaticHandler viewUpdateHandler = new StaticHandler(this);
 
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState){
+		List<RepositoryDaemonInfo> listContent = new ArrayList<>();
+		DaemonListAdapter<RepositoryDaemonInfo> adapter = new DaemonListAdapter<>(getActivity(), listContent, true, false);
+		setListAdapter(adapter);
+
+		ListView listView = getListView();
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (getAdapter() == parent.getAdapter()) {
+					final RepositoryDaemonInfo daemonInfo = getAdapter().getItem(position);
+
+					// ask the user if he really want's to install it
+					AlertDialog.Builder alertbox = new AlertDialog.Builder(getActivity());
+					alertbox.setMessage(getString(R.string.ask_install_daemon, daemonInfo.getName(),
+							daemonInfo.getVersion(), daemonInfo.getPackageURL()));
+
+					// set yes to install
+					alertbox.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							// start runner
+							DessertApplication.taskExecutor.execute(new DaemonInstallRunner(daemonInfo.getPackageURL()));
+						}
+					});
+
+					// set no to do nothing
+					alertbox.setNegativeButton(R.string.no, null);
+
+					// display dialog
+					alertbox.show();
+				}
+			}
+		});
+
+		//
+		registerForContextMenu(listView);
+
+		// start runner
+		Toast.makeText(getActivity(), R.string.getting_repo_index, Toast.LENGTH_SHORT).show();
+		DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.daemon_list, container, false);
+	}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.daemon_list);
-
-        List<RepositoryDaemonInfo> listContent = new ArrayList<>();
-        DaemonListAdapter<RepositoryDaemonInfo> adapter = new DaemonListAdapter<>(this, listContent, true, false);
-        setListAdapter(adapter);
-
-        ListView listView = getListView();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (getAdapter() == parent.getAdapter()) {
-                    final RepositoryDaemonInfo daemonInfo = getAdapter().getItem(position);
-
-                    // ask the user if he really want's to install it
-                    AlertDialog.Builder alertbox = new AlertDialog.Builder(TabDaemonRepositoryActivity.this);
-                    alertbox.setMessage(getString(R.string.ask_install_daemon, daemonInfo.getName(),
-                            daemonInfo.getVersion(), daemonInfo.getPackageURL()));
-
-                    // set yes to install
-                    alertbox.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            // start runner
-                            DessertApplication.taskExecutor.execute(new DaemonInstallRunner(daemonInfo.getPackageURL()));
-                        }
-                    });
-
-                    // set no to do nothing
-                    alertbox.setNegativeButton(R.string.no, null);
-
-                    // display dialog
-                    alertbox.show();
-                }
-            }
-        });
-
-        //
-        registerForContextMenu(listView);
-
-        // start runner
-        Toast.makeText(TabDaemonRepositoryActivity.this, R.string.getting_repo_index, Toast.LENGTH_SHORT).show();
-        DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
     }
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
+		super.onActivityCreated(savedInstanceState);
+	}
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tab_repository, menu);
-
-        return true;
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.tab_repository, menu);
     }
 
     @Override
@@ -262,7 +272,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
         switch (menuItem.getItemId()) {
         case R.id.Refresh:
             // start runner
-            Toast.makeText(TabDaemonRepositoryActivity.this, R.string.getting_repo_index, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.getting_repo_index, Toast.LENGTH_LONG).show();
             DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
 
             supRetVal = true;
@@ -273,12 +283,12 @@ public class TabDaemonRepositoryActivity extends ListActivity {
             supRetVal = true;
             break;
         case R.id.Preferences:
-            startActivity(new Intent(TabDaemonRepositoryActivity.this, SetupActivity.class));
+            startActivity(new Intent(getActivity(), SetupActivity.class));
 
             supRetVal = true;
             break;
         case R.id.About:
-            new AboutDialog(this).show();
+            new AboutDialog(getActivity()).show();
 
             supRetVal = true;
             break;
@@ -291,9 +301,9 @@ public class TabDaemonRepositoryActivity extends ListActivity {
 
     private void tryInstallFromFile(File daemonZip) {
         if (DessertApplication.instance.installDaemonFromZip(daemonZip)) {
-            Toast.makeText(this, getString(R.string.install_daemon_success), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.install_daemon_success), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, getString(R.string.install_daemon_failure), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.install_daemon_failure), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -303,12 +313,12 @@ public class TabDaemonRepositoryActivity extends ListActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
         switch (requestCode) {
         case REQUEST_CODE_PICK_ZIP_FILE: {
-            if (resultCode == RESULT_OK && intent != null) {
+            if (resultCode == Activity.RESULT_OK && intent != null) {
                 Uri uri = intent.getData();
                 try {
                     if (uri != null) {
@@ -331,7 +341,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         // make sure to reflect the current state of installed daemons when the activity becomes active
@@ -345,7 +355,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
         // Don't show a dialog if the SD card is completely absent.
         final String state = Environment.getExternalStorageState();
         if (!Environment.MEDIA_MOUNTED_READ_ONLY.equals(state) && !Environment.MEDIA_MOUNTED.equals(state)) {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.no_sdcard_installed)
                     .setNegativeButton(android.R.string.cancel, null)
                     .create()
@@ -370,7 +380,7 @@ public class TabDaemonRepositoryActivity extends ListActivity {
         Log.d(LOG_TAG, "Files found " + names.toString());
 
         // prompt user to select any file from the sdcard root
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.select_daemon_zip_title)
                         .setItems(namesList, new DialogInterface.OnClickListener() {
                             @Override
@@ -383,5 +393,4 @@ public class TabDaemonRepositoryActivity extends ListActivity {
                         .create()
                         .show();
     }
-
 }

@@ -22,15 +22,16 @@
  ******************************************************************************/
 package de.fuberlin.dessert.activity;
 
+import android.os.Bundle;
+import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -39,7 +40,6 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
@@ -52,202 +52,189 @@ import de.fuberlin.dessert.model.daemon.DaemonInfo;
 import de.fuberlin.dessert.model.daemon.InstalledDaemonInfo;
 import de.fuberlin.dessert.model.daemon.RunningDaemonInfo;
 
-public class TabInstalledDaemonsActivity extends ListActivity {
+public class TabInstalledDaemonsActivity extends ListFragment {
 
-    private final class ListRetrieverRunner implements Runnable {
-        @Override
-        public void run() {
-            viewUpdateHandler.sendEmptyMessage(MESSAGE_CLEAR_LIST);
+	private static final String LOG_TAG = "TabInstalledDaemonsActv";
+	private static final int LAUNCH_ACTIVITY_REQUESTCODE = 1;
+	private static final int MESSAGE_CLEAR_LIST = 1;
+	private static final int MESSAGE_APPEND_LIST = 2;
+	private static final int CONTEXT_MENU_GROUP_RUNNINGDAEMON = 1;
+	private static final int CONTEXT_MENU_UNINSTALL = 0;
 
-            DessertApplication.instance.clearInstalledDaemonsCache();
-            List<InstalledDaemonInfo> installedDaemons = DessertApplication.instance.getInstalledDaemons();
-            viewUpdateHandler.sendMessage(viewUpdateHandler.obtainMessage(MESSAGE_APPEND_LIST, installedDaemons));
-        }
-    }
+	private final class ListRetrieverRunner implements Runnable {
+		@Override
+		public void run() {
+			viewUpdateHandler.sendEmptyMessage(MESSAGE_CLEAR_LIST);
 
-    private static final String LOG_TAG = "TabInstalledDaemonsActv";
+			DessertApplication.instance.clearInstalledDaemonsCache();
+			List<InstalledDaemonInfo> installedDaemons = DessertApplication.instance.getInstalledDaemons();
+			viewUpdateHandler.sendMessage(viewUpdateHandler.obtainMessage(MESSAGE_APPEND_LIST, installedDaemons));
+		}
+	}
 
-    private static final int LAUNCH_ACTIVITY_REQUESTCODE = 1;
+	/**
+	 * Update handler of this activity. Should be used as the receiver for
+	 * messages to indicate a need for UI changes, updates or any other activity
+	 * in general.
+	 */
+	public static class StaticHandler extends Handler {
+		private final WeakReference<TabInstalledDaemonsActivity> mActivity;
 
-    private static final int MESSAGE_CLEAR_LIST = 1;
-    private static final int MESSAGE_APPEND_LIST = 2;
+		public StaticHandler(TabInstalledDaemonsActivity activity) {
+			mActivity = new WeakReference<>(activity);
+		}
 
-    private static final int CONTEXT_MENU_GROUP_DEFAULT = 0;
-    private static final int CONTEXT_MENU_GROUP_RUNNINGDAEMON = 1;
+		@Override
+		public void handleMessage(Message msg) {
+			TabInstalledDaemonsActivity activity = mActivity.get();
+			if (activity != null) {
+				switch (msg.what) {
+					case MESSAGE_CLEAR_LIST:
+						activity.getAdapter().clear();
+						break;
+					case MESSAGE_APPEND_LIST:
+						@SuppressWarnings("unchecked")
+						List<InstalledDaemonInfo> installedDaemons = (List<InstalledDaemonInfo>) msg.obj;
+						Collections.sort(installedDaemons, DaemonInfo.DAEMON_LIST_COMPARATOR);
+						DaemonListAdapter<InstalledDaemonInfo> adapter = activity.getAdapter();
+						for (InstalledDaemonInfo daemon : installedDaemons) {
+							adapter.add(daemon);
+						}
+						break;
+					default:
+						Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
+				}
+				super.handleMessage(msg);
+			}
+		}
+	}
+	private final StaticHandler viewUpdateHandler = new StaticHandler(this);
 
-    private static final int CONTEXT_MENU_UNINSTALL = 0;
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.daemon_list, container, false);
+	}
 
-    /**
-     * Update handler of this activity. Should be used as the receiver for
-     * messages to indicate a need for UI changes, updates or any other activity
-     * in general.
-     */
-    public static class StaticHandler extends Handler {
-        private final WeakReference<TabInstalledDaemonsActivity> mActivity;
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState){
+		List<InstalledDaemonInfo> listContent = new ArrayList<>();
+		DaemonListAdapter<InstalledDaemonInfo> adapter = new DaemonListAdapter<>(getActivity(), listContent, false, true);
+		setListAdapter(adapter);
 
-        public StaticHandler(TabInstalledDaemonsActivity activity) {
-            mActivity = new WeakReference<>(activity);
-        }
+		ListView listView = getListView();
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (getAdapter() == parent.getAdapter()) {
+					InstalledDaemonInfo daemonInfo = getAdapter().getItem(position);
 
-        @Override
-        public void handleMessage(Message msg) {
-            TabInstalledDaemonsActivity activity = mActivity.get();
-            if (activity != null) {
-                switch (msg.what) {
-                    case MESSAGE_CLEAR_LIST:
-                        activity.getAdapter().clear();
-                        break;
-                    case MESSAGE_APPEND_LIST:
-                        @SuppressWarnings("unchecked")
-                        List<InstalledDaemonInfo> installedDaemons = (List<InstalledDaemonInfo>) msg.obj;
-                        Collections.sort(installedDaemons, DaemonInfo.DAEMON_LIST_COMPARATOR);
-                        DaemonListAdapter<InstalledDaemonInfo> adapter = activity.getAdapter();
-                        for (InstalledDaemonInfo daemon : installedDaemons) {
-                            adapter.add(daemon);
-                        }
-                        break;
-                    default:
-                        Log.w(LOG_TAG, "Got unknown message: " + msg + ". ignoring it");
-                }
-                super.handleMessage(msg);
-            }
-        }
-    }
-    private final StaticHandler viewUpdateHandler = new StaticHandler(this);
+					Intent intent = new Intent(getActivity(), LaunchDaemonActivity.class);
+					intent.putExtra(LaunchDaemonActivity.BUNDLE_DAEMON_ID_KEY, daemonInfo.getDaemonID());
+					startActivityForResult(intent, LAUNCH_ACTIVITY_REQUESTCODE);
+				}
+			}
+		});
+		registerForContextMenu(listView);
+	}
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case CONTEXT_MENU_UNINSTALL: {
-            AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case CONTEXT_MENU_UNINSTALL: {
+				AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
-            InstalledDaemonInfo daemonInfo = getAdapter().getItem(info.position);
-            DessertApplication.instance.uninstallDaemon(daemonInfo);
-            // start runner
-            DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
-            // show some info
-            Toast.makeText(TabInstalledDaemonsActivity.this, R.string.uninstalled_daemon, Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        default:
-            return super.onContextItemSelected(item);
-        }
-    }
+				InstalledDaemonInfo daemonInfo = getAdapter().getItem(info.position);
+				DessertApplication.instance.uninstallDaemon(daemonInfo);
+				// start runner
+				DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
+				// show some info
+				Toast.makeText(getActivity(), R.string.uninstalled_daemon, Toast.LENGTH_SHORT).show();
+				return true;
+			}
+			default:
+				return super.onContextItemSelected(item);
+		}
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public boolean onOptionsItemSelected(MenuItem menuItem) {
+		boolean supRetVal = super.onOptionsItemSelected(menuItem);
 
-        setContentView(R.layout.daemon_list);
+		Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
 
-        List<InstalledDaemonInfo> listContent = new ArrayList<>();
-        DaemonListAdapter<InstalledDaemonInfo> adapter = new DaemonListAdapter<>(this, listContent, false, true);
-        setListAdapter(adapter);
+		switch (menuItem.getItemId()) {
+			case R.id.Refresh:
+				// start runner
+				DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
 
-        ListView listView = getListView();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (getAdapter() == parent.getAdapter()) {
-                    InstalledDaemonInfo daemonInfo = getAdapter().getItem(position);
+				supRetVal = true;
+				break;
+			case R.id.Preferences:
+				startActivity(new Intent(getActivity(), SetupActivity.class));
 
-                    Intent intent = new Intent(TabInstalledDaemonsActivity.this, LaunchDaemonActivity.class);
-                    intent.putExtra(LaunchDaemonActivity.BUNDLE_DAEMON_ID_KEY, daemonInfo.getDaemonID());
-                    startActivityForResult(intent, LAUNCH_ACTIVITY_REQUESTCODE);
-                }
-            }
-        });
+				supRetVal = true;
+				break;
+			case R.id.About:
+				new AboutDialog(getActivity()).show();
 
-        //
-        registerForContextMenu(listView);
-    }
+				supRetVal = true;
+				break;
+			case R.id.Exit:
+				getActivity().finish();
+				supRetVal = true;
+				break;
+			default:
+				break;
+		}
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
+		return supRetVal;
+	}
 
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        InstalledDaemonInfo selectedDaemon = getAdapter().getItem(info.position);
+	@SuppressWarnings("unchecked")
+	private DaemonListAdapter<InstalledDaemonInfo> getAdapter() {
+		return (DaemonListAdapter<InstalledDaemonInfo>) getListAdapter();
+	}
 
-        // set title
-        menu.setHeaderTitle(selectedDaemon.getName() + " " + selectedDaemon.getVersion());
+	@Override
+	public void onResume() {
+		super.onResume();
+		// start runner
+		DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
+	}
 
-        // add menu items
-        menu.add(CONTEXT_MENU_GROUP_RUNNINGDAEMON, CONTEXT_MENU_UNINSTALL, 0, R.string.uninstall_daemon);
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
 
-        // enable/disable menu groups
-        RunningDaemonInfo runningDaemon = DessertApplication.instance.getRunningDaemon();
-        boolean enableRunningDaemonGroup = runningDaemon == null || !runningDaemon.getDaemonID().equals(selectedDaemon.getDaemonID());
-        menu.setGroupEnabled(CONTEXT_MENU_GROUP_RUNNINGDAEMON, enableRunningDaemonGroup);
-    }
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+		InstalledDaemonInfo selectedDaemon = getAdapter().getItem(info.position);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
+		// set title
+		menu.setHeaderTitle(selectedDaemon.getName() + " " + selectedDaemon.getVersion());
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tab_installed, menu);
+		// add menu items
+		menu.add(CONTEXT_MENU_GROUP_RUNNINGDAEMON, CONTEXT_MENU_UNINSTALL, 0, R.string.uninstall_daemon);
 
-        return true;
-    }
+		// enable/disable menu groups
+		RunningDaemonInfo runningDaemon = DessertApplication.instance.getRunningDaemon();
+		boolean enableRunningDaemonGroup = runningDaemon == null || !runningDaemon.getDaemonID().equals(selectedDaemon.getDaemonID());
+		menu.setGroupEnabled(CONTEXT_MENU_GROUP_RUNNINGDAEMON, enableRunningDaemonGroup);
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        boolean supRetVal = super.onOptionsItemSelected(menuItem);
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
+		super.onActivityCreated(savedInstanceState);
+	}
 
-        Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.tab_installed, menu);
+	}
 
-        switch (menuItem.getItemId()) {
-        case R.id.Refresh:
-            // start runner
-            DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
-
-            supRetVal = true;
-            break;
-        case R.id.Preferences:
-            startActivity(new Intent(TabInstalledDaemonsActivity.this, SetupActivity.class));
-
-            supRetVal = true;
-            break;
-        case R.id.About:
-            new AboutDialog(this).show();
-
-            supRetVal = true;
-            break;
-        case R.id.Exit:
-        	this.finish();
-        	supRetVal = true;
-        	break;
-        default:
-            break;
-        }
-
-        return supRetVal;
-    }
-
-    @SuppressWarnings("unchecked")
-    private DaemonListAdapter<InstalledDaemonInfo> getAdapter() {
-        return (DaemonListAdapter<InstalledDaemonInfo>) getListAdapter();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == LAUNCH_ACTIVITY_REQUESTCODE && resultCode == RESULT_OK) {
-            Activity parent = getParent();
-            if (parent instanceof MainActivity) {
-                MainActivity mainActivity = (MainActivity) parent;
-                mainActivity.setCurrentTabToRunning();
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // start runner
-        DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 }

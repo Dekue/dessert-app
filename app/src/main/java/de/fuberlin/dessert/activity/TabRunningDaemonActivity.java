@@ -27,11 +27,9 @@ import java.io.IOException;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,13 +37,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ListFragment;
 import android.text.InputType;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -81,7 +82,7 @@ import de.fuberlin.dessert.telnet.jobs.PropertyTelnetJob;
  * Activity to show the management entries as defined in the XML file of the
  * running daemon.
  */
-public class TabRunningDaemonActivity extends ListActivity implements DaemonStartStopEventListener, DataChangedEventListener,
+public class TabRunningDaemonActivity extends ListFragment implements DaemonStartStopEventListener, DataChangedEventListener,
         CommandResultEventListener {
 
     private final class ResultDialog extends Dialog {
@@ -106,15 +107,24 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
             textView.setText(this.content);
         }
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            super.onCreateOptionsMenu(menu);
+		@Override
+		public boolean onPrepareOptionsMenu(Menu menu) {
+			boolean result = super.onPrepareOptionsMenu(menu);
 
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.result_dialog, menu);
+			menu.setGroupEnabled(R.id.DaemonGroup, DessertApplication.instance.getRunningDaemon() != null);
 
-            return true;
-        }
+			return result;
+		}
+
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			super.onCreateOptionsMenu(menu);
+
+			MenuInflater inflater = getActivity().getMenuInflater();
+			inflater.inflate(R.menu.result_dialog, menu);
+
+			return true;
+		}
 
         @Override
         public boolean onMenuItemSelected(int featureId, MenuItem menuItem) {
@@ -123,10 +133,10 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
             Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
             switch (menuItem.getItemId()) {
             case R.id.Save: {
-                final Dialog dialog = new Dialog(TabRunningDaemonActivity.this);
+                final Dialog dialog = new Dialog(getActivity());
                 dialog.setTitle(R.string.command_results_title);
                 dialog.setCancelable(true);
-                dialog.setOwnerActivity(TabRunningDaemonActivity.this);
+                dialog.setOwnerActivity(getActivity());
                 dialog.setContentView(R.layout.save_result_file);
 
                 final ScrollView contentLayout = (ScrollView) dialog.findViewById(R.id.ContentLayout);
@@ -190,6 +200,12 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
     private String lastCustomCommand = "";
     private int lastCustomCommandModeIndex = 0;
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
+		super.onActivityCreated(savedInstanceState);
+	}
+
     @Override
     public void onAborted() {
         // stop progress bar and inform user
@@ -198,7 +214,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
             progressDialog = null;
         }
 
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.command_aborted)
                 .setNegativeButton(R.string.ok, null)
                 .create()
@@ -219,14 +235,14 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
             tmp = TabRunningDaemonActivity.this.getString(R.string.command_results_done);
         }
         final String result = tmp;
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // create dialog
                 final Dialog dialog = new ResultDialog(
-                        TabRunningDaemonActivity.this,
-                        TabRunningDaemonActivity.this,
-                        TabRunningDaemonActivity.this.getString(R.string.command_results_title),
+                        getActivity(),
+                        getActivity(),
+                        getActivity().getString(R.string.command_results_title),
                         result);
 
                 // show   
@@ -236,16 +252,22 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
 
     }
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.daemon_list, container, false);
+	}
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.daemon_list);
-
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         ListView listView = getListView();
-        View headerView = getLayoutInflater().inflate(R.layout.manage_header_element, getListView(), false);
+        View headerView = getActivity().getLayoutInflater().inflate(R.layout.manage_header_element, getListView(), false);
         listView.addHeaderView(headerView, null, false);
-        setListAdapter(new ManageConfigurationListAdapter(TabRunningDaemonActivity.this));
+        setListAdapter(new ManageConfigurationListAdapter(getActivity()));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -296,19 +318,15 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tab_running, menu);
-
-        return true;
-    }
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.tab_running, menu);
+	}
 
     @Override
     public void onDaemonStarted(final RunningDaemonInfo daemonInfo) {
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 View headerView = getListView().findViewById(R.id.HeaderView);
@@ -339,7 +357,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
 
     @Override
     public void onDaemonStopped() {
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 View headerView = getListView().findViewById(R.id.HeaderView);
@@ -352,7 +370,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
 
     @Override
     public void onDataChanged() {
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 getAdapter().notifyDataSetChanged();
@@ -368,7 +386,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
             progressDialog = null;
         }
 
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(getActivity())
                 .setMessage(R.string.command_error)
                 .setNegativeButton(R.string.ok, null)
                 .create()
@@ -414,7 +432,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
             DessertApplication.telnetScheduler.enqueueShutdownCommand(Priority.HIGHEST);
 
             // user message
-            Toast.makeText(TabRunningDaemonActivity.this, R.string.issued_shutdown_command, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.issued_shutdown_command, Toast.LENGTH_SHORT).show();
 
             supRetVal = true;
             break;
@@ -422,20 +440,20 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
         case R.id.Kill: {
             RunningDaemonInfo daemonInfo = DessertApplication.instance.getRunningDaemon();
             if (NativeTasks.killProcess(daemonInfo.getPID(), true)) {
-                Toast.makeText(TabRunningDaemonActivity.this, R.string.issued_kill_command, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.issued_kill_command, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(TabRunningDaemonActivity.this, R.string.error_kill_command, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.error_kill_command, Toast.LENGTH_LONG).show();
             }
             supRetVal = true;
             break;
         }
         case R.id.Preferences: {
-            startActivity(new Intent(TabRunningDaemonActivity.this, SetupActivity.class));
+            startActivity(new Intent(getActivity(), SetupActivity.class));
             supRetVal = true;
             break;
         }
         case R.id.About: {
-            new AboutDialog(this).show();
+            new AboutDialog(getActivity()).show();
 
             supRetVal = true;
             break;
@@ -447,25 +465,16 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
         return supRetVal;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean result = super.onPrepareOptionsMenu(menu);
-
-        menu.setGroupEnabled(R.id.DaemonGroup, DessertApplication.instance.getRunningDaemon() != null);
-
-        return result;
-    }
-
     private ManageConfigurationListAdapter getAdapter() {
         return (ManageConfigurationListAdapter) getListAdapter();
     }
 
     private void handleCommandClick(final ManageEntryCommand commandEntry) {
         // create dialog
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(getActivity());
         dialog.setTitle(getString(R.string.run_command, commandEntry.getDescription()));
         dialog.setCancelable(true);
-        dialog.setOwnerActivity(this);
+        dialog.setOwnerActivity(getActivity());
         dialog.setContentView(R.layout.execute_command);
 
         final LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
@@ -474,7 +483,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
         // fill with options
         final LinearLayout linearLayout = (LinearLayout) dialog.findViewById(R.id.OptionsLayout);
         for (CommandOption option : commandEntry.getCommandOptions()) {
-            View view = option.getView(getLayoutInflater());
+            View view = option.getView(getActivity().getLayoutInflater());
             linearLayout.addView(view);
         }
 
@@ -507,7 +516,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
                     String title = TabRunningDaemonActivity.this.getString(R.string.command_progress_title);
                     String msg = TabRunningDaemonActivity.this.getString(R.string.command_progress_message, commandEntry.getDescription());
                     TabRunningDaemonActivity.this.progressDialog =
-                            ProgressDialog.show(TabRunningDaemonActivity.this, title, msg, true, true,
+                            ProgressDialog.show(getActivity(), title, msg, true, true,
                                     new ProgressDialog.OnCancelListener() {
                                         @Override
                                         public void onCancel(DialogInterface dlg) {
@@ -529,22 +538,22 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
 
     private void handleCustomCommandClick() {
         // create dialog
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(getActivity());
         dialog.setTitle(R.string.run_custom_command);
         dialog.setCancelable(true);
-        dialog.setOwnerActivity(this);
+        dialog.setOwnerActivity(getActivity());
         dialog.setContentView(R.layout.execute_command);
 
         LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
         contentLayout.setMinimumWidth(1000);
 
         // fill with options
-        final EditText cmdEditText = new EditText(this);
+        final EditText cmdEditText = new EditText(getActivity());
         cmdEditText.setText(lastCustomCommand);
         cmdEditText.setInputType(InputType.TYPE_CLASS_TEXT);
 
         final int[] selectedModeIndex = { lastCustomCommandModeIndex };
-        final EditText modeSelectionView = new EditText(this);
+        final EditText modeSelectionView = new EditText(getActivity());
         modeSelectionView.setText(customCommandModes[selectedModeIndex[0]].toString());
         modeSelectionView.setInputType(InputType.TYPE_NULL);
         modeSelectionView.setCursorVisible(false);
@@ -559,7 +568,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
                     modeStrings[i] = customCommandModes[i].toString();
                 }
 
-                new AlertDialog.Builder(TabRunningDaemonActivity.this)
+                new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.choose_value)
                         .setCancelable(true)
                         .setItems(modeStrings, new DialogInterface.OnClickListener() {
@@ -602,7 +611,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
                     String customCommandString = TabRunningDaemonActivity.this.getString(R.string.custom_command);
                     String msg = TabRunningDaemonActivity.this.getString(R.string.command_progress_message, customCommandString);
                     TabRunningDaemonActivity.this.progressDialog =
-                            ProgressDialog.show(TabRunningDaemonActivity.this, title, msg, true, true,
+                            ProgressDialog.show(getActivity(), title, msg, true, true,
                                     new ProgressDialog.OnCancelListener() {
                                         @Override
                                         public void onCancel(DialogInterface dlg) {
@@ -633,10 +642,10 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
 
     private void handlePropertyLongClick(final ManageEntryProperty propertyEntry) {
         // create dialog
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(getActivity());
         dialog.setTitle(getString(R.string.set_property, propertyEntry.getDescription()));
         dialog.setCancelable(true);
-        dialog.setOwnerActivity(this);
+        dialog.setOwnerActivity(getActivity());
         dialog.setContentView(R.layout.execute_command);
 
         LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
@@ -645,7 +654,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
         // fill with options
         LinearLayout linearLayout = (LinearLayout) dialog.findViewById(R.id.OptionsLayout);
         for (CommandOption option : propertyEntry.getSetterCommandOptions()) {
-            View view = option.getView(getLayoutInflater());
+            View view = option.getView(getActivity().getLayoutInflater());
             linearLayout.addView(view);
         }
 
@@ -751,7 +760,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
 
         // unregister change listener
@@ -759,7 +768,7 @@ public class TabRunningDaemonActivity extends ListActivity implements DaemonStar
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         // register change listener

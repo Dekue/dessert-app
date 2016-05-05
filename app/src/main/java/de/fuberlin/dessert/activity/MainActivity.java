@@ -22,25 +22,26 @@
  ******************************************************************************/
 package de.fuberlin.dessert.activity;
 
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.app.AlertDialog;
-import android.app.TabActivity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
-import android.widget.TabHost;
 import android.widget.Toast;
-
 import java.lang.ref.WeakReference;
-
 import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
+import de.fuberlin.dessert.adapter.PagerAdapter;
 import de.fuberlin.dessert.tasks.FileTasks;
 import de.fuberlin.dessert.tasks.NativeTasks;
 import de.fuberlin.service.NotificationService;
@@ -49,7 +50,7 @@ import de.fuberlin.service.NotificationService;
  * Main activity of the application. Only holds the tab host containing the
  * running daemon, installed daemons and repository activities.
  */
-public class MainActivity extends TabActivity {
+public class MainActivity extends AppCompatActivity {
 
 	private final class InstallFilesRunner implements Runnable {
 
@@ -84,18 +85,10 @@ public class MainActivity extends TabActivity {
 	}
 
 	private static final String LOG_TAG = "DESSERT -> MainActivity";
-
-	private static final String TAB_TAG_RUNNING = "tab_running";
-	private static final String TAB_TAG_INSTALLED = "tab_installed";
-	private static final String TAB_TAG_TOOLS = "tab_tools";
-
 	private static final int MESSAGE_INSTALL_LIBRARIES_SUCCESS = 1;
 	private static final int MESSAGE_INSTALL_LIBRARIES_FAILURE = 2;
-
 	private static final int MESSAGE_EXCEPTION_INSTALL_SCRIPT = 101;
 	private static final int MESSAGE_EXCEPTION_INSTALL_LIBRARIES = 102;
-
-	private NotificationService mBoundService = null;
 
 	/**
 	 * Update handler of this activity. Should be used as the receiver for
@@ -151,23 +144,13 @@ public class MainActivity extends TabActivity {
 	}
 	private final StaticHandler viewUpdateHandler = new StaticHandler(this);
 
+
 	private final ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
-			// This is called when the connection with the service has been
-			// established, giving us the service object we can use to
-			// interact with the service.  Because we have bound to a explicit
-			// service that we know is running in our own process, we can
-			// cast its IBinder to a concrete class and directly access it.
-			mBoundService = ((NotificationService.LocalBinder) service).getService();
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName className) {
-			// This is called when the connection with the service has been
-			// unexpectedly disconnected -- that is, its process crashed.
-			// Because it is running in our same process, we should never
-			// see this happen.
-			mBoundService = null;
 		}
 	};
 
@@ -176,34 +159,38 @@ public class MainActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// init tabs
-		TabHost theTabHost = getTabHost();
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
-		// first tab: running daemons
-		theTabHost.addTab(
-				theTabHost.newTabSpec(TAB_TAG_RUNNING)
-						.setIndicator(getString(R.string.tab_running))
-						.setContent(new Intent(this, TabRunningDaemonActivity.class)));
-		// second tab: installed daemons
-		theTabHost.addTab(
-				theTabHost.newTabSpec(TAB_TAG_INSTALLED)
-						.setIndicator(getString(R.string.tab_installed))
-						.setContent(new Intent(this, TabInstalledDaemonsActivity.class)));
-		// third tab: manage daemons
-		theTabHost.addTab(
-				theTabHost.newTabSpec(TAB_TAG_TOOLS)
-						.setIndicator(getString(R.string.tab_tools))
-						.setContent(new Intent(this, TabDaemonRepositoryActivity.class)));
+		TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+		assert tabLayout != null;
+		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_tools)));
+		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_installed)));
+		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_running)));
+		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-		// set start tab
-		int startTab = 1;
-		if (DessertApplication.instance.getRunningDaemon() != null) {
-			startTab = 0;
-		}
-		if (!DessertApplication.instance.hasDaemonsInstalled()) {
-			startTab = 2;
-		}
-		theTabHost.setCurrentTab(startTab);
+		final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+		final PagerAdapter adapter = new PagerAdapter
+				(getSupportFragmentManager(), tabLayout.getTabCount());
+		assert viewPager != null;
+		viewPager.setAdapter(adapter);
+		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+											   @Override
+											   public void onTabSelected(TabLayout.Tab tab) {
+												   viewPager.setCurrentItem(tab.getPosition());
+											   }
+
+											   @Override
+											   public void onTabUnselected(TabLayout.Tab tab) {
+
+											   }
+
+											   @Override
+											   public void onTabReselected(TabLayout.Tab tab) {
+
+											   }
+										   });
 
 		// install files and libraries
 		DessertApplication.taskExecutor.execute(new InstallFilesRunner());
@@ -222,13 +209,6 @@ public class MainActivity extends TabActivity {
 		}
 	}
 
-	/**
-	 * Sets the currently active tab to the running tab
-	 */
-	public void setCurrentTabToRunning() {
-		getTabHost().setCurrentTab(0);
-	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -238,7 +218,8 @@ public class MainActivity extends TabActivity {
 
 			if (faultyPaths == null || faultyPaths.length == 0) {
 				NativeTasks.setCheckedForNativeCommands(true);
-			} else {
+			}
+			else {
 				StringBuilder sb = new StringBuilder();
 				for (String faultyPath : faultyPaths) {
 					sb.append('\n').append(faultyPath);

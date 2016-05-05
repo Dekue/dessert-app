@@ -28,16 +28,16 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.tasks.NativeTasks;
 
 /**
  * Global preferences activity.
  */
-public class SetupActivity extends PreferenceActivity {
+public class SetupActivity extends PreferenceFragment {
 
-    private final class PathPrefenceChangeListener implements OnPreferenceChangeListener {
+    private final class PathPreferenceChangeListener implements OnPreferenceChangeListener {
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -47,7 +47,7 @@ public class SetupActivity extends PreferenceActivity {
                 if (!file.exists() && !file.isFile()) {
                     // show dialog
                     NativeTasks.setCheckedForNativeCommands(false);
-                    new AlertDialog.Builder(SetupActivity.this)
+                    new AlertDialog.Builder(getActivity())
                             .setCancelable(true)
                             .setTitle(R.string.native_command_not_found_title)
                             .setMessage(getString(R.string.native_command_not_found_msg, path))
@@ -93,7 +93,7 @@ public class SetupActivity extends PreferenceActivity {
 
         addPreferencesFromResource(R.xml.preferences);
 
-        PathPrefenceChangeListener pathChangeListener = new PathPrefenceChangeListener();
+        PathPreferenceChangeListener pathChangeListener = new PathPreferenceChangeListener();
         findPreference(KEY_PATH_SU).setOnPreferenceChangeListener(pathChangeListener);
         findPreference(KEY_PATH_SH).setOnPreferenceChangeListener(pathChangeListener);
         findPreference(KEY_PATH_LN).setOnPreferenceChangeListener(pathChangeListener);
