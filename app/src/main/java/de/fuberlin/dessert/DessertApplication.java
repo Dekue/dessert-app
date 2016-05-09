@@ -47,6 +47,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import de.fuberlin.dessert.activity.SetupActivity;
 import de.fuberlin.dessert.event.DaemonStartStopEventListener;
@@ -343,7 +344,7 @@ public class DessertApplication extends Application {
         DessertApplication.taskExecutor = Executors.newSingleThreadExecutor();
         DessertApplication.telnetScheduler = new TelnetScheduler();
         DessertApplication.telnetScheduler.startScheduler();
-        DessertApplication.defaultDaemonIcon = getResources().getDrawable(R.drawable.daemon_icon);
+        DessertApplication.defaultDaemonIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.daemon_icon, null);
 
         // load running daemon state
         loadRunningDaemonState();
@@ -421,7 +422,7 @@ public class DessertApplication extends Application {
      * @throws Exception thrown if anything bad happens to the sad and lonely
      *             daemon process
      */
-    public synchronized RunningDaemonInfo startDaemon(String daemonID) throws FileNotFoundException, IOException, Exception {
+    public synchronized RunningDaemonInfo startDaemon(String daemonID) throws Exception {
         if (runningDaemon != null) {
             throw new IllegalStateException("Can not start a second daemon if there is already a running daemon");
         }

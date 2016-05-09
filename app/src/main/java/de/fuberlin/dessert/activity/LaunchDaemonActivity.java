@@ -28,7 +28,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.lang.ref.WeakReference;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -39,6 +38,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,7 +60,7 @@ import de.fuberlin.dessert.model.daemon.RunningDaemonInfo;
 import de.fuberlin.dessert.model.daemon.InstalledDaemonInfo;
 import de.fuberlin.dessert.tasks.FileTasks;
 
-public class LaunchDaemonActivity extends Activity implements DaemonStartStopEventListener {
+public class LaunchDaemonActivity extends AppCompatActivity implements DaemonStartStopEventListener {
 
     private final class LaunchRunner implements Runnable {
         @Override
@@ -141,7 +142,8 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
             @Override
             public void run() {
                 Button launchButton = (Button) findViewById(R.id.LaunchButton);
-                launchButton.setEnabled(false);
+				if (launchButton != null)
+                	launchButton.setEnabled(false);
             }
         });
     }
@@ -152,7 +154,8 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
             @Override
             public void run() {
                 Button launchButton = (Button) findViewById(R.id.LaunchButton);
-                launchButton.setEnabled(true);
+				if (launchButton != null)
+                	launchButton.setEnabled(true);
             }
         });
     }
@@ -285,13 +288,21 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
 
         // set launch button event
         Button launchButton = (Button) findViewById(R.id.LaunchButton);
-        launchButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DessertApplication.taskExecutor.execute(new LaunchRunner());
-            }
-        });
-        
+        if(launchButton != null) {
+			launchButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					DessertApplication.taskExecutor.execute(new LaunchRunner());
+				}
+			});
+		}
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
+		if(getSupportActionBar() != null) {
+			//getSupportActionBar().setLogo(R.drawable.icon);
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
+		}
         
         // get needed preferences and configuration
         String daemonID = getIntent().getStringExtra(BUNDLE_DAEMON_ID_KEY);
@@ -302,24 +313,29 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
         // set the icon
         ImageView iconView = (ImageView) findViewById(R.id.Icon);
         Drawable icon = info.getIconDrawable();
-        if (icon == null) {
-            iconView.setImageDrawable(DessertApplication.defaultDaemonIcon);
-        } else {
-            iconView.setImageDrawable(icon);
-        }
+		if(iconView != null) {
+			if (icon == null) {
+				iconView.setImageDrawable(DessertApplication.defaultDaemonIcon);
+			} else {
+				iconView.setImageDrawable(icon);
+			}
+		}
         
         // set the daemon name
-        launchButton.setText(getString(R.string.launch, info.getName()));
+		if (launchButton != null)
+       		launchButton.setText(getString(R.string.launch, info.getName()));
         
         // generate configuration elements
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ConfigLayout);
-        linearLayout.removeAllViews();
-        for (ConfigEntry entry : configuration.getEntries()) {
-            entry.ensureDefaultValue(daemonPreferences, false);
-            View view = entry.getView(getLayoutInflater(), daemonPreferences);
-            linearLayout.addView(view);
-        }
-        linearLayout.requestLayout();
+		if(linearLayout != null) {
+			linearLayout.removeAllViews();
+			for (ConfigEntry entry : configuration.getEntries()) {
+				entry.ensureDefaultValue(daemonPreferences, false);
+				View view = entry.getView(getLayoutInflater(), daemonPreferences);
+				linearLayout.addView(view);
+			}
+			linearLayout.requestLayout();
+		}
     }
 
     @Override
@@ -331,6 +347,12 @@ public class LaunchDaemonActivity extends Activity implements DaemonStartStopEve
 
         finish();
     }
+
+	// image cheating to save resources instead of a real drawer:
+	public void onClickDrawer(View v)
+	{
+		Toast.makeText(this, "bla", Toast.LENGTH_SHORT).show();
+	}
 
     @Override
     protected void onResume() {

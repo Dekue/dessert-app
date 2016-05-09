@@ -252,12 +252,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
 
     }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
-	@Override
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.daemon_list, container, false);
 	}

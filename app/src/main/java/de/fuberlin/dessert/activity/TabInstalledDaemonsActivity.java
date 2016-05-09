@@ -65,7 +65,6 @@ public class TabInstalledDaemonsActivity extends ListFragment {
 		@Override
 		public void run() {
 			viewUpdateHandler.sendEmptyMessage(MESSAGE_CLEAR_LIST);
-
 			DessertApplication.instance.clearInstalledDaemonsCache();
 			List<InstalledDaemonInfo> installedDaemons = DessertApplication.instance.getInstalledDaemons();
 			viewUpdateHandler.sendMessage(viewUpdateHandler.obtainMessage(MESSAGE_APPEND_LIST, installedDaemons));
@@ -233,8 +232,4 @@ public class TabInstalledDaemonsActivity extends ListFragment {
 		inflater.inflate(R.menu.tab_installed, menu);
 	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
 }

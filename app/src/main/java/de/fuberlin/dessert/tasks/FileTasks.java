@@ -505,7 +505,7 @@ public class FileTasks {
      * @throws IOException thrown if there was a problem while accessing the
      *             file
      */
-    public static int readPIDFile(File pidFile) throws FileNotFoundException, IOException {
+    public static int readPIDFile(File pidFile) throws IOException {
         int result = -1;
 
         BufferedReader reader = null;

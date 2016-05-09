@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content"
-	android:layout_width="fill_parent" android:orientation="vertical" android:padding="5dip">
-	<TextView android:id="@+id/Description" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/desc"
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+	<TextView
+        android:id="@+id/Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/desc"
 		android:textAppearance="?android:attr/textAppearanceLarge" />
-	<EditText android:id="@+id/EditBox" android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="@string/content"
-		android:inputType="none" android:cursorVisible="false" android:drawableLeft="@android:drawable/ic_menu_more" android:drawableStart="@android:drawable/ic_menu_more" android:gravity="center_vertical" />
+	<EditText
+        android:id="@+id/EditBox"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/content"
+		android:inputType="none"
+        android:cursorVisible="false"
+        android:drawableLeft="@android:drawable/ic_menu_more"
+        android:drawableStart="@android:drawable/ic_menu_more"
+        android:gravity="center_vertical" />
 </LinearLayout>

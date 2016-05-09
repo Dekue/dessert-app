@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 import java.lang.ref.WeakReference;
 import de.fuberlin.dessert.DessertApplication;
@@ -51,6 +52,12 @@ import de.fuberlin.service.NotificationService;
  * running daemon, installed daemons and repository activities.
  */
 public class MainActivity extends AppCompatActivity {
+
+	// image cheating to save resources instead of a real drawer:
+	public void onClickDrawer(View v)
+	{
+		Toast.makeText(this, "blatest", Toast.LENGTH_SHORT).show();
+	}
 
 	private final class InstallFilesRunner implements Runnable {
 
@@ -162,6 +169,10 @@ public class MainActivity extends AppCompatActivity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
+		if(getSupportActionBar() != null) {
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
+		}
+
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 		assert tabLayout != null;
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_tools)));
@@ -180,15 +191,11 @@ public class MainActivity extends AppCompatActivity {
 											   public void onTabSelected(TabLayout.Tab tab) {
 												   viewPager.setCurrentItem(tab.getPosition());
 											   }
-
 											   @Override
 											   public void onTabUnselected(TabLayout.Tab tab) {
-
 											   }
-
 											   @Override
 											   public void onTabReselected(TabLayout.Tab tab) {
-
 											   }
 										   });
 

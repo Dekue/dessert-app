@@ -1,26 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:orientation="vertical">
-	<LinearLayout
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_gravity="top" android:orientation="horizontal">
-		<ImageView android:layout_width="wrap_content" android:maxHeight="100dip"
-		android:maxWidth="100dip" android:id="@+id/Icon" android:scaleType="fitXY"
-		android:minHeight="100dip" android:minWidth="100dip" android:adjustViewBounds="true"
-		android:src="@drawable/icon" android:visibility="visible" android:contentDescription="@string/none"
-		android:layout_height="wrap_content" />
-		<View
-			android:layout_width="fill_parent" android:layout_height="1dip"
-			android:layout_weight="1" />
-		<Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/LaunchButton"
-			android:text="@string/launch_daemon" android:layout_width="wrap_content" android:width="150dip" />
-		<View
-			android:layout_width="fill_parent" android:layout_height="1dip"
-			android:layout_weight="1" /> 
-	</LinearLayout>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:layout_marginLeft="-20dp"
+        android:layout_marginStart="-20dp"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
+        <ImageButton
+            android:contentDescription="@string/none"
+            android:src="@drawable/ic_navigation_drawer"
+            android:layout_width="wrap_content"
+            android:id="@+id/drawer"
+            android:clickable="true"
+            android:minHeight="45dp"
+            android:onClick="onClickDrawer"
+            android:layout_height="wrap_content"
+            android:background="@null" />
+        <ImageButton
+            android:contentDescription="@string/none"
+            android:src="@drawable/icon"
+            android:layout_width="wrap_content"
+            android:id="@+id/Icon"
+            android:clickable="true"
+            android:onClick="onClickDrawer"
+            android:layout_height="wrap_content"
+            android:background="@null"/>
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/LaunchButton"
+            android:text="@string/launch_daemon"
+            android:layout_width="wrap_content"
+            android:width="200dp" />
+    </android.support.v7.widget.Toolbar
+>
 	<ScrollView
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
-		<LinearLayout android:id="@+id/ConfigLayout" android:layout_width="fill_parent" android:orientation="vertical"
+		android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+		<LinearLayout
+            android:id="@+id/ConfigLayout"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
 			android:layout_height="wrap_content">
 		</LinearLayout>
 	</ScrollView>

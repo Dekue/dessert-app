@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
-	android:text="@string/desc" android:id="@+id/Description" android:lines="1" android:layout_height="wrap_content" android:padding="5dip"
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+	android:text="@string/desc"
+    android:id="@+id/Description"
+    android:lines="1"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
 	android:textStyle="bold">
 </TextView>
