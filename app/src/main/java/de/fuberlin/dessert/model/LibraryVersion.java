@@ -111,27 +111,6 @@ public class LibraryVersion implements Comparable<LibraryVersion> {
     }
 
     /**
-     * @return gets the age of the current ABI version of this history
-     */
-    public int getAge() {
-        return age;
-    }
-
-    /**
-     * @return gets the current ABI version of this library
-     */
-    public int getCurrent() {
-        return current;
-    }
-
-    /**
-     * @return gets the revision of the current ABI version of this library
-     */
-    public int getRevision() {
-        return revision;
-    }
-
-    /**
      * Checks if this object is compatible with the given version number.
      * 
      * @param expectedVersion version number to satisfy

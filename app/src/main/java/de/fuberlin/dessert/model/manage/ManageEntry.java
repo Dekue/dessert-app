@@ -92,11 +92,4 @@ public abstract class ManageEntry {
      * @return a newly created view or the reused <code>convertView</code>
      */
     abstract public View getView(LayoutInflater layoutInflater, View convertView, ViewGroup parent);
-
-    /**
-     * @return number of possible view types
-     */
-    public int getViewTypeCount() {
-        return ManageEntryType.values().length;
-    }
 }

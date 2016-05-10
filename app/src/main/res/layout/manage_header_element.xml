@@ -2,22 +2,22 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-	android:layout_width="fill_parent"
+	android:layout_width="match_parent"
     android:orientation="vertical"
     android:id="@+id/HeaderView">
 	<TextView
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:text="@string/daemon_running"
 		android:textAppearance="?android:attr/textAppearanceLarge" />
 	<LinearLayout
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:id="@+id/NotRunningLayout"
 		android:orientation="vertical">
 		<TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/daemon_not_running"
 			android:textAppearance="?android:attr/textAppearanceLarge"
@@ -26,29 +26,29 @@
 	</LinearLayout>
 	<LinearLayout
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:id="@+id/RunningLayout"
 		android:orientation="vertical">
 		<TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
 			android:id="@+id/NameText"
             android:text="@string/not_set_name" />
 		<TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
 			android:id="@+id/VersionText"
             android:text="@string/not_set_version" />
 		<TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
 			android:id="@+id/PidText"
             android:text="@string/not_set_pid" />
 		<TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
 			android:id="@+id/CliportText"

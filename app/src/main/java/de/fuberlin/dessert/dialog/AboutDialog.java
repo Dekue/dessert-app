@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.View;
@@ -51,7 +50,6 @@ public class AboutDialog extends AlertDialog {
 
         View aboutView = getLayoutInflater().inflate(R.layout.about_dialog, null);
         setView(aboutView);
-
         setTitle(R.string.about);
         setCancelable(true);
         setCanceledOnTouchOutside(true);

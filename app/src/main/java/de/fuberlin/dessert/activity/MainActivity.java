@@ -43,6 +43,7 @@ import java.lang.ref.WeakReference;
 import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.adapter.PagerAdapter;
+import de.fuberlin.dessert.dialog.DrawerMenu;
 import de.fuberlin.dessert.tasks.FileTasks;
 import de.fuberlin.dessert.tasks.NativeTasks;
 import de.fuberlin.service.NotificationService;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 	// image cheating to save resources instead of a real drawer:
 	public void onClickDrawer(View v)
 	{
-		Toast.makeText(this, "blatest", Toast.LENGTH_SHORT).show();
+		new DrawerMenu(this).show();
 	}
 
 	private final class InstallFilesRunner implements Runnable {
@@ -78,11 +79,14 @@ public class MainActivity extends AppCompatActivity {
 			// check if libraries installation is necessary
 			try {
 				if (FileTasks.isLibrariesUpdateNeeded()) {
+					FileTasks.installLibraryFiles();
+					viewUpdateHandler.sendEmptyMessage(MESSAGE_INSTALL_LIBRARIES_SUCCESS);
+					/*
 					if (FileTasks.installLibraryFiles()) {
 						viewUpdateHandler.sendEmptyMessage(MESSAGE_INSTALL_LIBRARIES_SUCCESS);
 					} else {
 						viewUpdateHandler.sendEmptyMessage(MESSAGE_INSTALL_LIBRARIES_FAILURE);
-					}
+					} */
 				}
 			} catch (Exception e) {
 				Log.e(LOG_TAG, "Could not install the start script", e);

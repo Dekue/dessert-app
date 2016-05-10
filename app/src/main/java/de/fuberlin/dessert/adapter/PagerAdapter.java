@@ -9,7 +9,7 @@ import de.fuberlin.dessert.activity.TabInstalledDaemonsActivity;
 import de.fuberlin.dessert.activity.TabRunningDaemonActivity;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
-	final int mNumOfTabs;
+	private final int mNumOfTabs;
 
 	public PagerAdapter(FragmentManager fm, int NumOfTabs) {
 		super(fm);

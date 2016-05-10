@@ -385,12 +385,11 @@ public class FileTasks {
     /**
      * Installs the library files as packaged in the application into the
      * libraries directory.
-     * 
-     * @return true if all files are installed successfully
+     *
      * @throws IOException thrown if an I/O error occurred while installing the
      *             library files
      */
-    public static boolean installLibraryFiles() throws IOException {
+    public static void installLibraryFiles() throws IOException {
         File librariesDir = getLibrariesDir();
 
         // empty directory
@@ -443,8 +442,6 @@ public class FileTasks {
         File versionFile = new File(librariesDir, LIBRARIES_VERSION_FILE);
         ApplicationVersion appVersion = DessertApplication.instance.getApplicationVersion();
         writeVersionToFile(appVersion, versionFile);
-
-        return true;
     }
 
     /**

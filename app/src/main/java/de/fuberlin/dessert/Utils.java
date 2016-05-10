@@ -80,21 +80,6 @@ public class Utils {
         }
     }
 
-	/**
-	 * Parses the given <code>str</code> to return a double value ignoring any
-	 * parsing exceptions. If the string could not be parsed the returned value
-	 * is <code>0</code>.
-	 *
-	 * @param str string to parse
-	 * @return the parsed value or the value <code>0</code> if parsing did not
-	 *         succeed
-	 */
-	/* TODO: delete never used method
-    public static double safelyParseDouble(String str) {
-        return safelyParseDouble(str, 0);
-    }
-    */
-
     /**
      * Parses the given <code>str</code> to return a double value ignoring any
      * parsing exceptions. If the string could not be parsed the returned value

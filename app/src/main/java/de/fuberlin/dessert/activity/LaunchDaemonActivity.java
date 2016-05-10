@@ -53,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
+import de.fuberlin.dessert.dialog.DrawerMenu;
 import de.fuberlin.dessert.event.DaemonStartStopEventListener;
 import de.fuberlin.dessert.model.config.ConfigEntry;
 import de.fuberlin.dessert.model.config.DaemonConfiguration;
@@ -351,7 +352,7 @@ public class LaunchDaemonActivity extends AppCompatActivity implements DaemonSta
 	// image cheating to save resources instead of a real drawer:
 	public void onClickDrawer(View v)
 	{
-		Toast.makeText(this, "bla", Toast.LENGTH_SHORT).show();
+		new DrawerMenu(this).show();
 	}
 
     @Override

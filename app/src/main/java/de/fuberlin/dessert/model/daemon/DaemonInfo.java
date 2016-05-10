@@ -32,7 +32,6 @@ import de.fuberlin.dessert.Utils;
 public class DaemonInfo {
 
     public final static class DaemonListComparator implements Comparator<DaemonInfo>, Serializable {
-        private static final long serialVersionUID = -8210340018093779465L;
 
         @Override
         public int compare(DaemonInfo left, DaemonInfo right) {
@@ -77,7 +76,6 @@ public class DaemonInfo {
     public static final String PROPERTY_LIBRARY_VERSION = "daemon.dessert.library.version";
 
     private static final String DEFAULT_EMPTY_NAME = "no-name-given-check-file";
-    public static final String DEFAULT_EMPTY_CLI_ID = "---";
     private static final String DEFAULT_EMPTY_VERSION = "-1";
     private static final String DEFAULT_EMPTY_APPLICATION_VERSION = "-1,-1,-1";
     private static final String DEFAULT_EMPTY_LIBRARY_VERSION = "-1";

@@ -13,10 +13,8 @@ import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.activity.MainActivity;
 
 public class NotificationService extends Service {
-	public class LocalBinder extends Binder {
-		public NotificationService getService() {
-			return NotificationService.this;
-		}
+	private class LocalBinder extends Binder {
+
 	}
 
 	private NotificationManager mNM;
