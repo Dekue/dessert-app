@@ -27,6 +27,8 @@
 			</intent-filter>
 		</activity>
 		<activity
+			android:name=".activity.SetupActivity"/>
+		<activity
             android:name=".activity.LaunchDaemonActivity"
             android:parentActivityName=".activity.MainActivity" />
 	<service android:name="de.fuberlin.service.NotificationService"/>

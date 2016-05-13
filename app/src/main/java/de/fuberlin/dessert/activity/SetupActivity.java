@@ -28,14 +28,14 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
+import android.preference.PreferenceActivity;
 import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.tasks.NativeTasks;
 
 /**
  * Global preferences activity.
  */
-public class SetupActivity extends PreferenceFragment {
+public class SetupActivity extends PreferenceActivity {
 
     private final class PathPreferenceChangeListener implements OnPreferenceChangeListener {
 
@@ -47,7 +47,7 @@ public class SetupActivity extends PreferenceFragment {
                 if (!file.exists() && !file.isFile()) {
                     // show dialog
                     NativeTasks.setCheckedForNativeCommands(false);
-                    new AlertDialog.Builder(getActivity())
+                    new AlertDialog.Builder(SetupActivity.this)
                             .setCancelable(true)
                             .setTitle(R.string.native_command_not_found_title)
                             .setMessage(getString(R.string.native_command_not_found_msg, path))

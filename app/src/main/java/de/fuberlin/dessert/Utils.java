@@ -173,7 +173,7 @@ public class Utils {
             last--;
         }
 
-        // append the strings in between 
+        // append the strings in between
         for (int i = first; i <= last; i++) {
             result.append(strings[i]);
             if (i != strings.length - 1) {
