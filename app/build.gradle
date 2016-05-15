@@ -13,22 +13,19 @@ model {
 
     android.buildTypes {
         release {
-            minifyEnabled = false
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled = true
+            useProguard = true
             proguardFiles.add(file('proguard-rules.txt'))
         }
     }
 
     android.ndk {
         moduleName = "native_task"
-        stl = "stlport_static"
-        //cppFlags += "-Isrc/main/jni".toString()
         ldLibs.addAll(['log'])
-        //ldLibs += ["android"]
     }
 }
 
 dependencies {
-    compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
 }

@@ -26,14 +26,9 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity
-			android:name=".activity.SetupActivity"/>
-		<activity
-            android:name=".activity.LaunchDaemonActivity"
-            android:parentActivityName=".activity.MainActivity" />
+		<activity android:name=".activity.SetupActivity" />
+		<activity android:name=".activity.LaunchDaemonActivity" />
 	<service android:name="de.fuberlin.service.NotificationService"/>
-	<service
-        android:name="de.fuberlin.service.DataService"
-        android:permission="android.permission.INTERNET"/>
+	<service android:name="de.fuberlin.service.DataService" />
 	</application>
 </manifest>
