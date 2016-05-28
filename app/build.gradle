@@ -23,6 +23,14 @@ model {
         moduleName = "native_task"
         ldLibs.addAll(['log'])
     }
+
+    android.buildTypes {
+        release {
+            ndk.with {
+                debuggable = true
+            }
+        }
+    }
 }
 
 dependencies {

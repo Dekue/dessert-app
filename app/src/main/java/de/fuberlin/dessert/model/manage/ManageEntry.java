@@ -78,7 +78,7 @@ public abstract class ManageEntry {
      * 
      * @return the type of this entry
      */
-    abstract public ManageEntryType getType();
+    public abstract ManageEntryType getType();
 
     /**
      * Get the current view for this manage entry. The entry might reuse an
@@ -91,5 +91,5 @@ public abstract class ManageEntry {
      * @param parent parent to optionally attach the view to
      * @return a newly created view or the reused <code>convertView</code>
      */
-    abstract public View getView(LayoutInflater layoutInflater, View convertView, ViewGroup parent);
+    public abstract View getView(LayoutInflater layoutInflater, View convertView, ViewGroup parent);
 }

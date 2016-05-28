@@ -273,39 +273,39 @@ public class TelnetScheduler {
         }
 
         // we need at most two command switches
-        String firstCommmand;
-        String secondCommmand = null;
+        String firstCommand;
+        String secondCommand = null;
 
         // decide which commands to call
         switch (currentMode) {
         case DEFAULT:
-            firstCommmand = COMMAND_ENABLE;
+            firstCommand = COMMAND_ENABLE;
             if (!modes.contains(TelnetCommandMode.PRIVILEGED)) {
-                secondCommmand = COMMAND_CONFIG;
+                secondCommand = COMMAND_CONFIG;
             }
             break;
         case PRIVILEGED:
             if (modes.contains(TelnetCommandMode.DEFAULT)) {
-                firstCommmand = COMMAND_DISABLE;
+                firstCommand = COMMAND_DISABLE;
             } else {
-                firstCommmand = COMMAND_CONFIG;
+                firstCommand = COMMAND_CONFIG;
             }
             break;
         case CONFIG:
-            firstCommmand = COMMAND_EXIT;
+            firstCommand = COMMAND_EXIT;
             if (!modes.contains(TelnetCommandMode.PRIVILEGED)) {
-                secondCommmand = COMMAND_DISABLE;
+                secondCommand = COMMAND_DISABLE;
             }
             break;
         default:
             throw new IllegalArgumentException("Got unsupported telnet command mode " + currentMode);
         }
 
-        sendCommand(firstCommmand);
+        sendCommand(firstCommand);
         readUntilPrompt();
 
-        if (secondCommmand != null) {
-            sendCommand(secondCommmand);
+        if (secondCommand != null) {
+            sendCommand(secondCommand);
             readUntilPrompt();
         }
     }

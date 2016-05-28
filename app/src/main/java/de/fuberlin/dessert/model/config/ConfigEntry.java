@@ -76,9 +76,9 @@ public abstract class ConfigEntry {
         return preferences.getString(getKey(), null);
     }
 
-    abstract public View getView(LayoutInflater layoutInflater, SharedPreferences preferences);
+    public abstract View getView(LayoutInflater layoutInflater, SharedPreferences preferences);
 
-    abstract public void readValueFromProperties(SharedPreferences preferences, Properties properties);
+    public abstract void readValueFromProperties(SharedPreferences preferences, Properties properties);
 
     void setValue(SharedPreferences preferences, String value) {
         Editor editor = preferences.edit();

@@ -73,7 +73,7 @@ public abstract class CommandOption {
         return value;
     }
 
-    abstract public View getView(LayoutInflater inflater);
+    public abstract View getView(LayoutInflater inflater);
 
     void setValue(String value) {
         this.value = value;

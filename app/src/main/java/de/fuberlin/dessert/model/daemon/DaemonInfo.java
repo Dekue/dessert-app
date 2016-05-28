@@ -31,7 +31,7 @@ import de.fuberlin.dessert.Utils;
 
 public class DaemonInfo {
 
-    public final static class DaemonListComparator implements Comparator<DaemonInfo>, Serializable {
+    public static final class DaemonListComparator implements Comparator<DaemonInfo>, Serializable {
 
         @Override
         public int compare(DaemonInfo left, DaemonInfo right) {
