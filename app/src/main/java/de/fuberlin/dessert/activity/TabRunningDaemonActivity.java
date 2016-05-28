@@ -99,7 +99,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
             this.setContentView(R.layout.command_results);
             this.setCanceledOnTouchOutside(true);
 
-            ScrollView contentLayout = (ScrollView) this.findViewById(R.id.ContentLayout);
+            LinearLayout contentLayout = (LinearLayout) this.findViewById(R.id.ContentLayout);
             contentLayout.setMinimumWidth(1000);
 
             // fill result
@@ -139,7 +139,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
                 dialog.setOwnerActivity(getActivity());
                 dialog.setContentView(R.layout.save_result_file);
 
-                final ScrollView contentLayout = (ScrollView) dialog.findViewById(R.id.ContentLayout);
+                final LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
                 contentLayout.setMinimumWidth(1000);
 
                 final RunningDaemonInfo runningDaemon = DessertApplication.instance.getRunningDaemon();
