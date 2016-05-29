@@ -99,7 +99,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
             this.setContentView(R.layout.command_results);
             this.setCanceledOnTouchOutside(true);
 
-            LinearLayout contentLayout = (LinearLayout) this.findViewById(R.id.ContentLayout);
+            ScrollView contentLayout = (ScrollView) this.findViewById(R.id.ContentLayout);
             contentLayout.setMinimumWidth(1000);
 
             // fill result
@@ -139,7 +139,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
                 dialog.setOwnerActivity(getActivity());
                 dialog.setContentView(R.layout.save_result_file);
 
-                final LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
+                final ScrollView contentLayout = (ScrollView) dialog.findViewById(R.id.ContentLayout);
                 contentLayout.setMinimumWidth(1000);
 
                 final RunningDaemonInfo runningDaemon = DessertApplication.instance.getRunningDaemon();
@@ -472,7 +472,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
         dialog.setOwnerActivity(getActivity());
         dialog.setContentView(R.layout.execute_command);
 
-        final LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
+        final ScrollView contentLayout = (ScrollView) dialog.findViewById(R.id.ContentLayout);
         contentLayout.setMinimumWidth(1000);
 
         // fill with options
@@ -539,7 +539,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
         dialog.setOwnerActivity(getActivity());
         dialog.setContentView(R.layout.execute_command);
 
-        LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
+        ScrollView contentLayout = (ScrollView) dialog.findViewById(R.id.ContentLayout);
         contentLayout.setMinimumWidth(1000);
 
         // fill with options
@@ -643,7 +643,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
         dialog.setOwnerActivity(getActivity());
         dialog.setContentView(R.layout.execute_command);
 
-        LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
+        ScrollView contentLayout = (ScrollView) dialog.findViewById(R.id.ContentLayout);
         contentLayout.setMinimumWidth(1000);
 
         // fill with options
