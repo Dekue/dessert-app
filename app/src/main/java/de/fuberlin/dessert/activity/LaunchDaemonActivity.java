@@ -50,6 +50,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
@@ -181,7 +182,7 @@ public class LaunchDaemonActivity extends AppCompatActivity implements DaemonSta
             dialog.setOwnerActivity(LaunchDaemonActivity.this);
             dialog.setContentView(R.layout.save_options_file);
 
-            LinearLayout contentLayout = (LinearLayout) dialog.findViewById(R.id.ContentLayout);
+            ScrollView contentLayout = (ScrollView) dialog.findViewById(R.id.ContentLayout);
             contentLayout.setMinimumWidth(1000);
 
             final String daemonID = getIntent().getStringExtra(BUNDLE_DAEMON_ID_KEY);
