@@ -287,6 +287,10 @@ public class TabDaemonRepositoryActivity extends ListFragment {
 
             supRetVal = true;
             break;
+	    case R.id.Exit:
+            getActivity().finish();
+            supRetVal = true;
+            break;
         default:
             break;
         }

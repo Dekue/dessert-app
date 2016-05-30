@@ -10,49 +10,48 @@
             android:visible="true"
             android:enabled="true"
 			android:id="@+id/Refresh"
-            android:title="@string/refresh_all"
-            android:icon="@android:drawable/ic_menu_rotate" />
+            android:title="@string/refresh_all" />
 		<item
             android:checkable="false"
             android:visible="true"
             android:enabled="true"
 			android:id="@+id/CustomCommand"
-            android:title="@string/custom_command"
-			android:icon="@android:drawable/ic_menu_edit" />
+            android:title="@string/custom_command" />
 		<item
             android:checkable="false"
             android:visible="true"
             android:enabled="true"
 			android:id="@+id/Telnet"
-            android:title="@string/telnet"
-            android:icon="@android:drawable/ic_menu_manage" />
+            android:title="@string/telnet" />
 		<item
             android:checkable="false"
             android:visible="true"
             android:enabled="true"
 			android:id="@+id/Shutdown"
-            android:title="@string/shutdown"
-			android:icon="@android:drawable/ic_menu_close_clear_cancel" />
+            android:title="@string/shutdown" />
 		<item
             android:checkable="false"
             android:visible="true"
             android:enabled="true"
 			android:id="@+id/Kill"
-            android:title="@string/kill"
-            android:icon="@android:drawable/ic_menu_delete" />
+            android:title="@string/kill" />
 	</group>
 	<item
 		android:checkable="false"
         android:visible="true"
         android:enabled="true"
 		android:id="@+id/Preferences"
-        android:title="@string/preferences"
-		android:icon="@android:drawable/ic_menu_preferences" />
+        android:title="@string/preferences" />
 	<item
 		android:checkable="false"
         android:visible="true"
         android:enabled="true"
 		android:id="@+id/About"
-        android:title="@string/about"
-        android:icon="@android:drawable/ic_menu_info_details" />
+        android:title="@string/about" />
+	<item
+		android:id="@+id/Exit"
+		android:title="@string/exit"
+		android:visible="true"
+		android:checkable="false"
+		android:enabled="true" />
 </menu>

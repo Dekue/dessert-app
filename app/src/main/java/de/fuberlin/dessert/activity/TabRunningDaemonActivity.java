@@ -437,6 +437,11 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
             supRetVal = true;
             break;
         }
+	    case R.id.Exit: {
+		    getActivity().finish();
+		    supRetVal = true;
+		    break;
+	    }
         default:
             break;
         }
