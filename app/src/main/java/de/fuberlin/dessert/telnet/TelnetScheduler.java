@@ -525,7 +525,7 @@ public class TelnetScheduler {
             }
 
             if (socket.isOutputShutdown()) {
-                throw new IllegalStateException("Outgoing stream must not be closedo");
+                throw new IllegalStateException("Outgoing stream must not be closed");
             }
 
             byte[] bytes;

@@ -107,25 +107,6 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
             textView.setText(this.content);
         }
 
-		@Override
-		public boolean onPrepareOptionsMenu(Menu menu) {
-			boolean result = super.onPrepareOptionsMenu(menu);
-
-			menu.setGroupEnabled(R.id.DaemonGroup, DessertApplication.instance.getRunningDaemon() != null);
-
-			return result;
-		}
-
-		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
-			super.onCreateOptionsMenu(menu);
-
-			MenuInflater inflater = getActivity().getMenuInflater();
-			inflater.inflate(R.menu.result_dialog, menu);
-
-			return true;
-		}
-
         @Override
         public boolean onMenuItemSelected(int featureId, MenuItem menuItem) {
             boolean supRetVal = super.onMenuItemSelected(featureId, menuItem);
@@ -317,10 +298,12 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.tab_running, menu);
+		menu.setGroupEnabled(R.id.DaemonGroup, DessertApplication.instance.getRunningDaemon() != null);
 	}
 
     @Override
     public void onDaemonStarted(final RunningDaemonInfo daemonInfo) {
+	    getActivity().invalidateOptionsMenu();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -352,6 +335,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
 
     @Override
     public void onDaemonStopped() {
+	    getActivity().invalidateOptionsMenu();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
