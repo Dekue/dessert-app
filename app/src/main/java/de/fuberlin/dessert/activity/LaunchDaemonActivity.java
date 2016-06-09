@@ -30,6 +30,8 @@ import java.util.Properties;
 import java.lang.ref.WeakReference;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,6 +63,7 @@ import de.fuberlin.dessert.model.config.DaemonConfiguration;
 import de.fuberlin.dessert.model.daemon.RunningDaemonInfo;
 import de.fuberlin.dessert.model.daemon.InstalledDaemonInfo;
 import de.fuberlin.dessert.tasks.FileTasks;
+import de.fuberlin.service.NotificationService;
 
 public class LaunchDaemonActivity extends AppCompatActivity implements DaemonStartStopEventListener {
 
@@ -165,8 +168,9 @@ public class LaunchDaemonActivity extends AppCompatActivity implements DaemonSta
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         boolean supRetVal = super.onOptionsItemSelected(menuItem);
-
-        Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+		if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+			Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+		}
 
         switch (menuItem.getItemId()) {
         case R.id.Load: {
@@ -295,6 +299,9 @@ public class LaunchDaemonActivity extends AppCompatActivity implements DaemonSta
 				@Override
 				public void onClick(View view) {
 					DessertApplication.taskExecutor.execute(new LaunchRunner());
+					NotificationService notificationService = new NotificationService();
+					NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+					notificationService.updateNotification(notificationManager, getApplicationContext());
 				}
 			});
 		}
@@ -410,7 +417,9 @@ public class LaunchDaemonActivity extends AppCompatActivity implements DaemonSta
         Collections.sort(names);
 
         final String[] namesList = names.toArray(new String[names.size()]);
-        Log.d(LOG_TAG, "Files found " + names.toString());
+	    if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+			Log.d(LOG_TAG, "Files found " + names.toString());
+		}
 
         // prompt user to select any file from the sdcard root
         new AlertDialog.Builder(this)

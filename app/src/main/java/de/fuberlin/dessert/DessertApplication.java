@@ -30,6 +30,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +40,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Pattern;
 import org.xml.sax.SAXException;
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -95,7 +97,9 @@ public class DessertApplication extends Application {
 
         @Override
         public void run() {
-            Log.d(LOG_TAG, "Waiting for pid " + pid);
+            if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+				Log.d(LOG_TAG, "Waiting for pid " + pid);
+			}
             try {
                 while (NativeTasks.isProcessRunning(pid, null)) {
                     Thread.sleep(1000); // sleep for 1 seconds each
@@ -103,7 +107,9 @@ public class DessertApplication extends Application {
             } catch (InterruptedException e) {
                 Log.w(LOG_TAG, "PID watcher was interrupted");
             }
-            Log.d(LOG_TAG, "Process finished pid " + pid);
+	        if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+				Log.d(LOG_TAG, "Process finished pid " + pid);
+			}
             setRunningDaemonStopped();
         }
     }
@@ -583,24 +589,22 @@ public class DessertApplication extends Application {
         // start pid watchdog        
         new Thread(new PIDWatchdog(pid)).start();
 
-        // return new running daemon info as inserted
-        return runningDaemon;
+		// return new running daemon info as inserted
+		return runningDaemon;
     }
 
-	/* TODO: delete never used method
-    public synchronized boolean switchWiFiMode() {
-    	// Texas Instruments Transceiver?
+	public synchronized boolean switchWiFiMode() {
+		// Texas Instruments Transceiver?
 		RandomAccessFile tiwlan = null;
 		try {
 			tiwlan = new RandomAccessFile("/system/etc/wifi/tiwlan.ini", "rw");
-			Pattern p =  Pattern.compile("^WiFiAdhoc = \\d.*$");
-		}
-		catch (FileNotFoundException e) {
+			Pattern p = Pattern.compile("^WiFiAdhoc = \\d.*$");
+		} catch (FileNotFoundException e) {
 			Log.i(LOG_TAG, "no tiwlan file found");
 		}
-    	return false;
-    }*/
-    
+		return false;
+	}
+
     /**
      * Uninstall the daemon identified by <code>daemonInfo</code>. This will
      * essentially just remove any installed file of this daemon. It will not

@@ -363,12 +363,12 @@ public class TelnetScheduler {
 
             try {
                 // 1. enter the correct telnet mode            
-                if (!command.isModeValid(currentMode)) {
-                    changeCommandMode(command.getModes());
-                    if (!command.isModeValid(currentMode)) {
-                        throw new IllegalStateException("Still in wrong mode after switching modes");
-                    }
-                }
+                if (command.isModeInvalid(currentMode)) {
+				changeCommandMode(command.getModes());
+					if (command.isModeInvalid(currentMode)) {
+						throw new IllegalStateException("Still in wrong mode after switching modes");
+					}
+				}
 
                 // 2. send the command
                 sendCommand(command.getCommand());

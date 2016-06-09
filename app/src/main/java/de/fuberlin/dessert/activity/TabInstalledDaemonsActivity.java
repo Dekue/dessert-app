@@ -159,7 +159,9 @@ public class TabInstalledDaemonsActivity extends ListFragment {
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		boolean supRetVal = super.onOptionsItemSelected(menuItem);
 
-		Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+		if (Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+			Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+		}
 
 		switch (menuItem.getItemId()) {
 			case R.id.Refresh:

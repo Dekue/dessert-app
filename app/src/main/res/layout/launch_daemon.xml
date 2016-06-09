@@ -16,7 +16,6 @@
             android:contentDescription="@string/none"
             android:src="@drawable/ic_navigation_drawer"
             android:layout_width="wrap_content"
-            android:id="@+id/drawer"
             android:clickable="true"
             android:minHeight="45dp"
             android:onClick="onClickDrawer"

@@ -22,13 +22,13 @@
             android:layout_width="match_parent"
 			android:inputType="text"
             android:id="@+id/TargetFileText"/>
+		<Button
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="12dp"
+			android:id="@+id/SaveButton"
+			android:text="@string/save"
+			android:width="150dp"
+			android:layout_width="wrap_content"/>
 	</LinearLayout>
-	<Button
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:id="@+id/SaveButton"
-        android:text="@string/save"
-        android:width="150dp"
-        android:layout_width="wrap_content"/>
 </ScrollView>

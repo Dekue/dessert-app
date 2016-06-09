@@ -30,28 +30,28 @@ import java.util.EnumSet;
  */
 public class TelnetCommand {
 
-    private final String command;
-    private final EnumSet<TelnetCommandMode> modes;
+	private final String command;
+	private final EnumSet<TelnetCommandMode> modes;
 
-    public TelnetCommand(String command, EnumSet<TelnetCommandMode> modes) {
-        this.command = command;
-        this.modes = EnumSet.copyOf(modes);
-    }
+	public TelnetCommand(String command, EnumSet<TelnetCommandMode> modes) {
+		this.command = command;
+		this.modes = EnumSet.copyOf(modes);
+	}
 
-    public TelnetCommand(String command, TelnetCommandMode mode) {
-        this.command = command;
-        this.modes = EnumSet.of(mode);
-    }
+	public TelnetCommand(String command, TelnetCommandMode mode) {
+		this.command = command;
+		this.modes = EnumSet.of(mode);
+	}
 
-    public String getCommand() {
-        return command;
-    }
+	public String getCommand() {
+		return command;
+	}
 
-    public EnumSet<TelnetCommandMode> getModes() {
-        return modes;
-    }
+	public EnumSet<TelnetCommandMode> getModes() {
+		return modes;
+	}
 
-    public boolean isModeValid(TelnetCommandMode mode) {
-        return modes.contains(mode);
-    }
+	public boolean isModeInvalid(TelnetCommandMode mode) {
+		return !modes.contains(mode);
+	}
 }

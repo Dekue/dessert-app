@@ -30,6 +30,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -77,6 +78,7 @@ import de.fuberlin.dessert.telnet.TelnetCommandMode;
 import de.fuberlin.dessert.telnet.TelnetScheduler.Priority;
 import de.fuberlin.dessert.telnet.jobs.CommandTelnetJob;
 import de.fuberlin.dessert.telnet.jobs.PropertyTelnetJob;
+import de.fuberlin.service.NotificationService;
 
 /**
  * Activity to show the management entries as defined in the XML file of the
@@ -111,7 +113,10 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
         public boolean onMenuItemSelected(int featureId, MenuItem menuItem) {
             boolean supRetVal = super.onMenuItemSelected(featureId, menuItem);
 
-            Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+			if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+				Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+			}
+
             switch (menuItem.getItemId()) {
             case R.id.Save: {
                 final Dialog dialog = new Dialog(getActivity());
@@ -299,6 +304,10 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.tab_running, menu);
 		menu.setGroupEnabled(R.id.DaemonGroup, DessertApplication.instance.getRunningDaemon() != null);
+
+		NotificationService notificationService = new NotificationService();
+		NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationService.updateNotification(notificationManager, getActivity());
 	}
 
     @Override
@@ -376,7 +385,9 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         boolean supRetVal = super.onOptionsItemSelected(menuItem);
 
-        Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+		if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+			Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+		}
 
         switch (menuItem.getItemId()) {
         case R.id.Refresh: {

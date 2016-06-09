@@ -21,8 +21,7 @@
             android:layout_height="wrap_content"
             android:text="@string/daemon_not_running"
 			android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:gravity="center_horizontal" />
+            android:textStyle="bold" />
 	</LinearLayout>
 	<LinearLayout
         android:layout_height="wrap_content"

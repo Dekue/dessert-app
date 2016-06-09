@@ -261,8 +261,9 @@ public class TabDaemonRepositoryActivity extends ListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         boolean supRetVal = super.onOptionsItemSelected(menuItem);
-
-        Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+		if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+			Log.d(LOG_TAG, "menuItem id: " + menuItem.getItemId());
+		}
 
         switch (menuItem.getItemId()) {
         case R.id.Refresh:
@@ -376,7 +377,9 @@ public class TabDaemonRepositoryActivity extends ListFragment {
         Collections.sort(names);
 
         final String[] namesList = names.toArray(new String[names.size()]);
-        Log.d(LOG_TAG, "Files found " + names.toString());
+		if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+			Log.d(LOG_TAG, "Files found " + names.toString());
+		}
 
         // prompt user to select any file from the sdcard root
         new AlertDialog.Builder(getActivity())

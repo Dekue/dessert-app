@@ -27,10 +27,9 @@ import java.util.EventListener;
 import de.fuberlin.dessert.model.daemon.RunningDaemonInfo;
 
 public interface DaemonStartStopEventListener extends EventListener {
-
     /**
      * Called when a daemon is started.
-     * 
+     *
      * @param daemonInfo the daemon info that got started
      */
     void onDaemonStarted(RunningDaemonInfo daemonInfo);

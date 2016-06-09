@@ -215,8 +215,10 @@ public class MainActivity extends AppCompatActivity {
 		try {
 			bindService(new Intent(getApplicationContext(),  NotificationService.class), mConnection, Context.BIND_AUTO_CREATE);
 		}
-		catch(SecurityException e){
-			Log.i("MainActivity", "Caught SecurityException: " + e.getMessage());
+		catch(SecurityException e) {
+			if (Log.isLoggable("MainActivity", Log.INFO)) {
+				Log.i("MainActivity", "Caught SecurityException: " + e.getMessage());
+			}
 		}
 	}
 

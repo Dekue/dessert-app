@@ -591,7 +591,7 @@ public class FileTasks {
      * The same as calling
      * {@link #writePropertiesFile(File, Properties, String)} with a comment
      * string of <code>null</code>.
-     * 
+     *
      * @param propertiesFile file to write to
      * @param properties properties to write
      * @return <code>true</code> if all went well
@@ -699,7 +699,9 @@ public class FileTasks {
     }
 
     private static void installAssetFile(String assetName, File targetFile) throws IOException {
-        Log.d(LOG_TAG, "Installing asset file to: " + targetFile.getAbsolutePath());
+		if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+			Log.d(LOG_TAG, "Installing asset file to: " + targetFile.getAbsolutePath());
+        }
 
         InputStream inputStream = null;
         try {
@@ -721,7 +723,9 @@ public class FileTasks {
      *             target file
      */
     private static void installRawFile(File targetFile) throws IOException {
-        Log.d(LOG_TAG, "Installing raw file to: " + targetFile.getAbsolutePath());
+	    if(Log.isLoggable(LOG_TAG, Log.DEBUG)) {
+			Log.d(LOG_TAG, "Installing raw file to: " + targetFile.getAbsolutePath());
+		}
 
         InputStream inputStream = null;
         try {
