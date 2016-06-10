@@ -161,5 +161,15 @@
                 android:textSize="12sp"
                 android:textColor="#ffffff"
 				android:text="@string/uthash_home" />
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:autoLink="web"
+				android:textColorLink="#ffffff"
+				android:paddingLeft="7.5dp"
+				android:paddingRight="7.5dp"
+				android:textSize="12sp"
+				android:textColor="#ffffff"
+				android:text="@string/setools_home" />
 		</LinearLayout>
 	</ScrollView>

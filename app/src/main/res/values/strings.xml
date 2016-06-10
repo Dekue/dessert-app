@@ -19,7 +19,7 @@
 
     <string name="notification_title">DES-SERT started</string>
     <string name="notification_text">The DES-SERT app has started.</string>
-	<string name="notification_text_2">Daemon running: %1$s</string>
+	<string name="notification_text_daemon_running">Daemon running: %1$s</string>
     <string name="notification_ticker">DES-SERT started</string>
 
     <string name="daemon_path">%1$s/dessert/%2$s/</string>
@@ -35,8 +35,10 @@
     <string name="dessert_home">http://www.des-testbed.net/DES-SERT</string>
     <string name="des_home">http://www.des-testbed.net</string>
     <string name="libpcap_home">http://www.tcpdump.org</string>
+    <string name="setools_home">https://github.com/xmikos/setools-android</string>
     <string name="gpl_home">http://www.gnu.org/licenses/gpl.html</string>
     <string name="gpl">GNU General Public License v3</string>
+    <string name="WIP">WIP</string>
 
     <string name="target_file_path">/sdcard/file.txt</string>
     <string name="target_directory_path">/sdcard</string>

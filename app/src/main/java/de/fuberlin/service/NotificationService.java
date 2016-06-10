@@ -41,29 +41,12 @@ public class NotificationService extends Service {
 	}
 
 	@Override
-	public void onDestroy() {
-		mNM.cancel(R.string.local_service_started);
-	}
-
-	@Override
 	public IBinder onBind(Intent intent) {
 		return mBinder;
 	}
 
 	private void showNotification() {
-		NotificationCompat.Builder mBuilder =
-				new NotificationCompat.Builder(getApplicationContext())
-						.setSmallIcon(R.drawable.dessert_notification)
-						.setShowWhen(true)
-						.setTicker(getString(R.string.notification_ticker));
-		updateNotification(mNM, this);
-
-		NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-		inboxStyle.setBigContentTitle(getString(R.string.notification_title));
-		inboxStyle.addLine(getString(R.string.notification_text));
-		inboxStyle.addLine(getString(R.string.notification_text_2, getDaemonName(this)));
-		mBuilder.setStyle(inboxStyle);
-		mNM.notify(R.string.local_service_started, mBuilder.build());
+		NotificationCompat.Builder notification = updateNotification(mNM, this);
 
 		Intent notificationIntent = new Intent(this, MainActivity.class);
 
@@ -72,20 +55,25 @@ public class NotificationService extends Service {
 		stackBuilder.addNextIntent(notificationIntent);
 		PendingIntent contentIntent =
 				stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(contentIntent);
+		notification.setContentIntent(contentIntent);
 	}
 
-	public void updateNotification(NotificationManager notificationManager, Context context) {
-		NotificationCompat.Builder notification = new NotificationCompat.Builder(context);
-		notification.setSmallIcon(R.drawable.dessert_notification);
+	public NotificationCompat.Builder updateNotification(NotificationManager notificationManager, Context context) {
+		NotificationCompat.Builder notification = new NotificationCompat.Builder(context)
+				.setSmallIcon(R.drawable.dessert_notification)
+				.setShowWhen(true)
+				.setAutoCancel(false)
+				.setTicker(context.getString(R.string.notification_ticker));
 
 		NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 		inboxStyle.setBigContentTitle(context.getString(R.string.notification_title));
 		inboxStyle.addLine(context.getString(R.string.notification_text));
-		inboxStyle.addLine(context.getString(R.string.notification_text_2, getDaemonName(context)));
+		inboxStyle.addLine(context.getString(R.string.notification_text_daemon_running, getDaemonName(context)));
 		notification.setStyle(inboxStyle);
 
 		notificationManager.notify(R.string.local_service_started, notification.build());
+
+		return notification;
 	}
 
 	private String getDaemonName(Context context) {
