@@ -2,13 +2,17 @@ package de.fuberlin.dessert.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Point;
+import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import de.fuberlin.dessert.R;
+import de.fuberlin.dessert.activity.SetupActivity;
 
 /**
  * Fake drawer menu saves resources and looks pretty nice.
@@ -16,7 +20,7 @@ import de.fuberlin.dessert.R;
 public class DrawerMenu extends AlertDialog {
 
 	public DrawerMenu(Context context){
-		super(context, R.style.dialog_theme);
+		super(context, R.style.alert_dialog_theme);
 
 		// set dialog options
 		View drawerView = getLayoutInflater().inflate(R.layout.drawer_menu, null);
@@ -51,5 +55,41 @@ public class DrawerMenu extends AlertDialog {
 		//darken the background
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 		params.dimAmount = 0.6f;
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.drawer_menu);
+
+		Button aboutButton = (Button) findViewById(R.id.DrawerAboutButton);
+		if (aboutButton != null) {
+			aboutButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					new AboutDialog(getContext()).show();
+				}
+			});
+		}
+
+		Button prefButton = (Button) findViewById(R.id.DrawerPrefButton);
+		if (prefButton != null) {
+			prefButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					getContext().startActivity(new Intent(getContext(), SetupActivity.class));
+				}
+			});
+		}
+
+		Button exitButton = (Button) findViewById(R.id.DrawerExitButton);
+		if (exitButton != null) {
+			exitButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					System.exit(0);
+				}
+			});
+		}
 	}
 }

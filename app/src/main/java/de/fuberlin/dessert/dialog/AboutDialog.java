@@ -46,7 +46,7 @@ public class AboutDialog extends AlertDialog {
      * @param context context in which to create the view of this dialogs
      */
     public AboutDialog(Context context) {
-        super(context);
+        super(context, R.style.dialog_theme);
 
         View aboutView = getLayoutInflater().inflate(R.layout.about_dialog, null);
         setView(aboutView);

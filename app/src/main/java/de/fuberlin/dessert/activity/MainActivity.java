@@ -55,9 +55,8 @@ import de.fuberlin.service.NotificationService;
 public class MainActivity extends AppCompatActivity {
 
 	// image cheating to save resources instead of a real drawer:
-	public void onClickDrawer(View v)
-	{
-		new DrawerMenu(this).show();
+	public void onClickDrawer(View v) {
+		new DrawerMenu(MainActivity.this).show();
 	}
 
 	private final class InstallFilesRunner implements Runnable {

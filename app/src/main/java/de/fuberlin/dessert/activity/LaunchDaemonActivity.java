@@ -359,7 +359,7 @@ public class LaunchDaemonActivity extends AppCompatActivity implements DaemonSta
 
 	// image cheating to save resources instead of a real drawer:
 	public void onClickDrawer(View v) {
-		new DrawerMenu(this).show();
+		new DrawerMenu(LaunchDaemonActivity.this).show();
 	}
 
     @Override

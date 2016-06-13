@@ -24,13 +24,15 @@
             android:gravity="center"
             android:clickable="false" />
         <ImageView
+            android:id="@+id/DrawerSeparator"
             android:background="#80cbc4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="2.5dp"
+            android:paddingTop="2dp"
             android:textStyle="bold"
             android:textColor="#ffffff" />
         <Button
+            android:id="@+id/DrawerPrefButton"
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,6 +50,7 @@
             android:clickable="true"
             android:longClickable="false" />
         <Button
+            android:id="@+id/DrawerAboutButton"
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,6 +68,7 @@
             android:clickable="true"
             android:longClickable="false" />
         <Button
+            android:id="@+id/DrawerExitButton"
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
