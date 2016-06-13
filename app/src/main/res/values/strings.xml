@@ -49,6 +49,8 @@
     <string name="not_set_pid">&lt;NOT SET&gt; PID</string>
     <string name="not_set_cli_port">&lt;NOT SET&gt; CLI Port</string>
 
+	<string name="main_menu">Main menu</string>
+
 	<string name="about">About</string>
 	<string name="app_version">Application Version:</string>
 	<string name="lib_versions">Library Versions:</string>

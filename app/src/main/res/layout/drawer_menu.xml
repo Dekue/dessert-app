@@ -2,21 +2,85 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:textSize="32sp"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="2.5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="#ffffff"
+            android:text="@string/main_menu"
+            android:gravity="center"
+            android:clickable="false" />
+        <ImageView
+            android:background="#80cbc4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="2.5dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff" />
+        <Button
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="7.5dp"
-            android:paddingLeft="7.5dp"
-            android:paddingRight="7.5dp"
-            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:textColor="#ffffff"
-            android:text="@string/WIP" />
+            android:text="@string/preferences"
+            android:gravity="end|center_vertical"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/settings"
+            android:drawableStart="@drawable/settings"
+            android:clickable="true"
+            android:longClickable="false" />
+        <Button
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="7.5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColor="#ffffff"
+            android:text="@string/about"
+            android:gravity="end|center_vertical"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/about"
+            android:drawableStart="@drawable/about"
+            android:clickable="true"
+            android:longClickable="false" />
+        <Button
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="7.5dp"
+            android:paddingLeft="17dp"
+            android:paddingRight="15dp"
+            android:paddingStart="17dp"
+            android:paddingEnd="15dp"
+            android:textColor="#ffffff"
+            android:text="@string/exit"
+            android:gravity="end|center_vertical"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/exit"
+            android:drawableStart="@drawable/exit"
+            android:clickable="true"
+            android:longClickable="false" />
+
     </LinearLayout>
 </ScrollView>
