@@ -301,7 +301,7 @@ public class LaunchDaemonActivity extends AppCompatActivity implements DaemonSta
 					DessertApplication.taskExecutor.execute(new LaunchRunner());
 					NotificationService notificationService = new NotificationService();
 					NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-					notificationService.updateNotification(notificationManager, getApplicationContext());
+					notificationService.showNotification(notificationManager, getApplicationContext());
 				}
 			});
 		}

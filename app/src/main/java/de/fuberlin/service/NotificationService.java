@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
@@ -26,7 +25,7 @@ public class NotificationService extends Service {
 	@Override
 	public void onCreate() {
 		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		showNotification();
+		showNotification(mNM, this);
 		Log.i("NotificationService", "onCreate finished");
 	}
 
@@ -45,35 +44,27 @@ public class NotificationService extends Service {
 		return mBinder;
 	}
 
-	private void showNotification() {
-		NotificationCompat.Builder notification = updateNotification(mNM, this);
-
-		Intent notificationIntent = new Intent(this, MainActivity.class);
-
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		stackBuilder.addParentStack(MainActivity.class);
-		stackBuilder.addNextIntent(notificationIntent);
-		PendingIntent contentIntent =
-				stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-		notification.setContentIntent(contentIntent);
-	}
-
-	public NotificationCompat.Builder updateNotification(NotificationManager notificationManager, Context context) {
+	public void showNotification(NotificationManager notificationManager, Context context) {
 		NotificationCompat.Builder notification = new NotificationCompat.Builder(context)
 				.setSmallIcon(R.drawable.dessert_notification)
+				.setContentTitle(context.getString(R.string.notification_title))
+				.setContentText(context.getString(R.string.notification_text_daemon_running, getDaemonName(context)))
 				.setShowWhen(true)
 				.setAutoCancel(false)
-				.setTicker(context.getString(R.string.notification_ticker));
+				.setTicker(context.getString(R.string.notification_ticker))
+				.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
 		NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 		inboxStyle.setBigContentTitle(context.getString(R.string.notification_title));
 		inboxStyle.addLine(context.getString(R.string.notification_text));
 		inboxStyle.addLine(context.getString(R.string.notification_text_daemon_running, getDaemonName(context)));
 		notification.setStyle(inboxStyle);
-
+		Intent notificationIntent = new Intent(context, MainActivity.class);
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+				notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		notification.setContentIntent(contentIntent);
 		notificationManager.notify(R.string.local_service_started, notification.build());
-
-		return notification;
 	}
 
 	private String getDaemonName(Context context) {

@@ -307,7 +307,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
 
 		NotificationService notificationService = new NotificationService();
 		NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationService.updateNotification(notificationManager, getActivity());
+		notificationService.showNotification(notificationManager, getActivity());
 	}
 
     @Override

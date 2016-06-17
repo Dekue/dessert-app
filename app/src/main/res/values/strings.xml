@@ -17,10 +17,10 @@
     <string name="tab_installed">Installed</string>
     <string name="tab_tools">Manage</string>
 
-    <string name="notification_title">DES-SERT started</string>
-    <string name="notification_text">The DES-SERT app has started.</string>
+    <string name="notification_title">DES-SERT was started</string>
+    <string name="notification_text">The DES-SERT app was started.</string>
 	<string name="notification_text_daemon_running">Daemon running: %1$s</string>
-    <string name="notification_ticker">DES-SERT started</string>
+    <string name="notification_ticker">DES-SERT was started</string>
 
     <string name="daemon_path">%1$s/dessert/%2$s/</string>
     <string name="daemon_name">Name:\t\t\t%1$s</string>
