@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="authors">Authors:</string>
-    <string name="author_1">Ramin Baradari (Original Development)</string>
-    <string name="author_2">Bastian Blywis (DES-SERT Project and Further Development)</string>
+    <string name="author_1">Ramin Baradari (original development)</string>
+    <string name="author_2">Bastian Blywis (DES-SERT project and further development)</string>
+	<string name="author_3">Denis Küchemann (porting / updating to Android 4.1+)</string>
 
 	<string name="none"/>
 	<string name="desc">Description</string>
@@ -38,7 +39,6 @@
     <string name="setools_home">https://github.com/xmikos/setools-android</string>
     <string name="gpl_home">http://www.gnu.org/licenses/gpl.html</string>
     <string name="gpl">GNU General Public License v3</string>
-    <string name="WIP">WIP</string>
 
     <string name="target_file_path">/sdcard/file.txt</string>
     <string name="target_directory_path">/sdcard</string>
@@ -52,15 +52,15 @@
 	<string name="main_menu">Main menu</string>
 
 	<string name="about">About</string>
-	<string name="app_version">Application Version:</string>
-	<string name="lib_versions">Library Versions:</string>
-	<string name="app_version_tab">Application Version:\t %s</string>
-	<string name="lib_version_tab">Library Version:\t\t\t %s</string>
+	<string name="app_version">Application version:</string>
+	<string name="lib_versions">Library versions:</string>
+	<string name="app_version_tab">Application version:\t %s</string>
+	<string name="lib_version_tab">Library version:\t\t\t %s</string>
 
-	<string name="project_page">Project Page:</string>
+	<string name="project_page">Project page:</string>
 	<string name="license">License:</string>
-	<string name="third_party_software">3rd-Party-Software</string>
-	<string name="install_file">Install File</string>
+	<string name="third_party_software">Third-party software</string>
+	<string name="install_file">Install file</string>
 	<string name="launch_daemon">Launch daemon</string>
 	<string name="launch">Launch %s</string>
 
@@ -69,16 +69,17 @@
 	</string>
 	<string name="start_daemon_script_error">The daemon startup script failed to run</string>
 	<string name="app_name">DES-SERT</string>
-	<string name="refresh_list">Refresh List</string>
-	<string name="refresh_all">Refresh All</string>
-	<string name="custom_command">Custom Command</string>
-	<string name="run_custom_command">Run Custom Command</string>
+	<string name="refresh_list">Refresh list</string>
+	<string name="refresh_all">Refresh all</string>
+	<string name="custom_command">Custom command</string>
+	<string name="run_custom_command">Run custom command</string>
 	<string name="telnet">Telnet</string>
 	<string name="shutdown">Shutdown</string>
 	<string name="kill">Kill</string>
 	<string name="preferences">Preferences</string>
-	<string name="select_daemon_zip_title">Select Daemon ZIP-File</string>
-	<string name="select_daemon_options_title">Select Daemon Options File</string>
+    <string name="select_daemon_zip_title_negative">SD card root directory:\nno daemon ZIP-files found</string>
+	<string name="select_daemon_zip_title_positive">Select daemon ZIP-file</string>
+	<string name="select_daemon_options_title">Select daemon options file</string>
 	<string name="load">Load</string>
 	<string name="save">Save</string>
 	<string name="defaults">Defaults</string>
@@ -91,7 +92,7 @@
 	<string name="issued_shutdown_command">Issued shutdown command</string>
 	<string name="issued_kill_command">Issued kill command</string>
 	<string name="error_kill_command">An error occurred while issuing the kill command. Is the \&quot;kill\&quot; command properly configured?</string>
-	<string name="uninstall_daemon">Uninstall Daemon</string>
+	<string name="uninstall_daemon">Uninstall daemon</string>
 	<string name="uninstalled_daemon">Daemon successfully uninstalled</string>
 	<string name="getting_repo_index">Retrieving repository index</string>
 	<string name="getting_repo_error">An error occurred while retrieving the repository:\n%s</string>
@@ -108,24 +109,24 @@
 	<string name="command_title">Command:</string>
 	<string name="property_title">Property:</string>
 	<string name="value_unknown">&lt;unknown&gt;</string>
-	<string name="set_property">Set Property: %s</string>
-	<string name="run_command">Run Command: %s</string>
+	<string name="set_property">Set property: %s</string>
+	<string name="run_command">Run command: %s</string>
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
 	<string name="close">Close</string>
 	<string name="ok">OK</string>
 	<string name="execute">Execute</string>
-	<string name="save_options_title">Save Options File</string>
-	<string name="command_progress_title">Running Command</string>
+	<string name="save_options_title">Save options file</string>
+	<string name="command_progress_title">Running command</string>
 	<string name="command_progress_message">Command: %s</string>
-	<string name="command_results_title">Command Results</string>
+	<string name="command_results_title">Command results</string>
 	<string name="command_results_done">DONE</string>
 	<string name="command_aborted">A failure occurred while running the command</string>
 	<string name="command_error">An error occurred while running the command</string>
-	<string name="native_commands_not_found_title">Bad Configuration</string>
+	<string name="native_commands_not_found_title">Bad configuration</string>
 	<string name="native_commands_not_found_msg">The following native commands could not be found. You
 		should check your configuration:\n%s</string>
-	<string name="native_command_not_found_title">Binary Not Found</string>
+	<string name="native_command_not_found_title">Binary not found</string>
 	<string name="native_command_not_found_msg">The native binary could not be found. You should check the
 		value: %s</string>
 	<string name="ignore">Ignore</string>
@@ -139,58 +140,58 @@
 		library files:\n</string>
 
 	<!-- setup strings -->
-	<string name="setup_category_cli_title">CLI Settings</string>
-	<string name="setup_category_sysif_title">System Interface Settings</string>
-	<string name="setup_category_meshif_title">Mesh Interface Settings</string>
-	<string name="setup_category_repository_title">Repository Settings</string>
-	<string name="setup_category_path_title">System Executable Settings</string>
+	<string name="setup_category_cli_title">CLI settings</string>
+	<string name="setup_category_sysif_title">System interface settings</string>
+	<string name="setup_category_meshif_title">Mesh interface settings</string>
+	<string name="setup_category_repository_title">Repository settings</string>
+	<string name="setup_category_path_title">System executable settings</string>
 
-	<string name="setup_cliport_title">Change Default CLI Port</string>
+	<string name="setup_cliport_title">Change default CLI port</string>
 	<string name="setup_cliport_summary">Port number to use for the CLI telnet interfaces (e.g.
 		4519)</string>
 
-	<string name="setup_sysif_title">Change System Interface</string>
+	<string name="setup_sysif_title">Change system interface</string>
 	<string name="setup_sysif_summary">System interface name to use (e.g. tap0)</string>
 
-	<string name="setup_sysip_title">Change System IP Number</string>
+	<string name="setup_sysip_title">Change system IP number</string>
 	<string name="setup_sysip_summary">IP number to use for the system interface (e.g.
 		10.0.17.254)</string>
 
-	<string name="setup_sysmask_title">Change System Subnet Mask</string>
+	<string name="setup_sysmask_title">Change system subnet mask</string>
 	<string name="setup_sysmask_summary">Subnet mask number to use for the system interface (e.g.
 		255.255.0.0)</string>
 
-	<string name="setup_mtu_title">Change System MTU Size</string>
-	<string name="setup_mtu_summary">MTU Size to use for the system interface (e.g. 1300)
+	<string name="setup_mtu_title">Change system MTU size</string>
+	<string name="setup_mtu_summary">MTU size to use for the system interface (e.g. 1300)
 	</string>
 
-	<string name="setup_meshif_title">Change Mesh Interface</string>
+	<string name="setup_meshif_title">Change mesh interface</string>
 	<string name="setup_meshif_summary">Mesh interface name to use (e.g. wlan0)</string>
 
-	<string name="setup_repourl_title">Change Repository URL</string>
+	<string name="setup_repourl_title">Change repository URL</string>
 	<string name="setup_repourl_summary">Daemon repository URL (e.g.
 		http://www.example.net/repo/folder)</string>
 
-	<string name="setup_pathsu_title">Change \&quot;su\&quot; Command</string>
+	<string name="setup_pathsu_title">Change \&quot;su\&quot; command</string>
 	<string name="setup_pathsu_summary">Path to \&quot;su\&quot; command (e.g. /system/bin/su)
 	</string>
 
-	<string name="setup_pathsh_title">Change \&quot;sh\&quot; Command</string>
+	<string name="setup_pathsh_title">Change \&quot;sh\&quot; command</string>
 	<string name="setup_pathsh_summary">Path to \&quot;sh\&quot; command (e.g. /system/bin/sh)
 	</string>
 
-	<string name="setup_pathln_title">Change \&quot;ln\&quot; Command</string>
+	<string name="setup_pathln_title">Change \&quot;ln\&quot; command</string>
 	<string name="setup_pathln_summary">Path to \&quot;ln\&quot; command (e.g. /system/bin/ln)
 	</string>
 
-	<string name="setup_pathchmod_title">Change \&quot;chmod\&quot; Command</string>
+	<string name="setup_pathchmod_title">Change \&quot;chmod\&quot; command</string>
 	<string name="setup_pathchmod_summary">Path to \&quot;chmod\&quot; command (e.g.
 		/system/bin/chmod)</string>
 
-	<string name="setup_pathkill_title">Change \&quot;kill\&quot; Command</string>
+	<string name="setup_pathkill_title">Change \&quot;kill\&quot; command</string>
 	<string name="setup_pathkill_summary">Path to \&quot;kill\&quot; command (e.g. /system/bin/kill)
 	</string>
 
-<string name="local_service_started">Notification Service</string>
+<string name="local_service_started">Notification service</string>
 <string name="exit">Exit</string>
 </resources>

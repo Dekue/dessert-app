@@ -437,22 +437,6 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
             supRetVal = true;
             break;
         }
-        case R.id.Preferences: {
-            startActivity(new Intent(getActivity(), SetupActivity.class));
-            supRetVal = true;
-            break;
-        }
-        case R.id.About: {
-            new AboutDialog(getActivity()).show();
-
-            supRetVal = true;
-            break;
-        }
-	    case R.id.Exit: {
-		    getActivity().finish();
-		    supRetVal = true;
-		    break;
-	    }
         default:
             break;
         }

@@ -5,6 +5,5 @@
         android:visible="true"
         android:enabled="true"
 		android:id="@+id/Save"
-        android:title="@string/save"
-        android:icon="@android:drawable/ic_menu_save" />
+        android:title="@string/save" />
 </menu>

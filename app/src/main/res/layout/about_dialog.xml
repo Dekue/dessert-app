@@ -113,6 +113,13 @@
                 android:textColor="#ffffff"
 				android:text="@string/author_2" />
 			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="7.5dp"
+				android:paddingRight="7.5dp"
+				android:textColor="#ffffff"
+				android:text="@string/author_3" />
+			<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 				android:paddingTop="7.5dp"

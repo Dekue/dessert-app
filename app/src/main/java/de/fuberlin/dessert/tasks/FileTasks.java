@@ -270,14 +270,11 @@ public class FileTasks {
     }
 
     /**
-     * Get the directory for temporary files. The directory is in world readable
-     * mode.
+     * Get the directory for temporary files. The directory is in private mode.
      * 
      * @return directory for temporary files
      */
     public static File getTemporaryDir() {
-		// TODO: Check if MODE_WORLD_WRITABLE can be replaced by MODE_PRIVATE without problems.
-		// Change Doxygen-Comment if so.
         return DessertApplication.instance.getDir("tmp", Context.MODE_PRIVATE).getAbsoluteFile();
     }
 

@@ -53,7 +53,6 @@ import android.widget.Toast;
 import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.adapter.DaemonListAdapter;
-import de.fuberlin.dessert.dialog.AboutDialog;
 import de.fuberlin.dessert.model.daemon.DaemonInfo;
 import de.fuberlin.dessert.model.daemon.RepositoryDaemonInfo;
 
@@ -278,20 +277,6 @@ public class TabDaemonRepositoryActivity extends ListFragment {
 
             supRetVal = true;
             break;
-        case R.id.Preferences:
-            startActivity(new Intent(getActivity(), SetupActivity.class));
-
-            supRetVal = true;
-            break;
-        case R.id.About:
-            new AboutDialog(getActivity()).show();
-
-            supRetVal = true;
-            break;
-	    case R.id.Exit:
-            getActivity().finish();
-            supRetVal = true;
-            break;
         default:
             break;
         }
@@ -349,7 +334,7 @@ public class TabDaemonRepositoryActivity extends ListFragment {
     }
 
     /**
-     * Let's the user pick a file from the sdcard root directory.
+     * Lets the user pick a file from the sdcard root directory.
      */
     private void pickFlatFileInstall() {
         // Don't show a dialog if the SD card is completely absent.
@@ -381,9 +366,17 @@ public class TabDaemonRepositoryActivity extends ListFragment {
 			Log.d(LOG_TAG, "Files found " + names.toString());
 		}
 
+	    String title;
+	    if (namesList.length == 0){
+		    title = getString(R.string.select_daemon_zip_title_negative);
+	    }
+	    else {
+		    title = getString(R.string.select_daemon_zip_title_positive);
+	    }
+
         // prompt user to select any file from the sdcard root
         new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.select_daemon_zip_title)
+                        .setTitle(title)
                         .setItems(namesList, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface view, int position) {
