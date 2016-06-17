@@ -264,10 +264,4 @@ public class MainActivity extends AppCompatActivity {
 		super.onDestroy();
 		unbindService(mConnection);
 	}
-
-	public void terminate() {
-		Log.i("MainActivity","terminated!!");
-		super.onDestroy();
-		this.finish();
-	}
 }

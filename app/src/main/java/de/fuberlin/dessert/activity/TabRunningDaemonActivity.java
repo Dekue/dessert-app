@@ -61,7 +61,6 @@ import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.Utils;
 import de.fuberlin.dessert.adapter.ManageConfigurationListAdapter;
-import de.fuberlin.dessert.dialog.AboutDialog;
 import de.fuberlin.dessert.event.CommandResultEventListener;
 import de.fuberlin.dessert.event.DaemonStartStopEventListener;
 import de.fuberlin.dessert.event.DataChangedEventListener;

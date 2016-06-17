@@ -19,12 +19,11 @@ public class NotificationService extends Service {
 
 	}
 
-	private NotificationManager mNM;
 	private final IBinder mBinder = new LocalBinder();
 
 	@Override
 	public void onCreate() {
-		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		NotificationManager mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		showNotification(mNM, this);
 		Log.i("NotificationService", "onCreate finished");
 	}

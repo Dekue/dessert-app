@@ -676,12 +676,10 @@ public class FileTasks {
     }
 
     private static File getDaemonsDir() {
-		// TODO: Check if MODE_WORLD_WRITABLE can be replaced by MODE_PRIVATE without problems.
         return DessertApplication.instance.getDir("daemons", Context.MODE_PRIVATE).getAbsoluteFile();
     }
 
     private static File getLibrariesDir() {
-		// TODO: Check if MODE_WORLD_WRITABLE can be replaced by MODE_PRIVATE without problems.
         return DessertApplication.instance.getDir("libraries", Context.MODE_PRIVATE).getAbsoluteFile();
     }
 

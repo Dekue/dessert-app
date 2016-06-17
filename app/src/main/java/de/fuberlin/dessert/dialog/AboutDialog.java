@@ -38,7 +38,7 @@ import de.fuberlin.dessert.model.LibraryVersion;
 /**
  * About dialog...
  */
-public class AboutDialog extends AlertDialog {
+class AboutDialog extends AlertDialog {
 
     /**
      * Creates a new about dialog ready to be show()n.

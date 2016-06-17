@@ -47,7 +47,6 @@ import android.widget.Toast;
 import de.fuberlin.dessert.DessertApplication;
 import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.adapter.DaemonListAdapter;
-import de.fuberlin.dessert.dialog.AboutDialog;
 import de.fuberlin.dessert.model.daemon.DaemonInfo;
 import de.fuberlin.dessert.model.daemon.InstalledDaemonInfo;
 import de.fuberlin.dessert.model.daemon.RunningDaemonInfo;

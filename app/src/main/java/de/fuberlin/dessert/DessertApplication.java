@@ -30,7 +30,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
+//import java.io.RandomAccessFile;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +40,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.regex.Pattern;
+//import java.util.regex.Pattern;
 import org.xml.sax.SAXException;
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -593,6 +593,7 @@ public class DessertApplication extends Application {
 		return runningDaemon;
     }
 
+    /* Seems to be unused
 	public synchronized boolean switchWiFiMode() {
 		// Texas Instruments Transceiver?
 		RandomAccessFile tiwlan = null;
@@ -604,6 +605,7 @@ public class DessertApplication extends Application {
 		}
 		return false;
 	}
+	*/
 
     /**
      * Uninstall the daemon identified by <code>daemonInfo</code>. This will
