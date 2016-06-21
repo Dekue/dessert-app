@@ -5,11 +5,12 @@
     android:versionCode="3"
     android:versionName="2.0.0">
 	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
 	<application
         android:icon="@drawable/icon"
         android:logo="@drawable/icon"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:theme="@style/color_override"
         android:label="@string/app_name"
         android:name="DessertApplication"
         android:allowBackup="false"

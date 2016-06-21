@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -62,17 +64,7 @@ public class DrawerMenu extends AlertDialog {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.drawer_menu);
 
-		Button aboutButton = (Button) findViewById(R.id.DrawerAboutButton);
-		if (aboutButton != null) {
-			aboutButton.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					new AboutDialog(getContext()).show();
-				}
-			});
-		}
-
-		Button prefButton = (Button) findViewById(R.id.DrawerPrefButton);
+		final Button prefButton = (Button) findViewById(R.id.DrawerPrefButton);
 		if (prefButton != null) {
 			prefButton.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -80,14 +72,60 @@ public class DrawerMenu extends AlertDialog {
 					getContext().startActivity(new Intent(getContext(), SetupActivity.class));
 				}
 			});
+			prefButton.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_DOWN){
+						prefButton.setBackgroundColor(Color.argb(128,0x4f,0x4f,0x4f));
+					}
+					if (event.getAction() == MotionEvent.ACTION_UP){
+						prefButton.setBackgroundColor(Color.TRANSPARENT);
+					}
+					return false;
+				}
+			});
 		}
 
-		Button exitButton = (Button) findViewById(R.id.DrawerExitButton);
+		final Button aboutButton = (Button) findViewById(R.id.DrawerAboutButton);
+		if (aboutButton != null) {
+			aboutButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					new AboutDialog(getContext()).show();
+				}
+			});
+			aboutButton.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_DOWN){
+						aboutButton.setBackgroundColor(Color.argb(128,0x4f,0x4f,0x4f));
+					}
+					if (event.getAction() == MotionEvent.ACTION_UP){
+						aboutButton.setBackgroundColor(Color.TRANSPARENT);
+					}
+					return false;
+				}
+			});
+		}
+
+		final Button exitButton = (Button) findViewById(R.id.DrawerExitButton);
 		if (exitButton != null) {
 			exitButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					System.exit(0);
+				}
+			});
+			exitButton.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_DOWN){
+						exitButton.setBackgroundColor(Color.argb(128,0x4f,0x4f,0x4f));
+					}
+					if (event.getAction() == MotionEvent.ACTION_UP){
+						exitButton.setBackgroundColor(Color.TRANSPARENT);
+					}
+					return false;
 				}
 			});
 		}

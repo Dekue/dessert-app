@@ -27,7 +27,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 			case 2:
 				return new TabRunningDaemonActivity();
 			default:
-				return null;
+				return new TabDaemonRepositoryActivity();
 		}
 	}
 

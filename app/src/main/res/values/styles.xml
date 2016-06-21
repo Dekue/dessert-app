@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="alert_dialog_theme" parent="@style/Theme.AppCompat.NoActionBar">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="color_override" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">@android:color/holo_red_dark</item>
+        <item name="android:colorAccent" tools:targetApi="21"> @android:color/holo_red_dark</item>
+    </style>
+    <style name="alert_dialog_theme" parent="color_override">
         <item name="android:layout_height">fill_parent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:background">@drawable/tile_repeat</item>
     </style>
-    <style name="dialog_theme" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="dialog_theme" parent="color_override">
         <item name="android:layout_height">fill_parent</item>
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowIsFloating">true</item>
