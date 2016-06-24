@@ -51,7 +51,7 @@ public class DrawerMenu extends AlertDialog {
 		params.gravity = Gravity.TOP | Gravity.START;
 		params.x = 0;
 		params.y = yMargin;
-		params.width = 450;
+		params.width = (int)((double) displaySize.x * 0.75f);
 		params.height = displaySize.y - yMargin;
 
 		//darken the background
