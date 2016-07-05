@@ -53,10 +53,25 @@ import de.fuberlin.service.NotificationService;
  * running daemon, installed daemons and repository activities.
  */
 public class MainActivity extends AppCompatActivity {
+	private DrawerMenu drawerMenu;
+	private static boolean drawerMenuDismissed = false;
 
 	// image cheating to save resources instead of a real drawer:
 	public void onClickDrawer(View v) {
-		new DrawerMenu(MainActivity.this).show();
+		drawerMenu = new DrawerMenu(MainActivity.this);
+		drawerMenu.show();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if(drawerMenu != null) {
+			if (drawerMenu.isShowing()) {
+				drawerMenu.dismiss();
+				drawerMenu = null;
+				drawerMenuDismissed = true;
+			}
+		}
 	}
 
 	private final class InstallFilesRunner implements Runnable {
@@ -78,14 +93,11 @@ public class MainActivity extends AppCompatActivity {
 			// check if libraries installation is necessary
 			try {
 				if (FileTasks.isLibrariesUpdateNeeded()) {
-					FileTasks.installLibraryFiles();
-					viewUpdateHandler.sendEmptyMessage(MESSAGE_INSTALL_LIBRARIES_SUCCESS);
-					/*
 					if (FileTasks.installLibraryFiles()) {
 						viewUpdateHandler.sendEmptyMessage(MESSAGE_INSTALL_LIBRARIES_SUCCESS);
 					} else {
 						viewUpdateHandler.sendEmptyMessage(MESSAGE_INSTALL_LIBRARIES_FAILURE);
-					} */
+					}
 				}
 			} catch (Exception e) {
 				Log.e(LOG_TAG, "Could not install the start script", e);
@@ -168,6 +180,13 @@ public class MainActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		// reopen closed drawer on phone rotation w/o usage of fragments
+		if (drawerMenuDismissed) {
+			drawerMenu = new DrawerMenu(MainActivity.this);
+			drawerMenu.show();
+			drawerMenuDismissed = false;
+		}
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);

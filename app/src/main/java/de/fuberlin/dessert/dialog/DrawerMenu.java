@@ -3,6 +3,7 @@ package de.fuberlin.dessert.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -17,11 +18,14 @@ import de.fuberlin.dessert.R;
 import de.fuberlin.dessert.activity.SetupActivity;
 
 /**
- * Fake drawer menu saves resources and looks pretty nice.
+ * Fake drawer menu cannot be drawn but saves resources. Still looks pretty nice.
  */
 public class DrawerMenu extends AlertDialog {
 
-	public DrawerMenu(Context context){
+	// value in (0; 1]: percentage of screen usage in portrait mode, determines landscape mode width
+	private static final float DRAWER_WIDTH = 0.75f;
+
+	public DrawerMenu(Context context) {
 		super(context, R.style.alert_dialog_theme);
 
 		// set dialog options
@@ -51,12 +55,29 @@ public class DrawerMenu extends AlertDialog {
 		params.gravity = Gravity.TOP | Gravity.START;
 		params.x = 0;
 		params.y = yMargin;
-		params.width = (int)((double) displaySize.x * 0.75f);
+		params.width = getDrawerWidth(displaySize);
 		params.height = displaySize.y - yMargin;
 
 		//darken the background
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 		params.dimAmount = 0.6f;
+	}
+
+	/**
+	 * Get the drawer width: 75% of the display size if the screen is in portrait mode or
+	 * if it isn't (landscape mode) the same amount of dp as if it were in portrait mode.
+	 *
+	 * @param displaySize the size of the display
+	 * @return drawer width casted to int
+	 */
+	private int getDrawerWidth(Point displaySize){
+		if(getContext().getResources().getConfiguration().orientation ==
+				ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+			return (int) ((double) displaySize.x * DRAWER_WIDTH);
+		}
+		else {
+			return (int) ((double) displaySize.y * DRAWER_WIDTH);
+		}
 	}
 
 	@Override

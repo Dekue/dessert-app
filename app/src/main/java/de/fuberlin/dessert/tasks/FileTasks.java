@@ -386,11 +386,12 @@ public class FileTasks {
      * @throws IOException thrown if an I/O error occurred while installing the
      *             library files
      */
-    public static void installLibraryFiles() throws IOException {
+    public static boolean installLibraryFiles() throws IOException {
+        boolean result = true;
         File librariesDir = getLibrariesDir();
 
         // empty directory
-        clearDirectory(librariesDir);
+        result &= clearDirectory(librariesDir);
 
         // first read the library file descriptions
         Properties libProps = new Properties();
@@ -439,6 +440,7 @@ public class FileTasks {
         File versionFile = new File(librariesDir, LIBRARIES_VERSION_FILE);
         ApplicationVersion appVersion = DessertApplication.instance.getApplicationVersion();
         writeVersionToFile(appVersion, versionFile);
+        return result;
     }
 
     /**
@@ -584,22 +586,6 @@ public class FileTasks {
     /**
      * Writes the the given <code>properties</code> to the
      * <code>propertiesFile</code>.
-     * <p>
-     * The same as calling
-     * {@link #writePropertiesFile(File, Properties, String)} with a comment
-     * string of <code>null</code>.
-     *
-     * @param propertiesFile file to write to
-     * @param properties properties to write
-     * @return <code>true</code> if all went well
-     */
-    public static boolean writePropertiesFile(File propertiesFile, Properties properties) {
-        return writePropertiesFile(propertiesFile, properties, null);
-    }
-
-    /**
-     * Writes the the given <code>properties</code> to the
-     * <code>propertiesFile</code>.
      * 
      * @param propertiesFile file to write to
      * @param properties properties to write
@@ -667,12 +653,15 @@ public class FileTasks {
         }
     }
 
-    private static void clearDirectory(File directory) {
+    private static boolean clearDirectory(File directory) {
+        boolean result = true;
         for (File file : directory.listFiles()) {
             if (!file.delete()) {
                 Log.w(LOG_TAG, "Could not delete the file: " + file.getAbsolutePath());
+                result = false;
             }
         }
+        return result;
     }
 
     private static File getDaemonsDir() {
