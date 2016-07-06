@@ -24,6 +24,7 @@ public class DrawerMenu extends AlertDialog {
 
 	// value in (0; 1]: percentage of screen usage in portrait mode, determines landscape mode width
 	private static final float DRAWER_WIDTH = 0.75f;
+	private AboutDialog aboutDialog;
 
 	public DrawerMenu(Context context) {
 		super(context, R.style.alert_dialog_theme);
@@ -112,7 +113,8 @@ public class DrawerMenu extends AlertDialog {
 			aboutButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					new AboutDialog(getContext()).show();
+					aboutDialog = new AboutDialog(getContext());
+					aboutDialog.show();
 				}
 			});
 			aboutButton.setOnTouchListener(new View.OnTouchListener() {
@@ -149,6 +151,16 @@ public class DrawerMenu extends AlertDialog {
 					return false;
 				}
 			});
+		}
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if(aboutDialog != null) {
+			if (aboutDialog.isShowing()) {
+				aboutDialog.dismiss();
+			}
 		}
 	}
 }

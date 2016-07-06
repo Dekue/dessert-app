@@ -387,11 +387,10 @@ public class FileTasks {
      *             library files
      */
     public static boolean installLibraryFiles() throws IOException {
-        boolean result = true;
         File librariesDir = getLibrariesDir();
 
         // empty directory
-        result &= clearDirectory(librariesDir);
+        boolean result = clearDirectory(librariesDir);
 
         // first read the library file descriptions
         Properties libProps = new Properties();

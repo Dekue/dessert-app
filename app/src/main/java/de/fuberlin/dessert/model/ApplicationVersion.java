@@ -23,6 +23,7 @@
 package de.fuberlin.dessert.model;
 
 import android.support.annotation.NonNull;
+import de.fuberlin.dessert.HashCode;
 import de.fuberlin.dessert.Utils;
 
 public class ApplicationVersion implements Comparable<ApplicationVersion> {
@@ -68,6 +69,29 @@ public class ApplicationVersion implements Comparable<ApplicationVersion> {
         this.versionString = versionString;
     }
 
+	@Override public int hashCode() {
+		int result = HashCode.SEED;
+		result = HashCode.hash(result, major);
+		result = HashCode.hash(result, minor);
+		result = HashCode.hash(result, revision);
+		result = HashCode.hash(result, extra);
+		result = HashCode.hash(result, versionString);
+		return result;
+	}
+
+    @Override
+    public boolean equals(Object other) {
+	    if (this == other) return true;
+	    if (!(other instanceof ApplicationVersion)) return false;
+
+	    ApplicationVersion that = (ApplicationVersion) other;
+	    return
+			    (this.major == that.major) &&
+			    (this.minor == that.minor) &&
+				(this.revision == that.revision) &&
+				(this.extra.equals(that.extra));
+    }
+
     @Override
     public int compareTo(@NonNull ApplicationVersion other) {
         int tmp;
@@ -98,27 +122,28 @@ public class ApplicationVersion implements Comparable<ApplicationVersion> {
         return extra;
     }
 
+	/* UNUSED methods
     /**
      * @return major version of this application version
-     */
+     *
     public int getMajor() {
         return major;
     }
 
     /**
      * @return minor version of this application version
-     */
+     *
     public int getMinor() {
         return minor;
     }
-
+	/
     /**
      * @return revision of this application version
-     */
+     *
     public int getRevision() {
         return revision;
     }
-
+	*/
     /**
      * Checks if this object is compatible with the given version mask.
      * <p>
@@ -218,8 +243,6 @@ public class ApplicationVersion implements Comparable<ApplicationVersion> {
                 return -1;
             }
         }
-
         return 0;
     }
-
 }

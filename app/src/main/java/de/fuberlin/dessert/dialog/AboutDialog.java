@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.TextView;
 import de.fuberlin.dessert.DessertApplication;
@@ -54,7 +55,7 @@ class AboutDialog extends AlertDialog {
         setCancelable(true);
         setCanceledOnTouchOutside(true);
 
-        setButton(BUTTON_NEUTRAL, getContext().getString(R.string.close), (AlertDialog.OnClickListener) null);
+        setButton(BUTTON_NEUTRAL, getContext().getString(R.string.close), (DialogInterface.OnClickListener) null);
 
         TextView appVersionText = (TextView) aboutView.findViewById(R.id.AppVersionText);
         appVersionText.setText(DessertApplication.instance.getApplicationVersion().toString());

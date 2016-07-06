@@ -23,6 +23,7 @@
 package de.fuberlin.dessert.model;
 
 import android.support.annotation.NonNull;
+import de.fuberlin.dessert.HashCode;
 import de.fuberlin.dessert.Utils;
 
 /**
@@ -87,6 +88,24 @@ public class LibraryVersion implements Comparable<LibraryVersion> {
         this.versionString = versionString;
     }
 
+	@Override public int hashCode() {
+		int result = HashCode.SEED;
+		result = HashCode.hash(result, current);
+		result = HashCode.hash(result, revision);
+		result = HashCode.hash(result, age);
+		result = HashCode.hash(result, versionString);
+		return result;
+	}
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof LibraryVersion)) return false;
+
+        LibraryVersion that = (LibraryVersion) other;
+        return this.versionString.equals(that.versionString);
+    }
+
     @Override
     public int compareTo(@NonNull LibraryVersion other) {
         int tmp;
@@ -142,7 +161,6 @@ public class LibraryVersion implements Comparable<LibraryVersion> {
         if (left < 0 || left < right) {
             return -1;
         }
-
         return 0;
     }
 }

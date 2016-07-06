@@ -259,14 +259,14 @@ public class MainActivity extends AppCompatActivity {
 				new AlertDialog.Builder(this)
 						.setTitle(R.string.native_commands_not_found_title)
 						.setMessage(getString(R.string.native_commands_not_found_msg, sb.toString()))
-						.setPositiveButton(R.string.preferences, new AlertDialog.OnClickListener() {
+						.setPositiveButton(R.string.preferences, new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dlg, int which) {
 								startActivity(new Intent(MainActivity.this, SetupActivity.class));
 								dlg.dismiss();
 							}
 						})
-						.setNegativeButton(R.string.ignore, new AlertDialog.OnClickListener() {
+						.setNegativeButton(R.string.ignore, new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dlg, int which) {
 								NativeTasks.setCheckedForNativeCommands(true);

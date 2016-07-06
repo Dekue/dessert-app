@@ -108,6 +108,17 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
             textView.setText(this.content);
         }
 
+	    //TODO: this does not work anymore! Get it to work again!
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+	        super.onCreateOptionsMenu(menu);
+
+	        MenuInflater inflater = getActivity().getMenuInflater();
+	        inflater.inflate(R.menu.result_dialog, menu);
+
+	        return true;
+        }
+
         @Override
         public boolean onMenuItemSelected(int featureId, MenuItem menuItem) {
             boolean supRetVal = super.onMenuItemSelected(featureId, menuItem);
@@ -495,7 +506,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
                     String msg = TabRunningDaemonActivity.this.getString(R.string.command_progress_message, commandEntry.getDescription());
                     TabRunningDaemonActivity.this.progressDialog =
                             ProgressDialog.show(getActivity(), title, msg, true, true,
-                                    new ProgressDialog.OnCancelListener() {
+                                    new DialogInterface.OnCancelListener() {
                                         @Override
                                         public void onCancel(DialogInterface dlg) {
                                             // we cut the connection here
@@ -590,7 +601,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
                     String msg = TabRunningDaemonActivity.this.getString(R.string.command_progress_message, customCommandString);
                     TabRunningDaemonActivity.this.progressDialog =
                             ProgressDialog.show(getActivity(), title, msg, true, true,
-                                    new ProgressDialog.OnCancelListener() {
+                                    new DialogInterface.OnCancelListener() {
                                         @Override
                                         public void onCancel(DialogInterface dlg) {
                                             // we cut the connection here
