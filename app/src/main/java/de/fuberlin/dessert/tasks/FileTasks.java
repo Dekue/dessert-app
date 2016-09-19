@@ -415,23 +415,19 @@ public class FileTasks {
                 String sourceName = libProps.getProperty(LIB_PROPERTY_PREFIX_SOURCE_NAME + libName);
                 String targetName = libProps.getProperty(LIB_PROPERTY_PREFIX_TARGET_NAME + libName);
                 String targetVersion = libProps.getProperty(LIB_PROPERTY_PREFIX_TARGET_VERSION + libName);
+	            String majorTargetVersion = null;
+	            if (targetVersion != null){
+		            String[] targetVersions = targetVersion.split("\\.");
+		            majorTargetVersion = targetVersions[0];
+	            }
 
                 if (sourceName == null || targetName == null || targetVersion == null) {
                     Log.w(LOG_TAG, "Library properties are incomplete for library: " + libName + ". skipping library entries");
                     continue;
                 }
 
-                File targetFile = new File(librariesDir, targetName + "." + targetVersion);
-                installAssetFile(sourceName, targetFile);
-
-                String targetPath = targetFile.getAbsolutePath();
-                String targetPathShort = targetPath.substring(0, targetPath.lastIndexOf('.'));
-                String targetPathShorter = targetPathShort.substring(0, targetPathShort.lastIndexOf('.'));
-                String targetPathShortest = targetPathShorter.substring(0, targetPathShorter.lastIndexOf('.'));
-
-                NativeTasks.chmod(new File(targetPath), DEFAULT_LIBRARY_MODE, false);
-                NativeTasks.ln(new File(targetPath), new File(targetPathShorter), false);
-                NativeTasks.ln(new File(targetPathShorter), new File(targetPathShortest), false);
+	            String[] versions = {majorTargetVersion, targetVersion};
+	            installLibraryVersions(versions, librariesDir, targetName, sourceName);
             }
         }
 
@@ -441,6 +437,31 @@ public class FileTasks {
         writeVersionToFile(appVersion, versionFile);
         return result;
     }
+
+	/**
+	 * Installs various library versions (this worked on Android 1+ but it does not on Android 6+).
+	 *
+	 * @param versions the versions (e.g. targetVersion 1.9.4 -> majorTargetVersion 1)
+	 * @param librariesDir library directory
+	 * @param targetName name of target
+	 * @param sourceName name of source
+	 * @throws IOException thrown when an I/O error occurred while installing
+	 */
+	private static void installLibraryVersions(String[] versions, File librariesDir, String targetName, String sourceName) throws IOException {
+		for (String s: versions ) {
+			File targetFile = new File(librariesDir, targetName + "." + s);
+			installAssetFile(sourceName, targetFile);
+
+			String targetPath = targetFile.getAbsolutePath();
+			String targetPathShort = targetPath.substring(0, targetPath.lastIndexOf('.'));
+			String targetPathShorter = targetPathShort.substring(0, targetPathShort.lastIndexOf('.'));
+			String targetPathShortest = targetPathShorter.substring(0, targetPathShorter.lastIndexOf('.'));
+
+			NativeTasks.chmod(new File(targetPath), DEFAULT_LIBRARY_MODE, false);
+			NativeTasks.ln(new File(targetPath), new File(targetPathShorter), false);
+			NativeTasks.ln(new File(targetPathShorter), new File(targetPathShortest), false);
+		}
+	}
 
     /**
      * Writes the daemon startup script as found in the raw file section of the

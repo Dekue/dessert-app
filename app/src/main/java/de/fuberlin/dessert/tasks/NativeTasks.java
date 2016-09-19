@@ -40,7 +40,7 @@ import de.fuberlin.dessert.activity.SetupActivity;
 import de.fuberlin.dessert.model.ApplicationVersion;
 
 /**
- * Collection of native tasks implemented as a native library libNativeTask.so
+ * Collection of native tasks implemented as a native library libnative_task.so
  * 
  * @author Ramin Baradari
  */

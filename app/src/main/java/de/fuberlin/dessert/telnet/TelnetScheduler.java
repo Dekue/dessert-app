@@ -155,6 +155,7 @@ public class TelnetScheduler {
                     }
 
                     // check if connection needs to established
+                    // currentMode is getting set here!
                     boolean connectionOK = ensureConnection();
                     if (!connectionOK) {
                         Log.w(LOG_TAG, "Problem creating connection; skipping job");
@@ -364,7 +365,7 @@ public class TelnetScheduler {
             try {
                 // 1. enter the correct telnet mode            
                 if (command.isModeInvalid(currentMode)) {
-				changeCommandMode(command.getModes());
+				    changeCommandMode(command.getModes());
 					if (command.isModeInvalid(currentMode)) {
 						throw new IllegalStateException("Still in wrong mode after switching modes");
 					}
@@ -435,6 +436,7 @@ public class TelnetScheduler {
             boolean gotCR = false; // last character was a CR
             boolean foundPrompt = false;
             StringBuilder sb = new StringBuilder(128);
+	        //if b == -1 -> currentMode = null, else sb == e.g. localhost:OLSR> + # -> currentMode == DEFAULT
             for (int b = incomingData.read(); b != -1 && !foundPrompt; b = incomingData.read()) {
                 // handle CR without the following LF
                 if (gotCR && b != 0x0A) {
