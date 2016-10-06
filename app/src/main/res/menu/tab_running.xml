@@ -21,12 +21,6 @@
             android:checkable="false"
             android:visible="true"
             android:enabled="true"
-			android:id="@+id/Telnet"
-            android:title="@string/telnet" />
-		<item
-            android:checkable="false"
-            android:visible="true"
-            android:enabled="true"
 			android:id="@+id/Shutdown"
             android:title="@string/shutdown" />
 		<item

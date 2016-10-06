@@ -1,6 +1,7 @@
 package de.fuberlin.dessert.dialog;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -136,7 +137,10 @@ public class DrawerMenu extends AlertDialog {
 			exitButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					System.exit(0);
+					Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+					homeIntent.addCategory( Intent.CATEGORY_HOME );
+					homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					getContext().startActivity(homeIntent);
 				}
 			});
 			exitButton.setOnTouchListener(new View.OnTouchListener() {

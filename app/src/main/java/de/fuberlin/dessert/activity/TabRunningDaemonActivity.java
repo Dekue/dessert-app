@@ -415,7 +415,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
 
             supRetVal = true;
             break;
-        }
+        }/*
         case R.id.Telnet: {
             // make sure telnet connection is not active
             DessertApplication.telnetScheduler.disconnect();
@@ -426,7 +426,7 @@ public class TabRunningDaemonActivity extends ListFragment implements DaemonStar
 
             supRetVal = true;
             break;
-        }
+        }*/
         case R.id.Shutdown: {
             // query shutdown command the earliest execution time
             DessertApplication.telnetScheduler.enqueueShutdownCommand(Priority.HIGHEST);
