@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Outputs information on network changes in log.
@@ -25,9 +26,12 @@ public class NetworkService extends Service {
 
 	private AtomicBoolean wasConnected = new AtomicBoolean(false);
 	private AtomicBoolean wasAvailable = new AtomicBoolean(false);
+	private AtomicReference<String> SSID = new AtomicReference<>("");
+	private AtomicReference<String> failReason = new AtomicReference<>("");
+	private AtomicReference<String> detailedState = new AtomicReference<>("");
 
 	/**
-	 * "Call-by-reference" method for suppressing multiple log outputs.
+	 * "Call-by-reference" method for suppressing multiple redundant log messages.
 	 * Only output a log if the (network) state changed.
 	 * @param isState current (network) state
 	 * @param wasState atomic (network) state: the state before "isState"
@@ -46,18 +50,36 @@ public class NetworkService extends Service {
 		}
 	}
 
+	/**
+	 * "Call-by-reference" method for suppressing multiple redundant log messages.
+	 * Only output a log if the (network) state changed.
+	 * This checks again if a sub value  is null and has no "negative" message.
+	 * @param extraCond extra conditions to output a log message
+	 * @param atomicString variable to check if a log was already output
+	 * @param networkInfo the relevant network information
+	 * @param logMessage first part of the log message
+	 */
+	private void suppressMultipleLogs(boolean extraCond, AtomicReference<String> atomicString, String networkInfo, String logMessage) {
+		if (extraCond && !atomicString.get().equals(networkInfo)) {
+			Log.d(LOG_TAG, logMessage + networkInfo);
+			atomicString.set(networkInfo);
+		}
+	}
+
 	private final BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo wifi = connMgr.getActiveNetworkInfo();
+			if (wifi != null) {
+				// log network information
+				suppressMultipleLogs(wifi.isAvailable(), wasAvailable, "network connection (wifi): available", "network connection (wifi): not available");
+				suppressMultipleLogs(wifi.isConnectedOrConnecting(), wasConnected, "network connection (wifi): enabled/connected", "network connection (wifi): disabled/disconnected");
 
-			// output: network available / connected
-			boolean isAvailable = wifi != null && wifi.isAvailable();
-			suppressMultipleLogs(isAvailable, wasAvailable, "network connection (wifi): available", "network connection (wifi): not available");
-
-			boolean isConnected = wifi != null && wifi.isConnectedOrConnecting();
-			suppressMultipleLogs(isConnected, wasConnected, "network connection (wifi): enabled/connected", "network connection (wifi): disabled/disconnected");
+				suppressMultipleLogs(wifi.isConnected() && wifi.getExtraInfo() != null, SSID, wifi.getExtraInfo(), "connected to SSID: ");
+				suppressMultipleLogs(wifi.getDetailedState() != null, detailedState, wifi.getDetailedState().toString(), "detailed network state: ");
+				suppressMultipleLogs(wifi.getReason() != null, failReason, wifi.getReason(), "reason an attempt to establish connectivity failed: ");
+			}
 		}
 	};
 
