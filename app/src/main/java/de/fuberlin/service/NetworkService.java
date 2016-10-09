@@ -53,10 +53,10 @@ public class NetworkService extends Service {
 			NetworkInfo wifi = connMgr.getActiveNetworkInfo();
 
 			// output: network available / connected
-			boolean isAvailable = wifi.isAvailable();
+			boolean isAvailable = wifi != null && wifi.isAvailable();
 			suppressMultipleLogs(isAvailable, wasAvailable, "network connection (wifi): available", "network connection (wifi): not available");
 
-			boolean isConnected = wifi.isConnectedOrConnecting();
+			boolean isConnected = wifi != null && wifi.isConnectedOrConnecting();
 			suppressMultipleLogs(isConnected, wasConnected, "network connection (wifi): enabled/connected", "network connection (wifi): disabled/disconnected");
 		}
 	};
