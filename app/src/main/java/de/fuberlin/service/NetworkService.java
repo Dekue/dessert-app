@@ -12,6 +12,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Outputs information on network changes in log.
  */
@@ -21,8 +23,28 @@ public class NetworkService extends Service {
 
 	private static final String LOG_TAG = "DESSERT -> NtwrkSrvc";
 
-	private boolean wasConnected = false; // used for suppression of multiple log outputs
-	private boolean wasAvailable = false;
+	private AtomicBoolean wasConnected = new AtomicBoolean(false);
+	private AtomicBoolean wasAvailable = new AtomicBoolean(false);
+
+	/**
+	 * "Call-by-reference" method for suppressing multiple log outputs.
+	 * Only output a log if the (network) state changed.
+	 * @param isState current (network) state
+	 * @param wasState atomic (network) state: the state before "isState"
+	 * @param positive a positive log message (like connected or available)
+	 * @param negative a negative log message (like disconnected or unavailable)
+	 */
+	private void suppressMultipleLogs(boolean isState, AtomicBoolean wasState, String positive, String negative) {
+		if (isState) {
+			if (!wasState.get())
+				Log.d(LOG_TAG, positive);
+			wasState.set(true);
+		} else {
+			if (wasState.get())
+				Log.d(LOG_TAG, negative);
+			wasState.set(false);
+		}
+	}
 
 	private final BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
@@ -32,26 +54,10 @@ public class NetworkService extends Service {
 
 			// output: network available / connected
 			boolean isAvailable = wifi.isAvailable();
-			if (isAvailable) {
-				if (!wasAvailable)
-					Log.d(LOG_TAG, "network connection (wifi): available");
-				wasAvailable = true;
-			} else {
-				if (wasAvailable)
-					Log.d(LOG_TAG, "network connection (wifi): not available");
-				wasAvailable = false;
-			}
+			suppressMultipleLogs(isAvailable, wasAvailable, "network connection (wifi): available", "network connection (wifi): not available");
 
 			boolean isConnected = wifi.isConnectedOrConnecting();
-			if (isConnected) {
-				if (!wasConnected)
-					Log.d(LOG_TAG, "network connection (wifi): enabled/connected");
-				wasConnected = true;
-			} else {
-				if (wasConnected)
-					Log.d(LOG_TAG, "network connection (wifi): disabled/disconnected");
-				wasConnected = false;
-			}
+			suppressMultipleLogs(isConnected, wasConnected, "network connection (wifi): enabled/connected", "network connection (wifi): disabled/disconnected");
 		}
 	};
 
