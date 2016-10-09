@@ -46,6 +46,7 @@ import de.fuberlin.dessert.adapter.PagerAdapter;
 import de.fuberlin.dessert.dialog.DrawerMenu;
 import de.fuberlin.dessert.tasks.FileTasks;
 import de.fuberlin.dessert.tasks.NativeTasks;
+import de.fuberlin.service.NetworkService;
 import de.fuberlin.service.NotificationService;
 
 /**
@@ -232,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
 
 		try {
 			bindService(new Intent(getApplicationContext(),  NotificationService.class), mConnection, Context.BIND_AUTO_CREATE);
+			bindService(new Intent(getApplicationContext(),  NetworkService.class), mConnection, Context.BIND_AUTO_CREATE);
 		}
 		catch(SecurityException e) {
 			if (Log.isLoggable("MainActivity", Log.INFO)) {
