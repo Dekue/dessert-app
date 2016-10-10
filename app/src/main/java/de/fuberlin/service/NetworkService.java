@@ -39,6 +39,7 @@ public class NetworkService extends Service {
 	 * @param negative a negative log message (like disconnected or unavailable)
 	 */
 	private void suppressMultipleLogs(boolean isState, AtomicBoolean wasState, String positive, String negative) {
+		if (isState)
 		if (isState) {
 			if (!wasState.get())
 				Log.d(LOG_TAG, positive);
@@ -73,12 +74,17 @@ public class NetworkService extends Service {
 			NetworkInfo wifi = connMgr.getActiveNetworkInfo();
 			if (wifi != null) {
 				// log network information
-				suppressMultipleLogs(wifi.isAvailable(), wasAvailable, "network connection (wifi): available", "network connection (wifi): not available");
-				suppressMultipleLogs(wifi.isConnectedOrConnecting(), wasConnected, "network connection (wifi): enabled/connected", "network connection (wifi): disabled/disconnected");
+				try {
+					suppressMultipleLogs(wifi.isAvailable(), wasAvailable, "network connection (wifi): available", "network connection (wifi): not available");
+					suppressMultipleLogs(wifi.isConnectedOrConnecting(), wasConnected, "network connection (wifi): enabled/connected", "network connection (wifi): disabled/disconnected");
 
-				suppressMultipleLogs(wifi.isConnected() && wifi.getExtraInfo() != null, SSID, wifi.getExtraInfo(), "connected to SSID: ");
-				suppressMultipleLogs(wifi.getDetailedState() != null, detailedState, wifi.getDetailedState().toString(), "detailed network state: ");
-				suppressMultipleLogs(wifi.getReason() != null, failReason, wifi.getReason(), "reason an attempt to establish connectivity failed: ");
+					suppressMultipleLogs(wifi.isConnected() && wifi.getExtraInfo() != null, SSID, wifi.getExtraInfo(), "connected to SSID: ");
+					suppressMultipleLogs(wifi.getDetailedState() != null, detailedState, wifi.getDetailedState().toString(), "detailed network state: ");
+					suppressMultipleLogs(wifi.getReason() != null, failReason, wifi.getReason(), "reason an attempt to establish connectivity failed: ");
+				}
+				catch(Exception e){
+					Log.d(LOG_TAG, "null information: " + e);
+				}
 			}
 		}
 	};
