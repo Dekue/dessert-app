@@ -39,7 +39,6 @@ public class NetworkService extends Service {
 	 * @param negative a negative log message (like disconnected or unavailable)
 	 */
 	private void suppressMultipleLogs(boolean isState, AtomicBoolean wasState, String positive, String negative) {
-		if (isState)
 		if (isState) {
 			if (!wasState.get())
 				Log.d(LOG_TAG, positive);
