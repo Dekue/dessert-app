@@ -168,13 +168,15 @@ public class TabDaemonRepositoryActivity extends ListFragment {
                         break;
                     }
                     case MESSAGE_EXCEPTION_REPO_QUERY: {
-                        String exceptionText = activity.getString(R.string.value_unknown);
-                        if (msg.obj != null) {
-                            Exception exception = (Exception) msg.obj;
-                            exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
-                        }
-                        String msgText = activity.getString(R.string.getting_repo_error, exceptionText);
-                        Toast.makeText(activity.getActivity(), msgText, Toast.LENGTH_LONG).show();
+	                    if(activity.isAdded()) {
+		                    String exceptionText = activity.getString(R.string.value_unknown);
+		                    if (msg.obj != null) {
+			                    Exception exception = (Exception) msg.obj;
+			                    exceptionText = exception.getMessage() != null ? exception.getMessage() : exception.toString();
+		                    }
+		                    String msgText = activity.getString(R.string.getting_repo_error, exceptionText);
+		                    Toast.makeText(activity.getActivity(), msgText, Toast.LENGTH_LONG).show();
+	                    }
                         break;
                     }
                     case MESSAGE_EXCEPTION_INSTALL_DAEMON: {
@@ -236,8 +238,8 @@ public class TabDaemonRepositoryActivity extends ListFragment {
 		registerForContextMenu(listView);
 
 		// start runner
-		Toast.makeText(getActivity(), R.string.getting_repo_index, Toast.LENGTH_SHORT).show();
-		DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
+		//Toast.makeText(getActivity(), R.string.getting_repo_index, Toast.LENGTH_SHORT).show();
+		//DessertApplication.taskExecutor.execute(new ListRetrieverRunner());
 	}
 
 	@Override

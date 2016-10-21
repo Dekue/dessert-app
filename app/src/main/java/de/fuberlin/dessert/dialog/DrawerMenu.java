@@ -137,10 +137,13 @@ public class DrawerMenu extends AlertDialog {
 			exitButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
+					/*
 					Intent homeIntent = new Intent(Intent.ACTION_MAIN);
 					homeIntent.addCategory( Intent.CATEGORY_HOME );
 					homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					getContext().startActivity(homeIntent);
+					*/
+					System.exit(0);
 				}
 			});
 			exitButton.setOnTouchListener(new View.OnTouchListener() {
